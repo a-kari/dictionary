@@ -33,4 +33,8 @@
         <item>@color/avatarGrey</item>
     </array>
 
+    <!-- Ripples -->
+    <color name="white_ripple">#CCCCCC</color>
+    <color name="blueLight_ripple">#157CB0</color>
+
 </resources>

@@ -6,4 +6,7 @@
     <string name="main_bottom_navigation_home">Home</string>
     <string name="main_bottom_navigation_discover">Discover</string>
 
+    <!-- HomeFragment -->
+    <string name="home_edit">Edit</string>
+
 </resources>
