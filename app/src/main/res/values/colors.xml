@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App -->
+    <color name="colorPrimary">@color/blueLight</color>
+    <color name="colorPrimaryDark">@color/blueDark</color>
+    <color name="colorAccent">@color/pinkLight</color>
+
+    <!-- Common -->
+    <color name="blueLight">#1BA1E2</color>
+    <color name="blueDark">#006EAF</color>
+    <color name="pinkLight">#D80073</color>
+    <color name="greyLight">#FFFAFA</color>
+    <color name="greyDark">#E6E1E1</color>
+
+    <!-- Avatars -->
+    <color name="avatarRed">#E51400</color>
+    <color name="avatarOrange">#FA6800</color>
+    <color name="avatarYellow">#E3C800</color>
+    <color name="avatarGreen">#60A917</color>
+    <color name="avatarPurple">#AA00FF</color>
+    <color name="avatarBrown">#A0522D</color>
+    <color name="avatarGrey">#647687</color>
+
+    <array name="avatarColors">
+        <item>@color/avatarRed</item>
+        <item>@color/avatarRed</item>
+        <item>@color/avatarOrange</item>
+        <item>@color/avatarYellow</item>
+        <item>@color/avatarGreen</item>
+        <item>@color/avatarPurple</item>
+        <item>@color/avatarBrown</item>
+        <item>@color/avatarGrey</item>
+    </array>
+
+</resources>
