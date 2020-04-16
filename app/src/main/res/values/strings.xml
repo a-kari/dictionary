@@ -1,3 +1,9 @@
 <resources>
+
     <string name="app_name">Dictionary</string>
+
+    <!-- MainActivity -->
+    <string name="main_bottom_navigation_home">Home</string>
+    <string name="main_bottom_navigation_discover">Discover</string>
+
 </resources>

@@ -1,9 +1,9 @@
 package jp.neechan.akari.dictionary
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import jp.neechan.akari.dictionary.common.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
