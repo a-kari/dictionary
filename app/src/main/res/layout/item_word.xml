@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_selectable"
@@ -23,28 +24,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_move" />
 
-    <!-- todo: Create AvatarView class instead. -->
-    <androidx.cardview.widget.CardView
+    <jp.neechan.akari.dictionary.common.AvatarView
         android:id="@+id/avatarView"
         android:layout_width="@dimen/word_avatar_size"
         android:layout_height="@dimen/word_avatar_size"
         android:layout_marginStart="@dimen/default_padding_small"
-        app:cardBackgroundColor="@color/avatarGreen"
-        app:cardCornerRadius="@dimen/word_avatar_corner_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/moveButton"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/avatarViewTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="A"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/word_avatar_text_size" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/wordTv"
@@ -53,14 +40,14 @@
         android:layout_marginStart="@dimen/default_padding"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:text="Air"
         android:textColor="@android:color/black"
         android:textSize="@dimen/text_size_large"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/deleteButton"
         app:layout_constraintStart_toEndOf="@id/avatarView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Air" />
 
     <ImageView
         android:id="@+id/deleteButton"

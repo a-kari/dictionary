@@ -7,7 +7,7 @@
     </style>
 
     <style name="Toolbar">
-        <item name="android:background">@color/blueLight</item>
+        <item name="android:background">@color/blue</item>
     </style>
 
     <style name="Toolbar.TitleTextAppearance">

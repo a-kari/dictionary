@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.Word
-import jp.neechan.akari.dictionary.common.getFirstCharacter
 import kotlinx.android.synthetic.main.item_word.view.*
 
 class WordsAdapter(private val wordClickListener: (Word) -> Unit) : RecyclerView.Adapter<WordsAdapter.WordHolder>() {
@@ -34,8 +33,7 @@ class WordsAdapter(private val wordClickListener: (Word) -> Unit) : RecyclerView
                      private val wordClickListener: (Word) -> Unit) : RecyclerView.ViewHolder(root) {
 
         fun bind(word: Word) {
-            // todo: Create AvatarView class and encapsulate avatar logic there.
-            root.avatarViewTv.text = word.word.getFirstCharacter()
+            root.avatarView.setText(word.word)
             root.wordTv.text = word.word
             root.setOnClickListener { wordClickListener(word) }
         }

@@ -10,7 +10,6 @@
 
     <!-- Word -->
     <dimen name="word_avatar_size">50dp</dimen>
-    <dimen name="word_avatar_corner_radius">25dp</dimen>
     <dimen name="word_avatar_text_size">30sp</dimen>
     <dimen name="word_button_size">46dp</dimen>
 

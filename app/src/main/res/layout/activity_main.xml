@@ -25,7 +25,7 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blueLight"
+        android:background="@color/blue"
         app:itemBackground="@drawable/bg_navigation_item"
         app:itemIconTint="@color/fg_navigation_item"
         app:labelVisibilityMode="unlabeled"
