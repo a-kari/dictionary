@@ -9,7 +9,11 @@ import jp.neechan.akari.dictionary.common.Word
 import jp.neechan.akari.dictionary.common.toast
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment(), WordsAdapter.WordActionListener{
+
+    private lateinit var wordsAdapter: WordsAdapter
+    private lateinit var editButton: MenuItem
+    private var isEditMode = false // todo: Move the state to ViewModel.
 
     companion object {
         fun newInstance() = HomeFragment()
@@ -31,15 +35,52 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupRecyclerView() {
-        wordsRv.adapter = WordsAdapter(this::onWordClicked)
+        wordsAdapter = WordsAdapter(this)
+        wordsRv.adapter = wordsAdapter
         wordsRv.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
     }
 
-    private fun onWordClicked(word: Word) {
+    private fun setupObservers() {
+        wordsAdapter.addWords(getSampleWords())
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_edit, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+
+        editButton = menu.findItem(R.id.edit)
+        syncEditButtonIcon()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.edit) {
+            toggleEditMode()
+            true
+
+        } else {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun toggleEditMode() {
+        isEditMode = !isEditMode
+        wordsAdapter.toggleEditMode(isEditMode)
+        syncEditButtonIcon()
+    }
+
+    private fun syncEditButtonIcon() {
+        editButton.setIcon(if (!isEditMode) R.drawable.ic_edit else R.drawable.ic_ok)
+    }
+
+    override fun onWordClicked(word: Word) {
         toast(requireContext(), word.word)
     }
 
-    private fun setupObservers() {
+    override fun onWordDeleted(word: Word) {
+        toast(requireContext(), "Deleted: " + word.word)
+    }
+
+    private fun getSampleWords(): List<Word> {
         val words = mutableListOf<Word>()
         words.add(Word("Air", "", listOf(), listOf(), 10.0))
         words.add(Word("Nature", "", listOf(), listOf(), 10.0))
@@ -54,12 +95,6 @@ class HomeFragment : BaseFragment() {
         words.add(Word("Lake", "", listOf(), listOf(), 10.0))
         words.add(Word("Ocean", "", listOf(), listOf(), 10.0))
         words.add(Word("Sea", "", listOf(), listOf(), 10.0))
-
-        (wordsRv.adapter as WordsAdapter).addWords(words)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_edit, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+        return words
     }
 }
