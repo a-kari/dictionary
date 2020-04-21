@@ -3,6 +3,7 @@ package jp.neechan.akari.dictionary
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import jp.neechan.akari.dictionary.common.BaseActivity
+import jp.neechan.akari.dictionary.discover.DiscoverFragment
 import jp.neechan.akari.dictionary.home.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -33,7 +34,7 @@ class MainActivity : BaseActivity() {
 
     private fun openDiscover() {
         toolbar.setTitle(R.string.main_bottom_navigation_discover)
-//        loadFragment(DiscoverFragment.newInstance())
+        loadFragment(DiscoverFragment.newInstance())
     }
 
     private fun loadFragment(fragment: Fragment) {

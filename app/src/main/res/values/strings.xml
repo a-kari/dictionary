@@ -10,4 +10,8 @@
     <string name="home_edit">Edit</string>
     <string name="home_empty_content">Your dictionary is currently empty.\nTap + to add a word there.</string>
 
+    <!-- DiscoverFragment -->
+    <string name="discover_filter">Filter</string>
+    <string name="discover_empty_content">No relevant words found for your search.</string>
+
 </resources>
