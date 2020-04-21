@@ -44,5 +44,6 @@
     <!-- Ripples -->
     <color name="white_ripple">#CCCCCC</color>
     <color name="blueLight_ripple">#157CB0</color>
+    <color name="pink_ripple">#A60058</color>
 
 </resources>

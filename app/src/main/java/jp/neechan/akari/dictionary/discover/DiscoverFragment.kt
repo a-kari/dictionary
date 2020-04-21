@@ -59,6 +59,6 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
     }
 
     private fun showFilterDialog() {
-        toast(requireContext(), "Filter dialog...")
+        WordsFilterDialog.newInstance().show(childFragmentManager, WordsFilterDialog::class.simpleName)
     }
 }

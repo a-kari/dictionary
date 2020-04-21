@@ -2,6 +2,9 @@
 
     <string name="app_name">Dictionary</string>
 
+    <!-- Common -->
+    <string name="ok">OK</string>
+
     <!-- MainActivity -->
     <string name="main_bottom_navigation_home">Home</string>
     <string name="main_bottom_navigation_discover">Discover</string>
@@ -13,5 +16,28 @@
     <!-- DiscoverFragment -->
     <string name="discover_filter">Filter</string>
     <string name="discover_empty_content">No relevant words found for your search.</string>
+
+    <!-- WordsFilterDialog -->
+    <string name="words_filter_frequency">Frequency:</string>
+    <string name="words_filter_part_of_speech">Part of speech:</string>
+
+    <!-- Frequency -->
+    <string name="frequency_very_rare">Very rare</string>
+    <string name="frequency_rare">Rare</string>
+    <string name="frequency_normal">Normal</string>
+    <string name="frequency_frequent">Frequent</string>
+    <string name="frequency_very_frequent">Very frequent</string>
+
+    <!-- PartOfSpeech -->
+    <string name="part_of_speech_all">All</string>
+    <string name="part_of_speech_unknown">Unknown</string>
+    <string name="part_of_speech_noun">Noun</string>
+    <string name="part_of_speech_pronoun">Pronoun</string>
+    <string name="part_of_speech_adjective">Adjective</string>
+    <string name="part_of_speech_verb">Verb</string>
+    <string name="part_of_speech_adverb">Adverb</string>
+    <string name="part_of_speech_preposition">Preposition</string>
+    <string name="part_of_speech_conjunction">Conjunction</string>
+    <string name="part_of_speech_interjection">Interjection</string>
 
 </resources>

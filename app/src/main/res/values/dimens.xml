@@ -7,6 +7,7 @@
     <dimen name="text_size_large">18sp</dimen>
     <dimen name="text_size_medium">14sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
+    <dimen name="dialog_padding">48dp</dimen>
 
     <!-- Word -->
     <dimen name="word_avatar_size">50dp</dimen>
