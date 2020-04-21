@@ -6,9 +6,9 @@ import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : BaseFragment(), WordsAdapter.WordActionListener{
+class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener{
 
-    private lateinit var wordsAdapter: WordsAdapter
+    private lateinit var wordsAdapter: EditableWordsAdapter
     private lateinit var editButton: MenuItem
     private var isEditMode = false // todo: Move the state to ViewModel.
 
@@ -32,7 +32,7 @@ class HomeFragment : BaseFragment(), WordsAdapter.WordActionListener{
     }
 
     private fun setupRecyclerView() {
-        wordsAdapter = WordsAdapter(this)
+        wordsAdapter = EditableWordsAdapter(this)
         wordsRv.adapter = wordsAdapter
         wordsRv.addVerticalDividers()
     }

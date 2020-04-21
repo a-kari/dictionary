@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.*
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.*
-import jp.neechan.akari.dictionary.home.WordsAdapter
 import kotlinx.android.synthetic.main.fragment_discover.*
 
 class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
@@ -43,8 +42,6 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
     override fun onWordClicked(word: Word) {
         toast(requireContext(), word.word)
     }
-
-    override fun onWordDeleted(word: Word) {}
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_filter, menu)

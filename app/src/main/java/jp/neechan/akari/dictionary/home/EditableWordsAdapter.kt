@@ -2,29 +2,18 @@ package jp.neechan.akari.dictionary.home
 
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.Word
+import jp.neechan.akari.dictionary.common.WordsAdapter
 import kotlinx.android.synthetic.main.item_word.view.*
 
-// todo: 1. Split into WordsAdapter and EditableWordsAdapter.
-// todo: 2. DiffUtils.
-class WordsAdapter(private val wordActionListener: WordActionListener) : RecyclerView.Adapter<WordsAdapter.WordHolder>() {
+class EditableWordsAdapter(private val wordActionListener: WordActionListener) : WordsAdapter(wordActionListener) {
 
-    private val words = mutableListOf<Word>()
     private var isEditMode = false
 
-    interface WordActionListener {
-        fun onWordClicked(word: Word)
+    interface WordActionListener : WordsAdapter.WordActionListener {
         fun onWordDeleted(word: Word)
-    }
-
-    fun addWords(words: List<Word>) {
-        this.words.addAll(words)
-        notifyDataSetChanged()
     }
 
     fun toggleEditMode(isEditMode: Boolean) {
@@ -32,32 +21,28 @@ class WordsAdapter(private val wordActionListener: WordActionListener) : Recycle
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = words.size
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordHolder {
         val root = LayoutInflater.from(parent.context).inflate(R.layout.item_word, parent, false)
         return WordHolder(root, wordActionListener)
     }
 
-    override fun onBindViewHolder(holder: WordHolder, position: Int) {
-        holder.bind(words[position], isEditMode)
+    override fun onBindViewHolder(holder: WordsAdapter.WordHolder, position: Int) {
+        (holder as WordHolder).bind(words[position], isEditMode)
     }
 
     class WordHolder(private val root: View,
-                     private val wordActionListener: WordActionListener) : RecyclerView.ViewHolder(root) {
+                     private val wordActionListener: WordActionListener) : WordsAdapter.WordHolder(root, wordActionListener) {
 
         fun bind(word: Word, isEditMode: Boolean) {
-            root.avatarView.setText(word.word)
-            root.wordTv.text = word.word
+            super.bind(word)
 
             if (!isEditMode) {
-                root.deleteButton.visibility = GONE
+                root.deleteButton.visibility = View.GONE
                 root.deleteButton.setOnClickListener(null)
-                root.setOnClickListener { wordActionListener.onWordClicked(word) }
 
             } else {
                 root.setOnClickListener(null)
-                root.deleteButton.visibility = VISIBLE
+                root.deleteButton.visibility = View.VISIBLE
                 root.deleteButton.setOnClickListener { wordActionListener.onWordDeleted(word) }
             }
         }
