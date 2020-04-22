@@ -25,7 +25,6 @@
             android:gravity="center"
             android:padding="@dimen/default_padding"
             android:text="@string/home_empty_content"
-            android:textColor="@android:color/black"
             android:textSize="@dimen/text_size_large"
             android:visibility="gone" />
 

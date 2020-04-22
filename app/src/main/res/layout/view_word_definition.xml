@@ -11,8 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_padding_small"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_size_medium"
         tools:text="Say or write something to deal with or as a reaction to someone or something." />
 
     <LinearLayout
@@ -27,8 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/word_examples"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/text_size_medium" />
+            android:textColor="@color/grey" />
 
         <TextView
             android:id="@+id/examplesTv"
@@ -36,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_padding_small"
             android:textColor="@color/grey"
-            android:textSize="@dimen/text_size_medium"
             tools:text="I didn't answer him" />
 
     </LinearLayout>
@@ -53,8 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/word_synonyms"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/text_size_medium" />
+            android:textColor="@color/grey" />
 
         <TextView
             android:id="@+id/synonymsTv"
@@ -62,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_padding_small"
             android:textColor="@color/grey"
-            android:textSize="@dimen/text_size_medium"
             tools:text="reply, respond, make a rejoinder, rejoin, retort, riposte, return" />
 
     </LinearLayout>
@@ -79,8 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/word_antonyms"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/text_size_medium" />
+            android:textColor="@color/grey" />
 
         <TextView
             android:id="@+id/antonymsTv"
@@ -88,7 +81,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_padding_small"
             android:textColor="@color/grey"
-            android:textSize="@dimen/text_size_medium"
             tools:text="ask, request, demand, seek" />
 
     </LinearLayout>
