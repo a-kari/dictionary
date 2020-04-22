@@ -3,13 +3,15 @@
     android:color="@color/blue_ripple">
 
     <item android:id="@android:id/mask">
-        <shape android:shape="rectangle">
+        <shape>
+            <corners android:radius="@dimen/default_padding_small" />
             <solid android:color="@color/blue" />
         </shape>
     </item>
 
     <item>
-        <shape android:shape="rectangle">
+        <shape>
+            <corners android:radius="@dimen/default_padding_small" />
             <solid android:color="@color/blue" />
         </shape>
     </item>

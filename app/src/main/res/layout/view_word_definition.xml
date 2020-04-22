@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/default_padding"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/definitionTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding_small"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_size_medium"
+        tools:text="Say or write something to deal with or as a reaction to someone or something." />
+
+    <LinearLayout
+        android:id="@+id/examplesContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding_small"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/word_examples"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_size_medium" />
+
+        <TextView
+            android:id="@+id/examplesTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding_small"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_size_medium"
+            tools:text="I didn't answer him" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/synonymsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding_small"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/word_synonyms"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_size_medium" />
+
+        <TextView
+            android:id="@+id/synonymsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding_small"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_size_medium"
+            tools:text="reply, respond, make a rejoinder, rejoin, retort, riposte, return" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/antonymsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding_small"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/word_antonyms"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_size_medium" />
+
+        <TextView
+            android:id="@+id/antonymsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_padding_small"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_size_medium"
+            tools:text="ask, request, demand, seek" />
+
+    </LinearLayout>
+
+</LinearLayout>

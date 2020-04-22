@@ -1,9 +1,11 @@
 package jp.neechan.akari.dictionary.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.*
+import jp.neechan.akari.dictionary.word.WordActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener{
@@ -70,7 +72,9 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener{
     }
 
     override fun onWordClicked(word: Word) {
-        toast(requireContext(), word.word)
+        val wordIntent = Intent(requireContext(), WordActivity::class.java)
+        wordIntent.putExtra(WordActivity.EXTRA_WORD, word)
+        startActivity(wordIntent)
     }
 
     override fun onWordDeleted(word: Word) {

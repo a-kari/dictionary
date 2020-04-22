@@ -40,4 +40,12 @@
     <string name="part_of_speech_conjunction">Conjunction</string>
     <string name="part_of_speech_interjection">Interjection</string>
 
+    <!-- Word -->
+    <string name="word_syllables">Syllables:</string>
+    <string name="word_frequency">Frequency:</string>
+    <string name="word_definitions">Definitions</string>
+    <string name="word_examples">Examples: </string>
+    <string name="word_synonyms">Synonyms: </string>
+    <string name="word_antonyms">Antonyms: </string>
+
 </resources>

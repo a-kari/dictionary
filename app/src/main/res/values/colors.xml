@@ -11,6 +11,7 @@
     <color name="blueDark">#006EAF</color>
     <color name="pink">#D80073</color>
     <color name="snow">#FFFAFA</color>
+    <color name="grey">#737373</color>
 
     <!-- Avatars -->
     <color name="avatarRed">#E51400</color>
@@ -43,7 +44,7 @@
 
     <!-- Ripples -->
     <color name="white_ripple">#CCCCCC</color>
-    <color name="blueLight_ripple">#157CB0</color>
+    <color name="blue_ripple">#157CB0</color>
     <color name="pink_ripple">#A60058</color>
 
 </resources>
