@@ -74,6 +74,7 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener{
     override fun onWordClicked(word: Word) {
         val wordIntent = Intent(requireContext(), WordActivity::class.java)
         wordIntent.putExtra(WordActivity.EXTRA_WORD, word)
+        wordIntent.putExtra(WordActivity.EXTRA_ADD_TO_DICTIONARY_ENABLED, false)
         startActivity(wordIntent)
     }
 

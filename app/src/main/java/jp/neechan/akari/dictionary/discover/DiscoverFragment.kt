@@ -44,6 +44,7 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
     override fun onWordClicked(word: Word) {
         val wordIntent = Intent(requireContext(), WordActivity::class.java)
         wordIntent.putExtra(WordActivity.EXTRA_WORD, word)
+        wordIntent.putExtra(WordActivity.EXTRA_ADD_TO_DICTIONARY_ENABLED, true)
         startActivity(wordIntent)
     }
 
