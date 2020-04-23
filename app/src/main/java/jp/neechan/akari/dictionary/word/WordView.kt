@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.view_word_part_of_speech.view.*
 
 class WordView : LinearLayout {
 
+    private lateinit var ttsHelper: TextToSpeechHelper
     private var definitionExtraTopMargin = 0
 
     constructor(context: Context) : super(context) {
@@ -29,6 +30,7 @@ class WordView : LinearLayout {
 
     private fun init() {
         LayoutInflater.from(context).inflate(R.layout.view_word, this, true)
+        ttsHelper = TextToSpeechHelper(context)
         definitionExtraTopMargin = resources.getDimensionPixelSize(R.dimen.default_padding_small)
     }
 
@@ -38,6 +40,7 @@ class WordView : LinearLayout {
         setSyllables(word.syllables)
         setFrequency(word.frequency)
         setDefinitions(word.definitions)
+        setupListeners(word)
     }
 
     private fun setPronunciation(pronunciation: String?) {
@@ -119,5 +122,13 @@ class WordView : LinearLayout {
         }
 
         return definitionView
+    }
+
+    private fun setupListeners(word: Word) {
+        speakButton.setOnClickListener { ttsHelper.speak(word.word) }
+    }
+
+    fun destroy() {
+        ttsHelper.shutdown()
     }
 }

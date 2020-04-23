@@ -32,4 +32,9 @@ class WordActivity : BaseActivity() {
             wordView.setWord(word)
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        wordView.destroy()
+    }
 }

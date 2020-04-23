@@ -47,5 +47,6 @@
     <string name="word_examples">Examples: </string>
     <string name="word_synonyms">Synonyms: </string>
     <string name="word_antonyms">Antonyms: </string>
+    <string name="word_tts_cant_play">Can\'t play the word</string>
 
 </resources>
