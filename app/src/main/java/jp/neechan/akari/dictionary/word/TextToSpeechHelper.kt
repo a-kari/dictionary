@@ -2,6 +2,7 @@ package jp.neechan.akari.dictionary.word
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
+import android.speech.tts.Voice
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.toast
 import java.util.*
@@ -18,16 +19,27 @@ class TextToSpeechHelper(private val context: Context) : TextToSpeech.OnInitList
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             tts.language = locale
+            maybeChangeVoice()
+        }
+    }
 
-            val preferredVoice = tts.voices.firstOrNull { voice ->
-                chooseVoiceCriteria.all { criteria ->
-                    voice.name.contains(criteria, true)
-                }
-            }
+    private fun maybeChangeVoice() {
+        // Although voices are available since Lollipop, some Lollipop devices
+        // still don't support them: https://issuetracker.google.com/issues/37012397
+        val voices = try {
+            tts.voices
+        } catch (t: Throwable) {
+            emptyList<Voice>()
+        }
 
-            if (preferredVoice != null) {
-                tts.voice = preferredVoice
+        val preferredVoice = voices.firstOrNull { voice ->
+            chooseVoiceCriteria.all { criteria ->
+                voice.name.contains(criteria, true)
             }
+        }
+
+        if (preferredVoice != null) {
+            tts.voice = preferredVoice
         }
     }
 
