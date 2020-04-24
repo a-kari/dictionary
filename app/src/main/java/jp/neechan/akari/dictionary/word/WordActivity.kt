@@ -19,6 +19,7 @@ class WordActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_word)
         setupFragment()
+        setupObservers()
     }
 
     override fun onStart() {
@@ -28,16 +29,12 @@ class WordActivity : BaseActivity() {
 
     private fun setupFragment() {
         wordFragment = WordFragment.newInstance()
+        val addToDictionaryEnabled = intent.getBooleanExtra(EXTRA_ADD_TO_DICTIONARY_ENABLED, false)
+        wordFragment.setAddToDictionaryEnabled(addToDictionaryEnabled)
+
         supportFragmentManager.beginTransaction()
                               .replace(R.id.content, wordFragment, WordFragment::class.simpleName)
                               .commit()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val addToDictionaryEnabled = intent.getBooleanExtra(EXTRA_ADD_TO_DICTIONARY_ENABLED, false)
-        wordFragment.setAddToDictionaryEnabled(addToDictionaryEnabled)
-        setupObservers()
     }
 
     // todo: Should receive not a Word instance, but a String (which is word's id)

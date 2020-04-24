@@ -4,17 +4,18 @@
 
     <!-- Common -->
     <string name="ok">OK</string>
+    <string name="edit">Edit</string>
+    <string name="search">Search</string>
+    <string name="filter">Filter</string>
 
     <!-- MainActivity -->
     <string name="main_bottom_navigation_home">Home</string>
     <string name="main_bottom_navigation_discover">Discover</string>
 
     <!-- HomeFragment -->
-    <string name="home_edit">Edit</string>
     <string name="home_empty_content">Your dictionary is currently empty.\nTap + to add a word there.</string>
 
     <!-- DiscoverFragment -->
-    <string name="discover_filter">Filter</string>
     <string name="discover_empty_content">No relevant words found for your search.</string>
 
     <!-- WordsFilterDialog -->
@@ -49,5 +50,10 @@
     <string name="word_antonyms">Antonyms: </string>
     <string name="word_tts_cant_play">Can\'t play the word</string>
     <string name="word_add_to_dictionary">Add to the dictionary</string>
+
+    <!-- SearchWordActivity -->
+    <string name="search_word_search_view_hint">Search a word</string>
+    <string name="search_word_hint">Search a word and it will appear here.</string>
+    <string name="search_word_no_result">No relevant word found for your search.</string>
 
 </resources>

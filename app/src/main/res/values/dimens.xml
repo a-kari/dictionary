@@ -9,6 +9,7 @@
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="dialog_padding">48dp</dimen>
     <dimen name="button_icon_size">16dp</dimen>
+    <dimen name="search_view_start_padding">-8dp</dimen>
 
     <!-- Word -->
     <dimen name="word_avatar_size">50dp</dimen>

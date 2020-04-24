@@ -40,4 +40,16 @@
         <item name="android:background">@drawable/bg_button_blue</item>
     </style>
 
+    <style name="SearchViewStyle">
+        <item name="android:paddingStart">@dimen/search_view_start_padding</item>
+        <item name="android:background">@drawable/bg_editable</item>
+        <item name="queryBackground">@null</item>
+        <item name="queryHint">@string/search</item>
+        <item name="iconifiedByDefault">false</item>
+    </style>
+
+    <style name="SearchViewTheme">
+        <item name="colorControlNormal">@color/grey</item>
+    </style>
+
 </resources>

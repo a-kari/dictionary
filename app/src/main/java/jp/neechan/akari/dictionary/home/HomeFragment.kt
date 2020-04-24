@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.*
+import jp.neechan.akari.dictionary.search.SearchWordActivity
 import jp.neechan.akari.dictionary.word.WordActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -31,6 +32,7 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener{
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupObservers()
+        setupListeners()
     }
 
     private fun setupRecyclerView() {
@@ -41,6 +43,13 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener{
 
     private fun setupObservers() {
         wordsAdapter.addWords(getSampleWords())
+    }
+
+    private fun setupListeners() {
+        addWordButton.setOnClickListener {
+            val searchIntent = Intent(requireContext(), SearchWordActivity::class.java)
+            startActivity(searchIntent)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

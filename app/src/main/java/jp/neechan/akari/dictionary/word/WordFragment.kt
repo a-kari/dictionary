@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_word.*
 class WordFragment : BaseFragment() {
 
     private lateinit var word: Word
+    private var addToDictionaryEnabled = false
 
     companion object {
         fun newInstance() = WordFragment()
@@ -27,7 +28,19 @@ class WordFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_word, container, false)
     }
 
+    // todo: Here also should be a function that receives a word.word and retrieves the word from a repository.
+    fun setWord(word: Word) {
+        this.word = word
+    }
+
     fun setAddToDictionaryEnabled(addToDictionaryEnabled: Boolean) {
+        this.addToDictionaryEnabled = addToDictionaryEnabled
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        wordView.setWord(word)
+
         if (addToDictionaryEnabled) {
             addToDictionaryButton.visibility = VISIBLE
             addToDictionaryButton.setOnClickListener { toast(requireContext(), "Adding to your dictionary...") }
@@ -35,12 +48,6 @@ class WordFragment : BaseFragment() {
         } else {
             addToDictionaryButton.visibility = GONE
         }
-    }
-
-    // todo: Here also should be a function that receives a word.word and retrieves the word from a repository.
-    fun setWord(word: Word) {
-        this.word = word
-        wordView.setWord(word)
     }
 
     override fun onDestroyView() {
