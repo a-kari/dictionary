@@ -4,23 +4,26 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@android:color/white</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
-    <style name="Toolbar">
+    <style name="ToolbarStyle">
         <item name="android:background">@color/blue</item>
     </style>
 
-    <style name="Toolbar.TitleTextAppearance">
+    <style name="ToolbarTheme">
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="ToolbarStyle.TitleTextAppearance">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="Button">
+    <style name="ButtonStyle">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textStyle">normal</item>
@@ -29,11 +32,11 @@
         <item name="android:minHeight">0dp</item>
     </style>
 
-    <style name="Button.Pink">
+    <style name="ButtonStyle.Pink">
         <item name="android:background">@drawable/bg_button_pink</item>
     </style>
 
-    <style name="Button.Blue">
+    <style name="ButtonStyle.Blue">
         <item name="android:background">@drawable/bg_button_blue</item>
     </style>
 

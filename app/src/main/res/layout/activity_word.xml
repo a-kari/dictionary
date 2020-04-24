@@ -8,11 +8,12 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/Toolbar"
+        style="@style/ToolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
+        android:theme="@style/ToolbarTheme"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextAppearance="@style/Toolbar.TitleTextAppearance"
+        app:titleTextAppearance="@style/ToolbarStyle.TitleTextAppearance"
         tools:title="Air" />
 
     <ProgressBar

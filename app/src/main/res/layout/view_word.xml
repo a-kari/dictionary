@@ -18,7 +18,7 @@
     <!-- todo: Create a class "IconButton" or something. -->
     <LinearLayout
         android:id="@+id/speakButton"
-        style="@style/Button.Blue"
+        style="@style/ButtonStyle.Blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_padding"
