@@ -32,12 +32,13 @@
         <item name="android:minHeight">0dp</item>
     </style>
 
-    <style name="ButtonStyle.Pink">
+    <style name="ButtonStyle.Large">
         <item name="android:background">@drawable/bg_button_pink</item>
     </style>
 
-    <style name="ButtonStyle.Blue">
+    <style name="ButtonStyle.Small">
         <item name="android:background">@drawable/bg_button_blue</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     <style name="SearchViewStyle">

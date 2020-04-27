@@ -45,7 +45,7 @@ class WordView : LinearLayout {
 
     private fun setPronunciation(pronunciation: String?) {
         if (pronunciation != null) {
-            pronunciationTv.text = pronunciation
+            speakButton.text = pronunciation
             speakButton.visibility = VISIBLE
 
         } else {

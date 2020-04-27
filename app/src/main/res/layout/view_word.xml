@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,31 +14,16 @@
         android:textStyle="bold"
         tools:text="Secret" />
 
-    <!-- todo: Create a class "IconButton" or something. -->
-    <LinearLayout
+    <Button
         android:id="@+id/speakButton"
-        style="@style/ButtonStyle.Blue"
+        style="@style/ButtonStyle.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_padding"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="visible">
-
-        <ImageView
-            android:layout_width="@dimen/button_icon_size"
-            android:layout_height="@dimen/button_icon_size"
-            app:srcCompat="@drawable/ic_speak" />
-
-        <TextView
-            android:id="@+id/pronunciationTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_padding_small"
-            android:textColor="@android:color/white"
-            tools:text="'sikrɪt" />
-
-    </LinearLayout>
+        android:drawableStart="@drawable/ic_speak"
+        android:drawablePadding="@dimen/default_padding_small"
+        android:visibility="visible"
+        tools:text="'sikrɪt" />
 
     <LinearLayout
         android:id="@+id/syllablesContainer"

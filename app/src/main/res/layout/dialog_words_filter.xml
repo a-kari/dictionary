@@ -53,7 +53,7 @@
 
     <Button
         android:id="@+id/filterButton"
-        style="@style/ButtonStyle.Pink"
+        style="@style/ButtonStyle.Large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_padding"
