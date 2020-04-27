@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import jp.neechan.akari.dictionary.common.BaseActivity
 import jp.neechan.akari.dictionary.discover.DiscoverFragment
 import jp.neechan.akari.dictionary.home.HomeFragment
+import jp.neechan.akari.dictionary.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -20,7 +21,8 @@ class MainActivity : BaseActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.home -> openHome()
-                else -> openDiscover()
+                R.id.discover -> openDiscover()
+                else -> openSettings()
             }
             true
         }
@@ -35,6 +37,11 @@ class MainActivity : BaseActivity() {
     private fun openDiscover() {
         toolbar.setTitle(R.string.main_bottom_navigation_discover)
         loadFragment(DiscoverFragment.newInstance())
+    }
+
+    private fun openSettings() {
+        toolbar.setTitle(R.string.main_bottom_navigation_settings)
+        loadFragment(SettingsFragment.newInstance())
     }
 
     private fun loadFragment(fragment: Fragment) {

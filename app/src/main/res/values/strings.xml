@@ -12,6 +12,7 @@
     <!-- MainActivity -->
     <string name="main_bottom_navigation_home">Home</string>
     <string name="main_bottom_navigation_discover">Discover</string>
+    <string name="main_bottom_navigation_settings">Settings</string>
 
     <!-- HomeFragment -->
     <string name="home_empty_content">Your dictionary is currently empty.\nTap + to add a word there.</string>
