@@ -11,9 +11,10 @@ class TextToSpeechHelper(private val context: Context) : TextToSpeech.OnInitList
 
     private val tts = TextToSpeech(context, this)
     private val locale = Locale.US
+    private lateinit var localeVoices: List<Voice>
 
     companion object {
-        private val chooseVoiceCriteria = setOf("en-us", "#female")
+        private val chooseVoiceCriteria = setOf("#female")
     }
 
     override fun onInit(status: Int) {
@@ -26,13 +27,13 @@ class TextToSpeechHelper(private val context: Context) : TextToSpeech.OnInitList
     private fun maybeChangeVoice() {
         // Although voices are available since Lollipop, some Lollipop devices
         // still don't support them: https://issuetracker.google.com/issues/37012397
-        val voices = try {
-            tts.voices
+        localeVoices = try {
+            tts.voices.toList().filter { it.locale == locale }
         } catch (t: Throwable) {
-            emptyList<Voice>()
+            emptyList()
         }
 
-        val preferredVoice = voices.firstOrNull { voice ->
+        val preferredVoice = localeVoices.firstOrNull { voice ->
             chooseVoiceCriteria.all { criteria ->
                 voice.name.contains(criteria, true)
             }
@@ -46,13 +47,43 @@ class TextToSpeechHelper(private val context: Context) : TextToSpeech.OnInitList
     fun speak(text: String) {
         val result = tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
         if (result == TextToSpeech.ERROR) {
-            toast(context, R.string.word_tts_cant_play)
+            toast(context, R.string.tts_cant_play)
         }
+    }
+
+    fun testSpeak() {
+        speak(context.getString(R.string.tts_service_test_phrase))
     }
 
     // todo: Create a lint to check if tts was actually shut down.
     fun shutdown() {
         tts.stop()
         tts.shutdown()
+    }
+
+    fun loadSelectedLocale(): Locale {
+        return locale
+    }
+
+    // todo: Suspend until TTS is initialized.
+    fun loadVoiceNames(): List<String> {
+        return localeVoices.map { it.name }
+    }
+
+    fun loadSelectedVoiceName(): String? {
+        return tts.voice.name
+    }
+
+    fun selectVoice(name: String) {
+        val voice = try {
+            tts.voices.firstOrNull { it.name == name }
+
+        } catch (t: Throwable) {
+            null
+        }
+
+        if (voice != null) {
+            tts.voice = voice
+        }
     }
 }

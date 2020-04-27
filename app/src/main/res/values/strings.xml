@@ -50,12 +50,21 @@
     <string name="word_examples">Examples: </string>
     <string name="word_synonyms">Synonyms: </string>
     <string name="word_antonyms">Antonyms: </string>
-    <string name="word_tts_cant_play">Can\'t play the word</string>
     <string name="word_add_to_dictionary">Add to the dictionary</string>
 
     <!-- SearchWordActivity -->
     <string name="search_word_search_view_hint">Search a word</string>
     <string name="search_word_hint">Search a word and it will appear here.</string>
     <string name="search_word_no_result">No relevant word found for your search.</string>
+
+    <!-- SettingsFragment -->
+    <string name="settings_pronunciation">Select a pronunciation:</string>
+    <string name="settings_pronunciation_us">US</string>
+    <string name="settings_pronunciation_uk">UK</string>
+    <string name="settings_voice">Select a voice:</string>
+
+    <!-- TextToSpeechService -->
+    <string name="tts_service_test_phrase">London is the capital of Great Britain.</string>
+    <string name="tts_cant_play">Can\'t play</string>
 
 </resources>
