@@ -16,9 +16,9 @@ class MainActivity : BaseActivity() {
         setupBottomNavigation()
     }
 
-    // todo: Maybe I should make a fabric here?
     private fun setupBottomNavigation() {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+            toolbar.title = menuItem.title
             when (menuItem.itemId) {
                 R.id.home -> openHome()
                 R.id.discover -> openDiscover()
@@ -30,23 +30,20 @@ class MainActivity : BaseActivity() {
     }
 
     private fun openHome() {
-        toolbar.setTitle(R.string.main_bottom_navigation_home)
         loadFragment(HomeFragment.newInstance())
     }
 
     private fun openDiscover() {
-        toolbar.setTitle(R.string.main_bottom_navigation_discover)
         loadFragment(DiscoverFragment.newInstance())
     }
 
     private fun openSettings() {
-        toolbar.setTitle(R.string.main_bottom_navigation_settings)
         loadFragment(SettingsFragment.newInstance())
     }
 
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment, fragment.javaClass.simpleName)
-            .commit()
+                              .replace(R.id.fragmentContainer, fragment, fragment.javaClass.simpleName)
+                              .commit()
     }
 }
