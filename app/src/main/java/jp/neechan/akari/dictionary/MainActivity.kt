@@ -20,30 +20,25 @@ class MainActivity : BaseActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             toolbar.title = menuItem.title
             when (menuItem.itemId) {
-                R.id.home -> openHome()
-                R.id.discover -> openDiscover()
-                else -> openSettings()
+                R.id.discover -> loadFragment(DiscoverFragment::class.java)
+                R.id.settings -> loadFragment(SettingsFragment::class.java)
+                else -> loadFragment(HomeFragment::class.java)
             }
             true
         }
         bottomNavigationView.selectedItemId = R.id.home
     }
 
-    private fun openHome() {
-        loadFragment(HomeFragment.newInstance())
-    }
+    private fun <T : Fragment> loadFragment(clazz: Class<T>) {
+        val tag = clazz.simpleName
+        val fragment = supportFragmentManager.findFragmentByTag(tag) ?: when (clazz) {
+            DiscoverFragment::class.java -> DiscoverFragment.newInstance()
+            SettingsFragment::class.java -> SettingsFragment.newInstance()
+            else -> HomeFragment.newInstance()
+        }
 
-    private fun openDiscover() {
-        loadFragment(DiscoverFragment.newInstance())
-    }
-
-    private fun openSettings() {
-        loadFragment(SettingsFragment.newInstance())
-    }
-
-    private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-                              .replace(R.id.fragmentContainer, fragment, fragment.javaClass.simpleName)
+                              .replace(R.id.fragmentContainer, fragment, tag)
                               .commit()
     }
 }
