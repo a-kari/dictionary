@@ -3,6 +3,7 @@ package jp.neechan.akari.dictionary.word
 import android.os.Bundle
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.BaseActivity
+import jp.neechan.akari.dictionary.common.Frequency
 import jp.neechan.akari.dictionary.common.Word
 import kotlinx.android.synthetic.main.activity_word.*
 
@@ -40,10 +41,10 @@ class WordActivity : BaseActivity() {
     // todo: Should receive not a Word instance, but a String (which is word's id)
     // todo: and get the needed Word instance from a repository.
     private fun setupObservers() {
-        val word = intent.getSerializableExtra(EXTRA_WORD) as Word?
+        val word = intent.getStringExtra(EXTRA_WORD)
         if (word != null) {
-            toolbar.title = word.word
-            wordFragment.setWord(word)
+            toolbar.title = word
+            wordFragment.setWord(Word(word, word, null, Frequency.NORMAL, null))
         }
     }
 }

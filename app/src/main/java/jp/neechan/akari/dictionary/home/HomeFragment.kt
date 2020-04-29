@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.common.*
+import jp.neechan.akari.dictionary.common.BaseFragment
+import jp.neechan.akari.dictionary.common.addVerticalDividers
+import jp.neechan.akari.dictionary.common.getSampleWordsString
+import jp.neechan.akari.dictionary.common.toast
 import jp.neechan.akari.dictionary.search.SearchWordActivity
 import jp.neechan.akari.dictionary.word.WordActivity
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -42,7 +45,7 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener{
     }
 
     private fun setupObservers() {
-        wordsAdapter.addWords(getSampleWords())
+        wordsAdapter.addWords(getSampleWordsString())
     }
 
     private fun setupListeners() {
@@ -80,14 +83,14 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener{
         editButton.setIcon(if (!isEditMode) R.drawable.ic_edit else R.drawable.ic_ok)
     }
 
-    override fun onWordClicked(word: Word) {
+    override fun onWordClicked(word: String) {
         val wordIntent = Intent(requireContext(), WordActivity::class.java)
         wordIntent.putExtra(WordActivity.EXTRA_WORD, word)
         wordIntent.putExtra(WordActivity.EXTRA_ADD_TO_DICTIONARY_ENABLED, false)
         startActivity(wordIntent)
     }
 
-    override fun onWordDeleted(word: Word) {
-        toast(requireContext(), "Deleted: " + word.word)
+    override fun onWordDeleted(word: String) {
+        toast(requireContext(), "Deleted: $word")
     }
 }

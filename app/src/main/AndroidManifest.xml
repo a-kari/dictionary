@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.neechan.akari.dictionary">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- todo: Allow backup later. -->
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"

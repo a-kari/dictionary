@@ -13,7 +13,7 @@ class EditableWordsAdapter(private val wordActionListener: WordActionListener) :
     private var isEditMode = false
 
     interface WordActionListener : WordsAdapter.WordActionListener {
-        fun onWordDeleted(word: Word)
+        fun onWordDeleted(word: String)
     }
 
     fun toggleEditMode(isEditMode: Boolean) {
@@ -33,7 +33,7 @@ class EditableWordsAdapter(private val wordActionListener: WordActionListener) :
     class WordHolder(private val root: View,
                      private val wordActionListener: WordActionListener) : WordsAdapter.WordHolder(root, wordActionListener) {
 
-        fun bind(word: Word, isEditMode: Boolean) {
+        fun bind(word: String, isEditMode: Boolean) {
             super.bind(word)
 
             if (!isEditMode) {

@@ -1,5 +1,20 @@
 package jp.neechan.akari.dictionary.common
 
+fun getSampleWordsString(): List<String> {
+    return listOf(
+        "Rain",
+        "Star",
+        "Fire",
+        "Forest",
+        "Lightning",
+        "Snow",
+        "Mountain",
+        "Lake",
+        "Ocean",
+        "Sea"
+    )
+}
+
 fun getSampleWords(): List<Word> {
     val wordsDto = mutableListOf<WordDTO>()
     wordsDto.add(

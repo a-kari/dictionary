@@ -3,13 +3,20 @@ package jp.neechan.akari.dictionary.discover
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.common.*
+import jp.neechan.akari.dictionary.common.BaseFragment
+import jp.neechan.akari.dictionary.common.WordsAdapter
+import jp.neechan.akari.dictionary.common.addVerticalDividers
 import jp.neechan.akari.dictionary.word.WordActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
 
 class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
+    private lateinit var viewModel: DiscoverViewModel
     private lateinit var wordsAdapter: WordsAdapter
 
     companion object {
@@ -27,6 +34,8 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(DiscoverViewModel::class.java)
+
         setupRecyclerView()
         setupObservers()
     }
@@ -37,11 +46,37 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
         wordsRv.addVerticalDividers()
     }
 
+    // todo: Need to handle errors here when I write a Result<T, Error> class.
     private fun setupObservers() {
-        wordsAdapter.addWords(getSampleWords())
+        viewModel.words.observe(this, Observer { page ->
+            when {
+                page == null -> showProgressBar()
+                page.content.isEmpty() -> showEmptyContent()
+                else -> showContent(page.content)
+            }
+        })
     }
 
-    override fun onWordClicked(word: Word) {
+    private fun showProgressBar() {
+        wordsRv.visibility = GONE
+        noWordsTv.visibility = GONE
+        progressBar.visibility = VISIBLE
+    }
+
+    private fun showEmptyContent() {
+        wordsRv.visibility = GONE
+        progressBar.visibility = GONE
+        noWordsTv.visibility = VISIBLE
+    }
+
+    private fun showContent(words: List<String>) {
+        wordsAdapter.addWords(words)
+        progressBar.visibility = GONE
+        noWordsTv.visibility = GONE
+        wordsRv.visibility = VISIBLE
+    }
+
+    override fun onWordClicked(word: String) {
         val wordIntent = Intent(requireContext(), WordActivity::class.java)
         wordIntent.putExtra(WordActivity.EXTRA_WORD, word)
         wordIntent.putExtra(WordActivity.EXTRA_ADD_TO_DICTIONARY_ENABLED, true)

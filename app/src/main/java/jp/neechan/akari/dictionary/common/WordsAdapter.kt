@@ -10,13 +10,13 @@ import kotlinx.android.synthetic.main.item_word.view.*
 // todo: DiffUtils.
 open class WordsAdapter(private val wordActionListener: WordActionListener) : RecyclerView.Adapter<WordsAdapter.WordHolder>() {
 
-    protected val words = mutableListOf<Word>()
+    protected val words = mutableListOf<String>()
 
     interface WordActionListener {
-        fun onWordClicked(word: Word)
+        fun onWordClicked(word: String)
     }
 
-    fun addWords(words: List<Word>) {
+    fun addWords(words: List<String>) {
         this.words.addAll(words)
         notifyDataSetChanged()
     }
@@ -35,9 +35,9 @@ open class WordsAdapter(private val wordActionListener: WordActionListener) : Re
     open class WordHolder(private val root: View,
                           private val wordActionListener: WordActionListener) : RecyclerView.ViewHolder(root) {
 
-        open fun bind(word: Word) {
-            root.avatarView.setText(word.word)
-            root.wordTv.text = word.word
+        open fun bind(word: String) {
+            root.avatarView.setText(word)
+            root.wordTv.text = word
             root.setOnClickListener { wordActionListener.onWordClicked(word) }
         }
     }
