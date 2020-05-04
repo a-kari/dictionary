@@ -2,12 +2,14 @@ package jp.neechan.akari.dictionary.common.di
 
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import jp.neechan.akari.dictionary.common.network.AuthorizationInterceptor
 import jp.neechan.akari.dictionary.common.viewmodels.ViewModelFactory
 import jp.neechan.akari.dictionary.discover.Page
 import jp.neechan.akari.dictionary.discover.StringPageDeserializer
 import jp.neechan.akari.dictionary.discover.WordsApiService
 import jp.neechan.akari.dictionary.discover.WordsRemoteRepository
 import jp.neechan.akari.dictionary.word.*
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -33,7 +35,14 @@ object KoinModule {
         }
 
         single {
+            OkHttpClient.Builder()
+                        .addNetworkInterceptor(AuthorizationInterceptor())
+                        .build()
+        }
+
+        single {
             Retrofit.Builder()
+                    .client(get())
                     .baseUrl("https://wordsapiv1.p.rapidapi.com/")
                     .addConverterFactory(GsonConverterFactory.create(get()))
                     .build()
