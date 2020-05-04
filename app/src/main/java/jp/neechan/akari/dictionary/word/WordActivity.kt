@@ -2,9 +2,7 @@ package jp.neechan.akari.dictionary.word
 
 import android.os.Bundle
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.common.BaseActivity
-import jp.neechan.akari.dictionary.common.Frequency
-import jp.neechan.akari.dictionary.common.Word
+import jp.neechan.akari.dictionary.common.views.BaseActivity
 import kotlinx.android.synthetic.main.activity_word.*
 
 class WordActivity : BaseActivity() {
@@ -44,7 +42,15 @@ class WordActivity : BaseActivity() {
         val word = intent.getStringExtra(EXTRA_WORD)
         if (word != null) {
             toolbar.title = word
-            wordFragment.setWord(Word(word, word, null, Frequency.NORMAL, null))
+            wordFragment.setWord(
+                Word(
+                    word,
+                    word,
+                    null,
+                    Frequency.NORMAL,
+                    null
+                )
+            )
         }
     }
 }

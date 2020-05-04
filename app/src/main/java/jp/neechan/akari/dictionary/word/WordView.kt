@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.common.*
 import kotlinx.android.synthetic.main.view_word.view.*
 import kotlinx.android.synthetic.main.view_word_definition.view.*
 import kotlinx.android.synthetic.main.view_word_part_of_speech.view.*

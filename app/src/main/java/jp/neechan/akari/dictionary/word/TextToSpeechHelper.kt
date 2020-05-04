@@ -4,7 +4,7 @@ import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.common.toast
+import jp.neechan.akari.dictionary.common.utils.toast
 import java.util.*
 
 class TextToSpeechHelper(private val context: Context) : TextToSpeech.OnInitListener {
@@ -47,7 +47,10 @@ class TextToSpeechHelper(private val context: Context) : TextToSpeech.OnInitList
     fun speak(text: String) {
         val result = tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
         if (result == TextToSpeech.ERROR) {
-            toast(context, R.string.tts_cant_play)
+            toast(
+                context,
+                R.string.tts_cant_play
+            )
         }
     }
 

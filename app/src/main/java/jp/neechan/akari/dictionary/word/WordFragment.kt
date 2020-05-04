@@ -7,9 +7,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.common.BaseFragment
-import jp.neechan.akari.dictionary.common.Word
-import jp.neechan.akari.dictionary.common.toast
+import jp.neechan.akari.dictionary.common.views.BaseFragment
+import jp.neechan.akari.dictionary.common.utils.toast
 import kotlinx.android.synthetic.main.fragment_word.*
 
 // todo: Change TTSHelper to TTSService. Move interaction with TTS to WordViewModel!
@@ -43,7 +42,12 @@ class WordFragment : BaseFragment() {
 
         if (addToDictionaryEnabled) {
             addToDictionaryButton.visibility = VISIBLE
-            addToDictionaryButton.setOnClickListener { toast(requireContext(), "Adding to your dictionary...") }
+            addToDictionaryButton.setOnClickListener {
+                toast(
+                    requireContext(),
+                    "Adding to your dictionary..."
+                )
+            }
 
         } else {
             addToDictionaryButton.visibility = GONE

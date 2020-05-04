@@ -1,6 +1,5 @@
 package jp.neechan.akari.dictionary.discover
 
-import jp.neechan.akari.dictionary.common.Page
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.QueryMap

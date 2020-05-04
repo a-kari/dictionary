@@ -1,7 +1,5 @@
 package jp.neechan.akari.dictionary.discover
 
-import jp.neechan.akari.dictionary.common.Page
-
 class WordsRemoteRepository(private val wordsApiService: WordsApiService) {
 
     suspend fun loadWords(): Page<String> {
