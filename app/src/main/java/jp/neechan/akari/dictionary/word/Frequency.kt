@@ -4,13 +4,19 @@ import androidx.annotation.StringRes
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.word.Frequency.*
 
-enum class Frequency(val fromValue: Float, val toValue: Float) {
+enum class Frequency(val from: Float, val to: Float) {
 
     VERY_RARE(0f, 2f),
     RARE(2f, 4f),
     NORMAL(4f, 5f),
     FREQUENT(5f, 6f),
-    VERY_FREQUENT(6f, 10f)
+    VERY_FREQUENT(6f, 10f);
+
+    companion object {
+        fun valueOf(frequencyNumber: Float): Frequency {
+            return values().first { it.from <= frequencyNumber && frequencyNumber <= it.to }
+        }
+    }
 }
 
 // todo: The extension should be in UI layer when I apply Clean Architecture.

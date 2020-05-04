@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import jp.neechan.akari.dictionary.R
+import jp.neechan.akari.dictionary.common.utils.isValid
 import kotlinx.android.synthetic.main.view_word.view.*
 import kotlinx.android.synthetic.main.view_word_definition.view.*
 import kotlinx.android.synthetic.main.view_word_part_of_speech.view.*
@@ -67,7 +68,7 @@ class WordView : LinearLayout {
     }
 
     private fun setDefinitions(partOfSpeechToDefinitionsMap: LinkedHashMap<PartOfSpeech, List<Definition>>?) {
-        if (partOfSpeechToDefinitionsMap != null) {
+        if (partOfSpeechToDefinitionsMap != null && partOfSpeechToDefinitionsMap.isNotEmpty()) {
             for (partOfSpeechToDefinitions in partOfSpeechToDefinitionsMap) {
                 definitionsView.addView(getPartOfSpeechView(partOfSpeechToDefinitions.key))
 
@@ -96,7 +97,7 @@ class WordView : LinearLayout {
 
         definitionView.definitionTv.text = definition.definition
 
-        if (definition.examples != null) {
+        if (definition.examples.isValid()) {
             definitionView.examplesTv.text = definition.examples
             definitionView.examplesContainer.visibility = VISIBLE
 
@@ -104,7 +105,7 @@ class WordView : LinearLayout {
             definitionView.examplesContainer.visibility = GONE
         }
 
-        if (definition.synonyms != null) {
+        if (definition.synonyms.isValid()) {
             definitionView.synonymsTv.text = definition.synonyms
             definitionView.synonymsContainer.visibility = VISIBLE
 
@@ -112,7 +113,7 @@ class WordView : LinearLayout {
             definitionView.synonymsContainer.visibility = GONE
         }
 
-        if (definition.antonyms != null) {
+        if (definition.antonyms.isValid()) {
             definitionView.antonymsTv.text = definition.antonyms
             definitionView.antonymsContainer.visibility = VISIBLE
 

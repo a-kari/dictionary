@@ -1,24 +1,29 @@
 package jp.neechan.akari.dictionary.word
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.views.BaseActivity
 import kotlinx.android.synthetic.main.activity_word.*
 
 class WordActivity : BaseActivity() {
 
-    private lateinit var wordFragment: WordFragment
+    private lateinit var viewModel: WordViewModel
 
     companion object {
         const val EXTRA_WORD = "word"
-        const val EXTRA_ADD_TO_DICTIONARY_ENABLED = "addToDictionaryEnabled"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(WordViewModel::class.java)
+
         setContentView(R.layout.activity_word)
-        setupFragment()
         setupObservers()
+        setupListeners()
     }
 
     override fun onStart() {
@@ -26,31 +31,24 @@ class WordActivity : BaseActivity() {
         setupBackButton()
     }
 
-    private fun setupFragment() {
-        wordFragment = WordFragment.newInstance()
-        val addToDictionaryEnabled = intent.getBooleanExtra(EXTRA_ADD_TO_DICTIONARY_ENABLED, false)
-        wordFragment.setAddToDictionaryEnabled(addToDictionaryEnabled)
-
-        supportFragmentManager.beginTransaction()
-                              .replace(R.id.content, wordFragment, WordFragment::class.simpleName)
-                              .commit()
-    }
-
-    // todo: Should receive not a Word instance, but a String (which is word's id)
-    // todo: and get the needed Word instance from a repository.
     private fun setupObservers() {
         val word = intent.getStringExtra(EXTRA_WORD)
         if (word != null) {
-            toolbar.title = word
-            wordFragment.setWord(
-                Word(
-                    word,
-                    word,
-                    null,
-                    Frequency.NORMAL,
-                    null
-                )
-            )
+            viewModel.word = word
+            viewModel.wordLiveData.observe(this, Observer {
+                wordView.setWord(it)
+                progressBar.visibility = GONE
+                content.visibility = VISIBLE
+            })
         }
+    }
+
+    private fun setupListeners() {
+        // todo: TTSService!
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        wordView.destroy()
     }
 }

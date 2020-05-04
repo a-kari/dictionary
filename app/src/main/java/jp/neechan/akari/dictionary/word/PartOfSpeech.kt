@@ -14,7 +14,13 @@ enum class PartOfSpeech {
     PREPOSITION,
     CONJUNCTION,
     INTERJECTION,
-    UNKNOWN
+    UNKNOWN;
+
+    companion object {
+        fun valueOf(partOfSpeechString: String?): PartOfSpeech {
+            return values().firstOrNull { it.name.equals(partOfSpeechString, true) } ?: UNKNOWN
+        }
+    }
 }
 
 // todo: The extension should be in UI layer when I apply Clean Architecture.

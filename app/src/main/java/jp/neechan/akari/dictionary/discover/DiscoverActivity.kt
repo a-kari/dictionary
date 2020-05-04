@@ -63,7 +63,6 @@ class DiscoverActivity : BaseActivity(), WordsAdapter.WordActionListener {
     override fun onWordClicked(word: String) {
         val wordIntent = Intent(this, WordActivity::class.java)
         wordIntent.putExtra(WordActivity.EXTRA_WORD, word)
-        wordIntent.putExtra(WordActivity.EXTRA_ADD_TO_DICTIONARY_ENABLED, true)
         startActivity(wordIntent)
     }
 }
