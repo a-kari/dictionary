@@ -10,7 +10,14 @@ class WordDeserializer : JsonDeserializer<WordDTO> {
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): WordDTO {
         val wordJson = json.asJsonObject
         val word = wordJson.getAsJsonPrimitive("word").asString
-        val pronunciation = wordJson.getAsJsonObject("pronunciation")?.getAsJsonPrimitive("all")?.asString
+
+        val pronunciation = if (wordJson.get("pronunciation").isJsonObject) {
+            wordJson.getAsJsonObject("pronunciation")?.getAsJsonPrimitive("all")?.asString
+
+        } else {
+            wordJson.getAsJsonPrimitive("pronunciation")?.asString
+        }
+
         val syllables = wordJson.getAsJsonObject("syllables")?.getAsJsonArray("list")?.map { it.asString }
         val frequency = Frequency.valueOf(wordJson.getAsJsonPrimitive("frequency").asFloat)
 
