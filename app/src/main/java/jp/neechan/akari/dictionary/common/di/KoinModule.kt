@@ -8,6 +8,7 @@ import jp.neechan.akari.dictionary.discover.StringPageDeserializer
 import jp.neechan.akari.dictionary.discover.WordsApiService
 import jp.neechan.akari.dictionary.discover.WordsRemoteRepository
 import jp.neechan.akari.dictionary.word.*
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -48,10 +49,8 @@ object KoinModule {
 
         single { WordsRemoteRepository(get(), get()) }
 
-        single {
-            ViewModelFactory(
-                get()
-            )
-        }
+        single { ViewModelFactory(get(), get()) }
+
+        single { TextToSpeechService(androidApplication()) }
     }
 }

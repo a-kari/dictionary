@@ -44,11 +44,6 @@ class WordActivity : BaseActivity() {
     }
 
     private fun setupListeners() {
-        // todo: TTSService!
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        wordView.destroy()
+        wordView.setSpeakCallback { viewModel.speak() }
     }
 }
