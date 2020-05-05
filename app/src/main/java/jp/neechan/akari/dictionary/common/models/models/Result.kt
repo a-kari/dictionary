@@ -1,4 +1,4 @@
-package jp.neechan.akari.dictionary.common.models
+package jp.neechan.akari.dictionary.common.models.models
 
 import jp.neechan.akari.dictionary.R
 

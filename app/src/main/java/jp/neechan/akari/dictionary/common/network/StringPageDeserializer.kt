@@ -1,11 +1,11 @@
-package jp.neechan.akari.dictionary.discover
+package jp.neechan.akari.dictionary.common.network
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
+import jp.neechan.akari.dictionary.common.models.models.Page
 import java.lang.reflect.Type
 
-// todo: It's strange that I have created a non-generic deserializer for the generic type.
 class StringPageDeserializer : JsonDeserializer<Page<String>> {
 
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Page<String> {

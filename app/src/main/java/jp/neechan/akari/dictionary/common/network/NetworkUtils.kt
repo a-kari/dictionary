@@ -1,6 +1,6 @@
 package jp.neechan.akari.dictionary.common.network
 
-import jp.neechan.akari.dictionary.common.models.Result
+import jp.neechan.akari.dictionary.common.models.models.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

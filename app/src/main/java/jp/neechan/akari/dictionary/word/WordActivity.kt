@@ -6,7 +6,8 @@ import android.view.View.VISIBLE
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.common.models.Result
+import jp.neechan.akari.dictionary.common.models.models.Result
+import jp.neechan.akari.dictionary.common.models.models.Word
 import jp.neechan.akari.dictionary.common.utils.toast
 import jp.neechan.akari.dictionary.common.views.BaseActivity
 import kotlinx.android.synthetic.main.activity_word.*

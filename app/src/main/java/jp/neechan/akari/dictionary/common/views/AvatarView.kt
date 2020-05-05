@@ -1,4 +1,4 @@
-package jp.neechan.akari.dictionary.discover
+package jp.neechan.akari.dictionary.common.views
 
 import android.content.Context
 import android.graphics.Canvas

@@ -1,4 +1,4 @@
-package jp.neechan.akari.dictionary.word
+package jp.neechan.akari.dictionary.common.services
 
 import android.content.Context
 import android.speech.tts.TextToSpeech

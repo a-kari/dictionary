@@ -1,12 +1,15 @@
 package jp.neechan.akari.dictionary.discover
 
-import jp.neechan.akari.dictionary.common.models.Result
+import jp.neechan.akari.dictionary.common.models.mappers.WordMapper
+import jp.neechan.akari.dictionary.common.models.models.Page
+import jp.neechan.akari.dictionary.common.models.models.Result
+import jp.neechan.akari.dictionary.common.models.models.Word
 import jp.neechan.akari.dictionary.common.network.makeApiCall
-import jp.neechan.akari.dictionary.word.Word
-import jp.neechan.akari.dictionary.word.WordMapper
 
-class WordsRemoteRepository(private val wordsApiService: WordsApiService,
-                            private val wordMapper: WordMapper) {
+class WordsRemoteRepository(
+    private val wordsApiService: WordsApiService,
+    private val wordMapper: WordMapper
+) {
 
     companion object {
         private const val PARAMETER_PAGE = "page"
@@ -40,7 +43,7 @@ class WordsRemoteRepository(private val wordsApiService: WordsApiService,
     suspend fun loadWord(word: String): Result<Word> {
         return makeApiCall {
             val wordDto = wordsApiService.loadWord(word)
-            wordMapper.dtoToWord(wordDto)
+            wordMapper.toModel(wordDto)
         }
     }
 }

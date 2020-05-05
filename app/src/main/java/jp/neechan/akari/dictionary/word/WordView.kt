@@ -6,6 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import jp.neechan.akari.dictionary.R
+import jp.neechan.akari.dictionary.common.models.models.Definition
+import jp.neechan.akari.dictionary.common.models.models.Frequency
+import jp.neechan.akari.dictionary.common.models.models.PartOfSpeech
+import jp.neechan.akari.dictionary.common.models.models.Word
 import jp.neechan.akari.dictionary.common.utils.isValid
 import kotlinx.android.synthetic.main.view_word.view.*
 import kotlinx.android.synthetic.main.view_word_definition.view.*
@@ -67,7 +71,7 @@ class WordView : LinearLayout {
     }
 
     private fun setFrequency(frequency: Frequency) {
-        frequencyTv.setText(frequency.getStringResource())
+        frequencyTv.setText(frequency.stringResource)
     }
 
     private fun setDefinitions(partOfSpeechToDefinitionsMap: LinkedHashMap<PartOfSpeech, List<Definition>>?) {
@@ -88,7 +92,7 @@ class WordView : LinearLayout {
 
     private fun getPartOfSpeechView(partOfSpeech: PartOfSpeech): View {
         val partOfSpeechView = LayoutInflater.from(context).inflate(R.layout.view_word_part_of_speech, definitionsView, false)
-        partOfSpeechView.partOfSpeechTv.setText(partOfSpeech.getStringResource())
+        partOfSpeechView.partOfSpeechTv.setText(partOfSpeech.stringResource)
         return partOfSpeechView
     }
 

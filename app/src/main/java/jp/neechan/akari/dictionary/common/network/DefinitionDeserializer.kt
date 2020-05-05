@@ -1,16 +1,18 @@
-package jp.neechan.akari.dictionary.word
+package jp.neechan.akari.dictionary.common.network
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
+import jp.neechan.akari.dictionary.common.models.dto.DefinitionDto
+import jp.neechan.akari.dictionary.common.models.dto.PartOfSpeechDto
 import java.lang.reflect.Type
 
-class DefinitionDeserializer : JsonDeserializer<DefinitionDTO> {
+class DefinitionDeserializer : JsonDeserializer<DefinitionDto> {
 
-    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): DefinitionDTO {
+    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): DefinitionDto {
         val definitionJson = json.asJsonObject
         val definition = definitionJson.getAsJsonPrimitive("definition").asString
-        val partOfSpeech = PartOfSpeech.valueOf(definitionJson.getAsJsonPrimitive("partOfSpeech")?.asString)
+        val partOfSpeech = PartOfSpeechDto.valueOf(definitionJson.getAsJsonPrimitive("partOfSpeech")?.asString)
         val examples = definitionJson.getAsJsonArray("examples")?.map { it.asString }
         val antonyms = definitionJson.getAsJsonArray("antonyms")?.map { it.asString }
 
@@ -18,6 +20,12 @@ class DefinitionDeserializer : JsonDeserializer<DefinitionDTO> {
         definitionJson.getAsJsonArray("synonyms")?.forEach { synonyms.add(it.asString) }
         definitionJson.getAsJsonArray("similarTo")?.forEach { synonyms.add(it.asString) }
 
-        return DefinitionDTO(definition, partOfSpeech, examples, synonyms, antonyms)
+        return DefinitionDto(
+            definition,
+            partOfSpeech,
+            examples,
+            synonyms,
+            antonyms
+        )
     }
 }

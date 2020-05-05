@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.discover.DiscoverViewModel
 import jp.neechan.akari.dictionary.discover.WordsRemoteRepository
-import jp.neechan.akari.dictionary.word.TextToSpeechService
+import jp.neechan.akari.dictionary.common.services.TextToSpeechService
 import jp.neechan.akari.dictionary.word.WordViewModel
 
 class ViewModelFactory(

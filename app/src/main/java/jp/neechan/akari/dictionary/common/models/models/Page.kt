@@ -1,4 +1,4 @@
-package jp.neechan.akari.dictionary.discover
+package jp.neechan.akari.dictionary.common.models.models
 
 data class Page<T>(
     val content: List<T>,
