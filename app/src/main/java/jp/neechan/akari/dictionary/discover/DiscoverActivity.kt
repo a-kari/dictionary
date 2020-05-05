@@ -6,6 +6,8 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
+import jp.neechan.akari.dictionary.common.models.Result
+import jp.neechan.akari.dictionary.common.utils.toast
 import jp.neechan.akari.dictionary.common.views.BaseActivity
 import jp.neechan.akari.dictionary.word.WordActivity
 import kotlinx.android.synthetic.main.activity_discover.*
@@ -30,34 +32,31 @@ class DiscoverActivity : BaseActivity(), WordsAdapter.WordActionListener {
         wordsRv.addVerticalDividers()
     }
 
-    // todo: Need to handle errors here when I write a Result<T, Error> class.
     private fun setupObservers() {
-        viewModel.words.observe(this, Observer { page ->
-            when {
-                page == null -> showProgressBar()
-                page.content.isEmpty() -> showEmptyContent()
-                else -> showContent(page.content)
+        viewModel.words.observe(this, Observer { result ->
+            when (result) {
+                is Result.Success -> showContent(result.value.content)
+                is Result.Error -> showError(result)
             }
         })
     }
 
-    private fun showProgressBar() {
-        wordsRv.visibility = View.GONE
-        noWordsTv.visibility = View.GONE
-        progressBar.visibility = View.VISIBLE
-    }
-
-    private fun showEmptyContent() {
-        wordsRv.visibility = View.GONE
-        progressBar.visibility = View.GONE
-        noWordsTv.visibility = View.VISIBLE
-    }
-
     private fun showContent(words: List<String>) {
-        wordsAdapter.addWords(words)
-        progressBar.visibility = View.GONE
-        noWordsTv.visibility = View.GONE
-        wordsRv.visibility = View.VISIBLE
+        if (words.isNotEmpty()) {
+            wordsAdapter.addWords(words)
+            progressBar.visibility = View.GONE
+            noWordsTv.visibility = View.GONE
+            wordsRv.visibility = View.VISIBLE
+
+        } else {
+            wordsRv.visibility = View.GONE
+            progressBar.visibility = View.GONE
+            noWordsTv.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showError(error: Result.Error) {
+        toast(this, error.errorMessageResource)
     }
 
     override fun onWordClicked(word: String) {

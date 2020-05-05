@@ -1,5 +1,7 @@
 package jp.neechan.akari.dictionary.discover
 
+import jp.neechan.akari.dictionary.common.models.Result
+import jp.neechan.akari.dictionary.common.network.makeApiCall
 import jp.neechan.akari.dictionary.word.Word
 import jp.neechan.akari.dictionary.word.WordMapper
 
@@ -31,13 +33,14 @@ class WordsRemoteRepository(private val wordsApiService: WordsApiService,
         )
     }
 
-    // todo: Pagination
-    suspend fun loadWords(): Page<String> {
-        return wordsApiService.loadWords(defaultParameters)
+    suspend fun loadWords(): Result<Page<String>> {
+        return makeApiCall { wordsApiService.loadWords(defaultParameters) }
     }
 
-    suspend fun loadWord(word: String): Word {
-        val wordDto = wordsApiService.loadWord(word)
-        return wordMapper.dtoToWord(wordDto)
+    suspend fun loadWord(word: String): Result<Word> {
+        return makeApiCall {
+            val wordDto = wordsApiService.loadWord(word)
+            wordMapper.dtoToWord(wordDto)
+        }
     }
 }

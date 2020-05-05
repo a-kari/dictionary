@@ -13,10 +13,7 @@ class AuthorizationInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val authenticatedRequest = request.newBuilder()
-                                          .header(
-                                              AUTHORIZATION_TOKEN_KEY,
-                                              AUTHORIZATION_TOKEN_VALUE
-                                          )
+                                          .header(AUTHORIZATION_TOKEN_KEY, AUTHORIZATION_TOKEN_VALUE)
                                           .build()
         return chain.proceed(authenticatedRequest)
     }
