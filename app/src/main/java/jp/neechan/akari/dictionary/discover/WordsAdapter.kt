@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import jp.neechan.akari.dictionary.R
 import kotlinx.android.synthetic.main.item_word.view.*
 
-class WordsAdapter(
+open class WordsAdapter(
     private val wordActionListener: WordActionListener
 ) : RecyclerView.Adapter<WordsAdapter.WordHolder>() {
 
-    private val words = mutableListOf<String>()
+    protected val words = mutableListOf<String>()
 
     interface WordActionListener {
         fun onWordClicked(word: String)
@@ -33,7 +33,7 @@ class WordsAdapter(
         holder.bind(words[position])
     }
 
-    class WordHolder(
+    open class WordHolder(
         private val root: View,
         private val wordActionListener: WordActionListener
     ) : RecyclerView.ViewHolder(root) {

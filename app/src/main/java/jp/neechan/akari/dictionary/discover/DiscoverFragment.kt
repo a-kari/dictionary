@@ -2,25 +2,37 @@ package jp.neechan.akari.dictionary.discover
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.models.models.Result
 import jp.neechan.akari.dictionary.common.utils.addVerticalDividers
 import jp.neechan.akari.dictionary.common.utils.toast
-import jp.neechan.akari.dictionary.common.views.BaseActivity
+import jp.neechan.akari.dictionary.common.views.BaseFragment
 import jp.neechan.akari.dictionary.word.WordActivity
-import kotlinx.android.synthetic.main.activity_discover.*
+import kotlinx.android.synthetic.main.fragment_discover.*
 
-class DiscoverActivity : BaseActivity(), WordsAdapter.WordActionListener {
+class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
     private lateinit var viewModel: DiscoverViewModel
     private lateinit var wordsAdapter: WordsAdapter
 
+    companion object {
+        fun newInstance() = DiscoverFragment()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_discover)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_discover, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DiscoverViewModel::class.java)
 
         setupRecyclerView()
@@ -57,12 +69,32 @@ class DiscoverActivity : BaseActivity(), WordsAdapter.WordActionListener {
     }
 
     private fun showError(error: Result.Error) {
-        toast(this, error.errorMessageResource)
+        toast(requireContext(), error.errorMessageResource)
     }
 
     override fun onWordClicked(word: String) {
-        val wordIntent = Intent(this, WordActivity::class.java)
+        val wordIntent = Intent(requireContext(), WordActivity::class.java)
         wordIntent.putExtra(WordActivity.EXTRA_WORD, word)
+        wordIntent.putExtra(WordActivity.EXTRA_ADD_TO_DICTIONARY_ENABLED, true)
         startActivity(wordIntent)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_filter, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.filter) {
+            showFilterDialog()
+            true
+
+        } else {
+            return super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showFilterDialog() {
+        WordsFilterDialog.newInstance().show(childFragmentManager, WordsFilterDialog::class.simpleName)
     }
 }

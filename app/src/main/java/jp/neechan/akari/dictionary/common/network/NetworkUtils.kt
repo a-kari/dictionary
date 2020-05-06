@@ -12,6 +12,7 @@ suspend inline fun <T> makeApiCall(crossinline apiCall: suspend () -> T): Result
         try {
             Result.Success(apiCall())
 
+        // todo: Multiple catch blocks, just for refactoring.
         } catch (throwable: Throwable) {
             if (throwable is UnknownHostException) {
                 Result.ConnectionError(throwable)
