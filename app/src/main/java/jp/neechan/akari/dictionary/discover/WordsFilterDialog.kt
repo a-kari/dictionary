@@ -7,17 +7,22 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import jp.neechan.akari.dictionary.R
+import jp.neechan.akari.dictionary.common.models.dto.FrequencyDto
 import jp.neechan.akari.dictionary.common.models.models.Frequency
 import jp.neechan.akari.dictionary.common.models.models.PartOfSpeech
 import jp.neechan.akari.dictionary.common.utils.toast
 import jp.neechan.akari.dictionary.common.views.BaseDialog
 import kotlinx.android.synthetic.main.dialog_words_filter.*
+import org.koin.android.ext.android.inject
 
+// todo: The god class is just currently showing its logic. Ofc, it will be entirely changed later.
 class WordsFilterDialog : BaseDialog() {
 
     // todo: Move the mapping logic to ViewModel.
     private lateinit var frequencies: List<Pair<Frequency, String>>
     private lateinit var partsOfSpeech: List<Pair<PartOfSpeech?, String>>
+
+    private val wordsRemoteRepository: WordsRemoteRepository by inject()
 
     companion object {
         fun newInstance() = WordsFilterDialog()
@@ -72,9 +77,17 @@ class WordsFilterDialog : BaseDialog() {
 
     private fun setupFilterButton() {
         filterButton.setOnClickListener {
-            val frequency = frequencies[frequencySeekBar.progress].first
+            val frequency = FrequencyDto.valueOf(frequencies[frequencySeekBar.progress].first.name)
             val partOfSpeech = partsOfSpeech[partOfSpeechSpinner.selectedItemPosition].first
             toast(requireContext(), "Frequency: ${frequency}. Part of speech: $partOfSpeech")
+
+            val params = HashMap(WordsRemoteRepository.defaultLoadWordsParams)
+            params[WordsRemoteRepository.PARAMETER_FREQUENCY_MIN] = frequency.from.toString()
+            params[WordsRemoteRepository.PARAMETER_FREQUENCY_MAX] = frequency.to.toString()
+            params[WordsRemoteRepository.PARAMETER_PART_OF_SPEECH] = partOfSpeech.toString().toLowerCase()
+
+            wordsRemoteRepository.updateLoadWordsParams(params)
+
             dismiss()
         }
     }

@@ -26,11 +26,12 @@ class EditableWordsAdapter(private val wordActionListener: WordActionListener) :
     }
 
     override fun onBindViewHolder(holder: WordsAdapter.WordHolder, position: Int) {
-        (holder as WordHolder).bind(words[position], isEditMode)
+        getItem(position)?.let { (holder as WordHolder).bind(it, isEditMode) }
     }
 
     class WordHolder(private val root: View,
-                     private val wordActionListener: WordActionListener) : WordsAdapter.WordHolder(root, wordActionListener) {
+                     private val wordActionListener: WordActionListener
+    ) : WordsAdapter.WordHolder(root, wordActionListener) {
 
         fun bind(word: String, isEditMode: Boolean) {
             super.bind(word)

@@ -43,33 +43,37 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
         wordsAdapter = WordsAdapter(this)
         wordsRv.adapter = wordsAdapter
         wordsRv.addVerticalDividers()
+        wordsRv.setHasFixedSize(true)
     }
 
     private fun setupObservers() {
-        viewModel.words.observe(this, Observer { result ->
-            when (result) {
-                is Result.Success -> showContent(result.value.content)
-                is Result.Error -> showError(result)
+        viewModel.words.observe(viewLifecycleOwner, Observer { words ->
+            wordsAdapter.submitList(words)
+            showContent()
+        })
+
+        viewModel.wordsError.observe(viewLifecycleOwner, Observer { error ->
+            when (error) {
+                is Result.NotFoundError -> showEmptyContent()
+                is Result.Error -> showError(error.errorMessageResource)
             }
         })
     }
 
-    private fun showContent(words: List<String>) {
-        if (words.isNotEmpty()) {
-            wordsAdapter.addWords(words)
-            progressBar.visibility = View.GONE
-            noWordsTv.visibility = View.GONE
-            wordsRv.visibility = View.VISIBLE
-
-        } else {
-            wordsRv.visibility = View.GONE
-            progressBar.visibility = View.GONE
-            noWordsTv.visibility = View.VISIBLE
-        }
+    private fun showContent() {
+        progressBar.visibility = View.GONE
+        noWordsTv.visibility = View.GONE
+        wordsRv.visibility = View.VISIBLE
     }
 
-    private fun showError(error: Result.Error) {
-        toast(requireContext(), error.errorMessageResource)
+    private fun showEmptyContent() {
+        noWordsTv.visibility = View.VISIBLE
+        progressBar.visibility = View.GONE
+        wordsRv.visibility = View.GONE
+    }
+
+    private fun showError(errorMessageResource: Int) {
+        toast(requireContext(), errorMessageResource)
     }
 
     override fun onWordClicked(word: String) {

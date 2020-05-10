@@ -1,11 +1,25 @@
 package jp.neechan.akari.dictionary.discover
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 
 class DiscoverViewModel(private val wordsRemoteRepository: WordsRemoteRepository) : ViewModel() {
 
-    val words = liveData {
-        emit(wordsRemoteRepository.loadWords())
+    private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    val words by lazy {
+        wordsRemoteRepository.subscribeToWords(ioScope)
+    }
+
+    val wordsError by lazy {
+        wordsRemoteRepository.subscribeToWordsError()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        ioScope.cancel()
     }
 }

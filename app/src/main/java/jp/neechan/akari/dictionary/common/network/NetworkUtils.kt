@@ -15,10 +15,10 @@ suspend inline fun <T> makeApiCall(crossinline apiCall: suspend () -> T): Result
         // todo: Multiple catch blocks, just for refactoring.
         } catch (throwable: Throwable) {
             if (throwable is UnknownHostException) {
-                Result.ConnectionError(throwable)
+                Result.ConnectionError
 
             } else if (throwable is HttpException && throwable.code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                Result.NotFoundError(throwable)
+                Result.NotFoundError
 
             } else {
                 Result.Error(throwable)

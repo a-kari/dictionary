@@ -44,7 +44,7 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener{
     }
 
     private fun setupObservers() {
-        wordsAdapter.addWords(getSampleWordsString())
+//        wordsAdapter.addWords(getSampleWordsString())
     }
 
     private fun setupListeners() {
