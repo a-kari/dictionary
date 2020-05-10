@@ -12,17 +12,19 @@ suspend inline fun <T> makeApiCall(crossinline apiCall: suspend () -> T): Result
         try {
             Result.Success(apiCall())
 
-        // todo: Multiple catch blocks, just for refactoring.
-        } catch (throwable: Throwable) {
-            if (throwable is UnknownHostException) {
-                Result.ConnectionError
+        } catch (unknownHostException: UnknownHostException) {
+            Result.ConnectionError
 
-            } else if (throwable is HttpException && throwable.code() == HttpURLConnection.HTTP_NOT_FOUND) {
+        } catch (httpException: HttpException) {
+            if (httpException.code() == HttpURLConnection.HTTP_NOT_FOUND) {
                 Result.NotFoundError
 
             } else {
-                Result.Error(throwable)
+                Result.Error(httpException)
             }
+
+        } catch (throwable: Throwable) {
+            Result.Error(throwable)
         }
     }
 }
