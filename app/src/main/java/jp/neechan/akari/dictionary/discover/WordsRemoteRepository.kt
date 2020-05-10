@@ -66,7 +66,7 @@ class WordsRemoteRepository(private val wordsApiService: WordsApiService,
     suspend fun loadWord(word: String): Result<Word> {
         return makeApiCall {
             val wordDto = wordsApiService.loadWord(word)
-            wordMapper.toModel(wordDto)
+            wordMapper.mapToHigherLayer(wordDto)
         }
     }
 }

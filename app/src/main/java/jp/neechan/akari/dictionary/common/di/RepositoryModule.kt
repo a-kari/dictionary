@@ -13,7 +13,7 @@ object RepositoryModule : KoinModule {
         // Mappers
         single { FrequencyMapper() }
         single { PartOfSpeechMapper() }
-        single { DefinitionMapper() }
+        single { DefinitionMapper(get()) }
         single { WordMapper(get(), get(), get()) }
 
         // Repositories
