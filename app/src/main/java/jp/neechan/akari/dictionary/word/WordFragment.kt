@@ -46,8 +46,10 @@ class WordFragment : BaseFragment() {
 
         if (arguments != null) {
             viewModel = ViewModelProvider(this, viewModelFactory).get(WordViewModel::class.java)
-            word = arguments!!.getString(ARGUMENT_WORD).orEmpty()
-            addToDictionaryEnabled = arguments!!.getBoolean(ARGUMENT_ADD_TO_DICTIONARY_ENABLED)
+            requireArguments().let { arguments ->
+                word = arguments.getString(ARGUMENT_WORD).orEmpty()
+                addToDictionaryEnabled = arguments.getBoolean(ARGUMENT_ADD_TO_DICTIONARY_ENABLED)
+            }
 
             if (word.isValid()) {
                 setupObservers()
@@ -69,7 +71,7 @@ class WordFragment : BaseFragment() {
 
     private fun setupObservers() {
         viewModel.word = word
-        viewModel.wordLiveData.observe(this, Observer { result ->
+        viewModel.wordLiveData.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Result.Success -> showContent(result.value)
                 is Result.Error -> showError(result)
