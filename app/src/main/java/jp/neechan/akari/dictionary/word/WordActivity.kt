@@ -1,6 +1,7 @@
 package jp.neechan.akari.dictionary.word
 
 import android.os.Bundle
+import androidx.fragment.app.commit
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.views.BaseActivity
 import kotlinx.android.synthetic.main.activity_word.*
@@ -33,8 +34,8 @@ class WordActivity : BaseActivity() {
 
     private fun setupFragment() {
         wordFragment = WordFragment.newInstance(word, addToDictionaryEnabled)
-        supportFragmentManager.beginTransaction()
-                              .replace(R.id.content, wordFragment, WordFragment::class.simpleName)
-                              .commit()
+        supportFragmentManager.commit {
+            replace(R.id.content, wordFragment, WordFragment::class.simpleName)
+        }
     }
 }

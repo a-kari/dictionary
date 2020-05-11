@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.commit
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.models.models.Frequency
 import jp.neechan.akari.dictionary.common.models.models.Word
@@ -58,9 +59,9 @@ class SearchWordActivity : BaseActivity() {
     private fun showContent(word: Word) {
         if (!::wordFragment.isInitialized) {
             wordFragment = WordFragment.newInstance(word.word, true)
-            supportFragmentManager.beginTransaction()
-                                  .replace(R.id.content, wordFragment, wordFragment.javaClass.simpleName)
-                                  .commit()
+            supportFragmentManager.commit {
+                replace(R.id.content, wordFragment, wordFragment.javaClass.simpleName)
+            }
         }
 
         hintTv.visibility = GONE

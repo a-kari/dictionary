@@ -2,6 +2,7 @@ package jp.neechan.akari.dictionary
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import jp.neechan.akari.dictionary.common.views.BaseActivity
 import jp.neechan.akari.dictionary.discover.DiscoverFragment
 import jp.neechan.akari.dictionary.home.HomeFragment
@@ -37,8 +38,6 @@ class MainActivity : BaseActivity() {
             else -> HomeFragment.newInstance()
         }
 
-        supportFragmentManager.beginTransaction()
-                              .replace(R.id.fragmentContainer, fragment, tag)
-                              .commit()
+        supportFragmentManager.commit { replace(R.id.fragmentContainer, fragment, tag) }
     }
 }
