@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import jp.neechan.akari.dictionary.common.models.models.Result
-import jp.neechan.akari.dictionary.discover.WordsRemoteRepository.Companion.PARAMETER_PAGE
-import jp.neechan.akari.dictionary.discover.WordsRemoteRepository.Companion.PARAMETER_PAGE_DEFAULT_VALUE
+import jp.neechan.akari.dictionary.discover.filter.WordsFilterParams
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -15,14 +14,14 @@ import java.net.UnknownHostException
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class WordsDataSource(private val wordsApiService: WordsApiService,
-                      private val loadWordsParams: Map<String, String>,
+                      private val wordsFilterParams: WordsFilterParams,
                       private val coroutineScope: CoroutineScope) : PageKeyedDataSource<Int, String>() {
 
     private val _errorLiveData = MutableLiveData<Result.Error>()
     val errorLiveData: LiveData<Result.Error> = _errorLiveData
 
     companion object {
-        private const val FIRST_PAGE = PARAMETER_PAGE_DEFAULT_VALUE
+        private const val FIRST_PAGE = WordsFilterParams.DEFAULT_PAGE
     }
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, String>) {
@@ -45,10 +44,9 @@ class WordsDataSource(private val wordsApiService: WordsApiService,
 
     private fun loadWords(page: Int, callback: (words: List<String>, previousPage: Int?, nextPage: Int?) -> Unit) {
         coroutineScope.launch(coroutineExceptionHandler) {
-            val params = HashMap(loadWordsParams)
-            params[PARAMETER_PAGE] = page.toString()
+            wordsFilterParams.page = page
 
-            val wordsPage = wordsApiService.loadWords(params)
+            val wordsPage = wordsApiService.loadWords(wordsFilterParams.toMap())
             val words = wordsPage.content
             val previousPage = if (wordsPage.pageNumber > FIRST_PAGE) wordsPage.pageNumber - 1 else null
             val nextPage = if (wordsPage.hasNextPage) wordsPage.pageNumber + 1 else null

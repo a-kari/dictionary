@@ -46,7 +46,6 @@
     <string name="part_of_speech_adverb">Adverb</string>
     <string name="part_of_speech_preposition">Preposition</string>
     <string name="part_of_speech_conjunction">Conjunction</string>
-    <string name="part_of_speech_interjection">Interjection</string>
 
     <!-- WordFragment -->
     <string name="word_syllables">Syllables:</string>

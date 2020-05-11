@@ -9,7 +9,7 @@ import retrofit2.http.QueryMap
 interface WordsApiService {
 
     @GET("words/")
-    suspend fun loadWords(@QueryMap parameters: Map<String, String>): Page<String>
+    suspend fun loadWords(@QueryMap params: Map<String, String>): Page<String>
 
     @GET("words/{word}")
     suspend fun loadWord(@Path("word") word: String): WordDto

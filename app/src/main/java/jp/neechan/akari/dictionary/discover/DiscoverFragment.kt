@@ -10,6 +10,7 @@ import jp.neechan.akari.dictionary.common.models.models.Result
 import jp.neechan.akari.dictionary.common.utils.addVerticalDividers
 import jp.neechan.akari.dictionary.common.utils.toast
 import jp.neechan.akari.dictionary.common.views.BaseFragment
+import jp.neechan.akari.dictionary.discover.filter.WordsFilterDialog
 import jp.neechan.akari.dictionary.word.WordActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
 

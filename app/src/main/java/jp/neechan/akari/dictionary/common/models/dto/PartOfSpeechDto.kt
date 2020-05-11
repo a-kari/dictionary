@@ -9,7 +9,6 @@ enum class PartOfSpeechDto {
     ADVERB,
     PREPOSITION,
     CONJUNCTION,
-    INTERJECTION,
     UNKNOWN;
 
     companion object {
