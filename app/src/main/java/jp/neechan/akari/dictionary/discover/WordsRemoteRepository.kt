@@ -40,9 +40,9 @@ class WordsRemoteRepository(private val wordsApiService: WordsApiService,
         return LivePagedListBuilder(wordsDataSourceFactory, config).build()
     }
 
-    fun subscribeToWordsError(): LiveData<Result.Error> {
+    fun subscribeToWordsResult(): LiveData<Result<List<String>>> {
         return Transformations.switchMap(wordsDataSourceFactory.wordsDataSource) { wordsDataSource ->
-            wordsDataSource.errorLiveData
+            wordsDataSource.resultLiveData
         }
     }
 

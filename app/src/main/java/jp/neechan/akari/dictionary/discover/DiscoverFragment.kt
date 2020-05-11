@@ -3,6 +3,8 @@ package jp.neechan.akari.dictionary.discover
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
@@ -45,32 +47,44 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
         wordsRv.adapter = wordsAdapter
         wordsRv.addVerticalDividers()
         wordsRv.setHasFixedSize(true)
+
+        // ItemAnimator is removed, because the animation after filtering takes too much time,
+        // so a user sees: 1. the end of loading, 2. old items, 3. new items.
+        // It wasn't used anywhere else except for this.
+        wordsRv.itemAnimator = null
     }
 
     private fun setupObservers() {
         viewModel.words.observe(viewLifecycleOwner, Observer { words ->
             wordsAdapter.submitList(words)
-            showContent()
         })
 
-        viewModel.wordsError.observe(viewLifecycleOwner, Observer { error ->
-            when (error) {
+        viewModel.wordsStatus.observe(viewLifecycleOwner, Observer { status ->
+            when (status) {
+                is Result.Loading -> showProgressBar()
+                is Result.Success -> showContent()
                 is Result.NotFoundError -> showEmptyContent()
-                is Result.Error -> showError(error.errorMessageResource)
+                is Result.Error -> showError(status.errorMessageResource)
             }
         })
     }
 
+    private fun showProgressBar() {
+        noWordsTv.visibility = GONE
+        wordsRv.visibility = GONE
+        progressBar.visibility = VISIBLE
+    }
+
     private fun showContent() {
-        progressBar.visibility = View.GONE
-        noWordsTv.visibility = View.GONE
-        wordsRv.visibility = View.VISIBLE
+        progressBar.visibility = GONE
+        noWordsTv.visibility = GONE
+        wordsRv.visibility = VISIBLE
     }
 
     private fun showEmptyContent() {
-        noWordsTv.visibility = View.VISIBLE
-        progressBar.visibility = View.GONE
-        wordsRv.visibility = View.GONE
+        noWordsTv.visibility = VISIBLE
+        progressBar.visibility = GONE
+        wordsRv.visibility = GONE
     }
 
     private fun showError(errorMessageResource: Int) {

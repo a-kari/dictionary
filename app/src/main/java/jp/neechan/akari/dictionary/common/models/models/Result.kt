@@ -12,4 +12,6 @@ sealed class Result<out T> {
     object ConnectionError : Error(errorMessageResource = R.string.network_connection_error)
 
     object NotFoundError : Error(errorMessageResource = R.string.network_not_found_error)
+
+    object Loading : Result<Nothing>()
 }

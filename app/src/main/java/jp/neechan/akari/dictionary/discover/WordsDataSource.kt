@@ -17,14 +17,15 @@ class WordsDataSource(private val wordsApiService: WordsApiService,
                       private val wordsFilterParams: WordsFilterParams,
                       private val coroutineScope: CoroutineScope) : PageKeyedDataSource<Int, String>() {
 
-    private val _errorLiveData = MutableLiveData<Result.Error>()
-    val errorLiveData: LiveData<Result.Error> = _errorLiveData
+    private val _resultLiveData = MutableLiveData<Result<List<String>>>()
+    val resultLiveData: LiveData<Result<List<String>>> = _resultLiveData
 
     companion object {
         private const val FIRST_PAGE = WordsFilterParams.DEFAULT_PAGE
     }
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, String>) {
+        _resultLiveData.postValue(Result.Loading)
         loadWords(FIRST_PAGE) { words, previousPage, nextPage ->
             callback.onResult(words, null, nextPage)
         }
@@ -52,15 +53,18 @@ class WordsDataSource(private val wordsApiService: WordsApiService,
             val nextPage = if (wordsPage.hasNextPage) wordsPage.pageNumber + 1 else null
             callback(words, previousPage, nextPage)
 
-            if (words.isEmpty()) {
-                _errorLiveData.postValue(Result.NotFoundError)
+            if (words.isNotEmpty()) {
+                _resultLiveData.postValue(Result.Success(words))
+
+            } else {
+                _resultLiveData.postValue(Result.NotFoundError)
             }
         }
     }
 
     // todo: Somehow merge this with NetworkUtils.
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        _errorLiveData.postValue(
+        _resultLiveData.postValue(
             if (throwable is UnknownHostException) {
                 Result.ConnectionError
 

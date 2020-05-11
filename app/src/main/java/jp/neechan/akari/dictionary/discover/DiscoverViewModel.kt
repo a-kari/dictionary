@@ -14,8 +14,8 @@ class DiscoverViewModel(private val wordsRemoteRepository: WordsRemoteRepository
         wordsRemoteRepository.subscribeToWords(ioScope)
     }
 
-    val wordsError by lazy {
-        wordsRemoteRepository.subscribeToWordsError()
+    val wordsStatus by lazy {
+        wordsRemoteRepository.subscribeToWordsResult()
     }
 
     override fun onCleared() {
