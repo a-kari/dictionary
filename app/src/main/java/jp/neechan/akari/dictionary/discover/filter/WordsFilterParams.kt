@@ -10,9 +10,8 @@ data class WordsFilterParams(var page: Int = DEFAULT_PAGE,
     companion object {
         const val DEFAULT_PAGE = 1
         const val DEFAULT_PAGE_SIZE = 100
-
-        private val DEFAULT_PART_OF_SPEECH = PartOfSpeechDto.NOUN
-        private val DEFAULT_FREQUENCY = FrequencyDto.FREQUENT
+        val DEFAULT_PART_OF_SPEECH = PartOfSpeechDto.NOUN
+        val DEFAULT_FREQUENCY = FrequencyDto.FREQUENT
 
         private const val DEFAULT_LETTER_PATTERN = "^[A-Za-z]{1,}\$"
         private const val DEFAULT_HAS_DETAILS = "definitions,examples"

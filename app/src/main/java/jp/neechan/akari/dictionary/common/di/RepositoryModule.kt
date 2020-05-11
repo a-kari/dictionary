@@ -17,6 +17,6 @@ object RepositoryModule : KoinModule {
         single { WordMapper(get(), get(), get()) }
 
         // Repositories
-        single { WordsRemoteRepository(get(), get(), get(), get()) }
+        single { WordsRemoteRepository(get(), get(), get(), get(), get()) }
     }
 }

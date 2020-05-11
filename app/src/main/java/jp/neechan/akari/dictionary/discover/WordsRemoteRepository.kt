@@ -13,17 +13,17 @@ import jp.neechan.akari.dictionary.common.models.models.Result
 import jp.neechan.akari.dictionary.common.models.models.Word
 import jp.neechan.akari.dictionary.common.network.makeApiCall
 import jp.neechan.akari.dictionary.discover.filter.WordsFilterParams
+import jp.neechan.akari.dictionary.discover.filter.WordsFilterPreferencesService
 import kotlinx.coroutines.CoroutineScope
 
 class WordsRemoteRepository(private val wordsApiService: WordsApiService,
+                            private val wordsPreferencesService: WordsFilterPreferencesService,
                             private val wordMapper: WordMapper,
                             private val frequencyMapper: FrequencyMapper,
                             private val partOfSpeechMapper: PartOfSpeechMapper) {
 
     private lateinit var wordsDataSourceFactory: WordsDataSourceFactory
-
-    // todo: Get from user preferences.
-    private val wordsFilterParams = WordsFilterParams()
+    private val wordsFilterParams = wordsPreferencesService.loadWordsFilterParams()
 
     val wordsFilterFrequency: Frequency
         get() = frequencyMapper.mapToHigherLayer(wordsFilterParams.frequency)
@@ -46,12 +46,18 @@ class WordsRemoteRepository(private val wordsApiService: WordsApiService,
         }
     }
 
-    // todo: Save filter params to user preferences.
     fun updateWordsFilterParams(frequency: Frequency, partOfSpeech: PartOfSpeech) {
-        wordsFilterParams.partOfSpeech = partOfSpeechMapper.mapToLowerLayer(partOfSpeech)
-        wordsFilterParams.frequency = frequencyMapper.mapToLowerLayer(frequency)
+        val partOfSpeechDto = partOfSpeechMapper.mapToLowerLayer(partOfSpeech)
+        val frequencyDto = frequencyMapper.mapToLowerLayer(frequency)
 
-        wordsDataSourceFactory.setWordsFilterParams(wordsFilterParams)
+        // Update only if the params were actually changed.
+        if (wordsFilterParams.partOfSpeech != partOfSpeechDto || wordsFilterParams.frequency != frequencyDto) {
+            wordsFilterParams.partOfSpeech = partOfSpeechDto
+            wordsFilterParams.frequency = frequencyDto
+
+            wordsDataSourceFactory.setWordsFilterParams(wordsFilterParams)
+            wordsPreferencesService.saveWordsFilterParams(wordsFilterParams)
+        }
     }
 
     suspend fun loadWord(word: String): Result<Word> {
