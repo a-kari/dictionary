@@ -1,7 +1,6 @@
 package jp.neechan.akari.dictionary.discover.filter
 
 import androidx.lifecycle.ViewModel
-import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.models.models.Frequency
 import jp.neechan.akari.dictionary.common.models.models.PartOfSpeech
 import jp.neechan.akari.dictionary.discover.WordsRemoteRepository
@@ -10,7 +9,7 @@ class WordsFilterViewModel(private val wordsRemoteRepository: WordsRemoteReposit
 
     private val frequencies = Frequency.values()
     private val partsOfSpeech = arrayOf(
-        null, // PartOfSpeech.ALL. I.e. don't filter by part of speech.
+        PartOfSpeech.ALL,
         PartOfSpeech.NOUN,
         PartOfSpeech.PRONOUN,
         PartOfSpeech.ADJECTIVE,
@@ -21,7 +20,7 @@ class WordsFilterViewModel(private val wordsRemoteRepository: WordsRemoteReposit
     )
 
     val frequencyStrings = frequencies.map { it.stringResource }
-    val partOfSpeechStrings = partsOfSpeech.map { it?.stringResource ?: R.string.part_of_speech_all }
+    val partOfSpeechStrings = partsOfSpeech.map { it.stringResource }
 
     val initialFrequencyIndex = frequencies.indexOf(wordsRemoteRepository.wordsFilterFrequency)
     val initialPartOfSpeechIndex = partsOfSpeech.indexOf(wordsRemoteRepository.wordsFilterPartOfSpeech)

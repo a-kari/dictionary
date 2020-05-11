@@ -28,8 +28,8 @@ class WordsRemoteRepository(private val wordsApiService: WordsApiService,
     val wordsFilterFrequency: Frequency
         get() = frequencyMapper.mapToHigherLayer(wordsFilterParams.frequency)
 
-    val wordsFilterPartOfSpeech: PartOfSpeech?
-        get() = wordsFilterParams.partOfSpeech?.let { partOfSpeechMapper.mapToHigherLayer(it) }
+    val wordsFilterPartOfSpeech: PartOfSpeech
+        get() = partOfSpeechMapper.mapToHigherLayer(wordsFilterParams.partOfSpeech)
 
     fun subscribeToWords(coroutineScope: CoroutineScope): LiveData<PagedList<String>> {
         wordsDataSourceFactory = WordsDataSourceFactory(wordsApiService, wordsFilterParams, coroutineScope)
@@ -47,8 +47,8 @@ class WordsRemoteRepository(private val wordsApiService: WordsApiService,
     }
 
     // todo: Save filter params to user preferences.
-    fun updateWordsFilterParams(frequency: Frequency, partOfSpeech: PartOfSpeech?) {
-        wordsFilterParams.partOfSpeech = partOfSpeech?.let { partOfSpeechMapper.mapToLowerLayer(it) }
+    fun updateWordsFilterParams(frequency: Frequency, partOfSpeech: PartOfSpeech) {
+        wordsFilterParams.partOfSpeech = partOfSpeechMapper.mapToLowerLayer(partOfSpeech)
         wordsFilterParams.frequency = frequencyMapper.mapToLowerLayer(frequency)
 
         wordsDataSourceFactory.setWordsFilterParams(wordsFilterParams)

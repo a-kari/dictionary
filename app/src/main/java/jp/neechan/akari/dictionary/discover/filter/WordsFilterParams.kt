@@ -4,7 +4,7 @@ import jp.neechan.akari.dictionary.common.models.dto.FrequencyDto
 import jp.neechan.akari.dictionary.common.models.dto.PartOfSpeechDto
 
 data class WordsFilterParams(var page: Int = DEFAULT_PAGE,
-                             var partOfSpeech: PartOfSpeechDto? = DEFAULT_PART_OF_SPEECH,
+                             var partOfSpeech: PartOfSpeechDto = DEFAULT_PART_OF_SPEECH,
                              var frequency: FrequencyDto = DEFAULT_FREQUENCY) {
 
     companion object {
@@ -19,9 +19,17 @@ data class WordsFilterParams(var page: Int = DEFAULT_PAGE,
     }
 
     fun toMap(): Map<String, String> {
+        // The backend does not receive "all" part of speech, but an empty string.
+        val partOfSpeech = if (partOfSpeech != PartOfSpeechDto.ALL) {
+            partOfSpeech.name.toLowerCase()
+
+        } else {
+            ""
+        }
+
         return mapOf(
             "page" to page.toString(),
-            "partOfSpeech" to partOfSpeech?.name?.toLowerCase().orEmpty(),
+            "partOfSpeech" to partOfSpeech,
             "frequencyMin" to frequency.from.toString(),
             "frequencyMax" to frequency.to.toString(),
             "letterPattern" to DEFAULT_LETTER_PATTERN,

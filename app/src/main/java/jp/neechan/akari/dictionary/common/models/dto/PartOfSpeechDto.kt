@@ -9,7 +9,8 @@ enum class PartOfSpeechDto {
     ADVERB,
     PREPOSITION,
     CONJUNCTION,
-    UNKNOWN;
+    UNKNOWN,
+    ALL;
 
     companion object {
         fun valueOf(partOfSpeechString: String?): PartOfSpeechDto {

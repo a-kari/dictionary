@@ -11,5 +11,6 @@ enum class PartOfSpeech(val stringResource: Int) {
     ADVERB(R.string.part_of_speech_adverb),
     PREPOSITION(R.string.part_of_speech_preposition),
     CONJUNCTION(R.string.part_of_speech_conjunction),
-    UNKNOWN(R.string.part_of_speech_unknown)
+    UNKNOWN(R.string.part_of_speech_unknown),
+    ALL(R.string.part_of_speech_all)
 }
