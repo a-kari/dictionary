@@ -2,46 +2,56 @@ package jp.neechan.akari.dictionary.common.services
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
-import android.speech.tts.Voice
+import androidx.annotation.StringRes
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.utils.toast
+import kotlinx.coroutines.delay
 import java.util.*
 
 class TextToSpeechService(private val context: Context) : TextToSpeech.OnInitListener {
 
-    // todo: Load locale & preferred voice from user preferences.
     private val tts = TextToSpeech(context, this)
-    private val locale = Locale.US
 
-    private lateinit var localeVoices: List<Voice>
+    @Volatile
+    private var isTtsInitialized = false
+
+    var preferredLocale = Locale(DEFAULT_LANGUAGE, DEFAULT_COUNTRY)
+        private set
+
+    var preferredVoiceName: String? = null
+        private set
 
     companion object {
-        private val chooseVoiceCriteria = setOf("#female")
+        const val DEFAULT_LANGUAGE = "en"
+        const val DEFAULT_COUNTRY = "gb"
     }
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
-            tts.language = locale
+            tts.language = preferredLocale
             maybeChangeVoice()
+            isTtsInitialized = true
         }
     }
 
+    /** Maybe change TTS voice to: a) a voice preferred by user; b) the most quality one. */
     private fun maybeChangeVoice() {
         // Although voices are available since Lollipop, some Lollipop devices
         // still don't support them: https://issuetracker.google.com/issues/37012397
-        localeVoices = try {
-            tts.voices.toList().filter { it.locale == locale }
-        } catch (t: Throwable) {
-            emptyList()
-        }
+        val preferredVoice = try {
+            if (preferredVoiceName != null) {
+                tts.voices.firstOrNull { it.locale == preferredLocale && it.name == preferredVoiceName }
 
-        val preferredVoice = localeVoices.firstOrNull { voice ->
-            chooseVoiceCriteria.all { criteria ->
-                voice.name.contains(criteria, true)
+            } else {
+                tts.voices.filter { it.locale == preferredLocale }.maxBy { it.quality }
             }
+
+        } catch (t: Throwable) {
+            null
         }
 
         if (preferredVoice != null) {
+            preferredVoiceName = preferredVoice.name
             tts.voice = preferredVoice
         }
     }
@@ -53,30 +63,38 @@ class TextToSpeechService(private val context: Context) : TextToSpeech.OnInitLis
         }
     }
 
-    fun testSpeak() {
-        speak(context.getString(R.string.tts_service_test_phrase))
+    fun speak(@StringRes textResource: Int) {
+        speak(context.getString(textResource))
     }
 
     fun stopSpeaking() {
         tts.stop()
     }
 
-    fun loadSelectedLocale(): Locale {
-        return locale
+    suspend fun loadVoiceNames(): List<String> {
+        return doAfterTtsInitialization {
+            try {
+                tts.voices.filter { it.locale == preferredLocale }.map { it.name }
+
+            } catch (t: Throwable) {
+                emptyList()
+            }
+        }
     }
 
-    // todo: Suspend until TTS is initialized.
-    fun loadVoiceNames(): List<String> {
-        return localeVoices.map { it.name }
+    fun selectLocale(locale: Locale) {
+        preferredLocale = locale
+        tts.language = preferredLocale
+
+        preferredVoiceName = null
+        maybeChangeVoice()
     }
 
-    fun loadSelectedVoiceName(): String? {
-        return tts.voice.name
-    }
+    fun selectVoice(voiceName: String) {
+        preferredVoiceName = voiceName
 
-    fun selectVoice(name: String) {
         val voice = try {
-            tts.voices.firstOrNull { it.name == name }
+            tts.voices.firstOrNull { it.name == voiceName }
 
         } catch (t: Throwable) {
             null
@@ -85,5 +103,12 @@ class TextToSpeechService(private val context: Context) : TextToSpeech.OnInitLis
         if (voice != null) {
             tts.voice = voice
         }
+    }
+
+    private suspend inline fun <T> doAfterTtsInitialization(block: () -> T): T {
+        while (!isTtsInitialized) {
+            delay(1)
+        }
+        return block()
     }
 }

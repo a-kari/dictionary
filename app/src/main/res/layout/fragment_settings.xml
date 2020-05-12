@@ -13,24 +13,10 @@
         android:text="@string/settings_pronunciation" />
 
     <RadioGroup
+        android:id="@+id/pronunciationsRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_padding_small">
-
-        <RadioButton
-            android:id="@+id/pronunciationUsButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_pronunciation_us"
-            tools:checked="true" />
-
-        <RadioButton
-            android:id="@+id/pronunciationUkButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_pronunciation_uk" />
-
-    </RadioGroup>
+        android:layout_marginTop="@dimen/default_padding_small" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,7 +24,7 @@
         android:layout_marginTop="@dimen/default_padding"
         android:text="@string/settings_voice" />
 
-    <Spinner
+    <jp.neechan.akari.dictionary.common.views.ReselectableSpinner
         android:id="@+id/voicesSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

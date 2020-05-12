@@ -1,23 +1,26 @@
 package jp.neechan.akari.dictionary.settings
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import androidx.annotation.IdRes
+import androidx.core.view.children
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.common.services.TextToSpeechService
 import jp.neechan.akari.dictionary.common.views.BaseFragment
 import kotlinx.android.synthetic.main.fragment_settings.*
-import org.koin.android.ext.android.inject
-import java.util.*
 
 class SettingsFragment : BaseFragment() {
 
-    // todo: Communicate with the service via ViewModel.
-    private val ttsService: TextToSpeechService by inject()
+    private lateinit var viewModel: SettingsViewModel
+
+    private lateinit var voicesAdapter: ArrayAdapter<String>
 
     companion object {
         fun newInstance() = SettingsFragment()
@@ -29,47 +32,67 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Handler().postDelayed({
-            setupObservers()
-            setupListeners()
-        }, 1000)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SettingsViewModel::class.java)
+
+        setupVoicesSpinner()
+        setupObservers()
+        setupListeners()
     }
 
-    // todo: Get selected values from user preferences.
+    private fun setupVoicesSpinner() {
+        voicesAdapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            mutableListOf()
+        )
+        voicesSpinner.adapter = voicesAdapter
+    }
+
     private fun setupObservers() {
-        val selectedLocale = ttsService.loadSelectedLocale()
-        val voices = ttsService.loadVoiceNames()
-        val selectedVoice = ttsService.loadSelectedVoiceName()
+        createPronunciationRadioButtons(viewModel.pronunciationStrings)
+        pronunciationsRadioGroup.checkPosition(viewModel.preferredPronunciationIndex)
 
-        if (selectedLocale == Locale.UK) {
-            pronunciationUkButton.isChecked = true
+        viewModel.voicesLiveData.observe(viewLifecycleOwner, Observer { voices ->
+            if (voices.isNotEmpty()) {
+                voicesAdapter.clear()
+                voicesAdapter.addAll(voices)
+                voicesSpinner.setSelection(viewModel.preferredVoiceIndex)
+                voicesSpinner.isEnabled = true
 
-        } else {
-            pronunciationUsButton.isChecked = true
-        }
-
-        if (voices.isNotEmpty()) {
-            voicesSpinner.adapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                voices
-            )
-            voicesSpinner.isEnabled = true
-            voicesSpinner.setSelection(voices.indexOf(selectedVoice))
-
-        } else {
-            voicesSpinner.isEnabled = false
-        }
+            } else {
+                voicesSpinner.isEnabled = false
+            }
+        })
     }
 
     private fun setupListeners() {
+        pronunciationsRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+            viewModel.selectPronunciation(pronunciationsRadioGroup.getCheckedPosition(checkedId))
+        }
+
         voicesSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                ttsService.selectVoice(voicesSpinner.selectedItem as String)
-                ttsService.testSpeak()
+                viewModel.selectVoice(position)
+                viewModel.testSpeak()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+    }
+
+    private fun createPronunciationRadioButtons(pronunciations: List<Int>) {
+        pronunciations.forEach { pronunciation ->
+            val radioButton = RadioButton(requireContext())
+            radioButton.setText(pronunciation)
+            pronunciationsRadioGroup.addView(radioButton)
+        }
+    }
+
+    private fun RadioGroup.checkPosition(position: Int) {
+        check(getChildAt(position).id)
+    }
+
+    private fun RadioGroup.getCheckedPosition(@IdRes checkedId: Int): Int {
+        return children.indexOfFirst { it.id == checkedId }
     }
 }
