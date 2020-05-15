@@ -63,10 +63,6 @@
 
     <!-- SettingsFragment -->
     <string name="settings_pronunciation">Select a pronunciation:</string>
-    <string name="settings_pronunciation_uk">United Kingdom</string>
-    <string name="settings_pronunciation_us">United States</string>
-    <string name="settings_pronunciation_india">India</string>
-    <string name="settings_pronunciation_australia">Australia</string>
     <string name="settings_voice">Select a voice:</string>
     <string name="settings_voice_test_phrase">London is the capital of Great Britain.</string>
 

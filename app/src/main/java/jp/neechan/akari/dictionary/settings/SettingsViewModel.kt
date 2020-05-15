@@ -1,33 +1,23 @@
 package jp.neechan.akari.dictionary.settings
 
-import androidx.lifecycle.LiveData
+import android.speech.tts.Voice
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.services.TextToSpeechService
 import kotlinx.coroutines.launch
-import java.util.*
 
 class SettingsViewModel(private val ttsService: TextToSpeechService) : ViewModel() {
 
-    private val pronunciations = listOf(
-        Locale.UK,
-        Locale.US,
-        Locale("en", "in"),
-        Locale("en", "au")
-    )
-    val pronunciationStrings = listOf(
-        R.string.settings_pronunciation_uk,
-        R.string.settings_pronunciation_us,
-        R.string.settings_pronunciation_india,
-        R.string.settings_pronunciation_australia
-    )
+    private val pronunciations = ttsService.availableLocales
+    val pronunciationNames = pronunciations.map { it.displayCountry }
     var preferredPronunciationIndex = pronunciations.indexOf(ttsService.preferredLocale)
         private set
 
-    private val _voicesLiveData = MutableLiveData<List<String>>()
-    val voicesLiveData: LiveData<List<String>> = _voicesLiveData
+    private val voicesLiveData = MutableLiveData<List<Voice>>()
+    val voiceNamesLiveData = Transformations.map(voicesLiveData) { voices -> voices.map { it.name } }
     var preferredVoiceIndex = -1
         private set
 
@@ -37,21 +27,21 @@ class SettingsViewModel(private val ttsService: TextToSpeechService) : ViewModel
 
     private fun refreshVoices() {
         viewModelScope.launch {
-            val voices = ttsService.loadVoiceNames()
-            _voicesLiveData.postValue(voices)
-            preferredVoiceIndex = voices.indexOf(ttsService.preferredVoiceName)
+            val voices = ttsService.loadLocaleVoices()
+            voicesLiveData.postValue(voices)
+            preferredVoiceIndex = voices.indexOf(ttsService.preferredVoice)
         }
     }
 
     fun selectPronunciation(pronunciationIndex: Int) {
         preferredPronunciationIndex = pronunciationIndex
-        ttsService.selectLocale(pronunciations[pronunciationIndex])
+        ttsService.setPreferredLocale(pronunciations[pronunciationIndex])
         refreshVoices()
     }
 
     fun selectVoice(voiceIndex: Int) {
         preferredVoiceIndex = voiceIndex
-        ttsService.selectVoice(_voicesLiveData.value!![voiceIndex])
+        ttsService.setPreferredVoice(voicesLiveData.value!![voiceIndex])
     }
 
     fun testSpeak() {

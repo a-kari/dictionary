@@ -49,10 +49,10 @@ class SettingsFragment : BaseFragment() {
     }
 
     private fun setupObservers() {
-        createPronunciationRadioButtons(viewModel.pronunciationStrings)
+        createPronunciationRadioButtons(viewModel.pronunciationNames)
         pronunciationsRadioGroup.checkPosition(viewModel.preferredPronunciationIndex)
 
-        viewModel.voicesLiveData.observe(viewLifecycleOwner, Observer { voices ->
+        viewModel.voiceNamesLiveData.observe(viewLifecycleOwner, Observer { voices ->
             if (voices.isNotEmpty()) {
                 voicesAdapter.clear()
                 voicesAdapter.addAll(voices)
@@ -80,10 +80,10 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
-    private fun createPronunciationRadioButtons(pronunciations: List<Int>) {
+    private fun createPronunciationRadioButtons(pronunciations: List<String>) {
         pronunciations.forEach { pronunciation ->
             val radioButton = RadioButton(requireContext())
-            radioButton.setText(pronunciation)
+            radioButton.text = pronunciation
             pronunciationsRadioGroup.addView(radioButton)
         }
     }

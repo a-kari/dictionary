@@ -1,59 +1,83 @@
 package jp.neechan.akari.dictionary.common.services
 
 import android.content.Context
+import android.os.Build
 import android.speech.tts.TextToSpeech
+import android.speech.tts.Voice
 import androidx.annotation.StringRes
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.utils.toast
+import jp.neechan.akari.dictionary.settings.TextToSpeechPreferencesService
 import kotlinx.coroutines.delay
 import java.util.*
 
-class TextToSpeechService(private val context: Context) : TextToSpeech.OnInitListener {
+class TextToSpeechService(private val context: Context,
+                          private val preferencesService: TextToSpeechPreferencesService) : TextToSpeech.OnInitListener {
 
     private val tts = TextToSpeech(context, this)
 
     @Volatile
     private var isTtsInitialized = false
 
-    var preferredLocale = Locale(DEFAULT_LANGUAGE, DEFAULT_COUNTRY)
+    val availableLocales: List<Locale>
+
+    var preferredLocale: Locale
         private set
 
-    var preferredVoiceName: String? = null
+    var preferredVoice: Voice? = null
         private set
 
-    companion object {
-        const val DEFAULT_LANGUAGE = "en"
-        const val DEFAULT_COUNTRY = "gb"
+    init {
+        availableLocales = mutableListOf(Locale.UK, Locale.US).apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                add(Locale("en", "in"))
+                add(Locale("en", "au"))
+            }
+        }
+        preferredLocale = preferencesService.loadPreferredLocale() ?: availableLocales.first()
     }
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             tts.language = preferredLocale
-            maybeChangeVoice()
+            initPreferredVoice()
+            maybeChangeTtsVoice()
             isTtsInitialized = true
         }
     }
 
-    /** Maybe change TTS voice to: a) a voice preferred by user; b) the most quality one. */
-    private fun maybeChangeVoice() {
-        // Although voices are available since Lollipop, some Lollipop devices
-        // still don't support them: https://issuetracker.google.com/issues/37012397
-        val preferredVoice = try {
-            if (preferredVoiceName != null) {
-                tts.voices.firstOrNull { it.locale == preferredLocale && it.name == preferredVoiceName }
+    private fun initPreferredVoice() {
+        val preferredVoiceName = preferencesService.loadPreferredVoice()
+        preferredVoice = if (preferredVoiceName != null) {
+            tts.getLocaleVoices(preferredLocale).firstOrNull { it.name == preferredVoiceName }
 
-            } else {
-                tts.voices.filter { it.locale == preferredLocale }.maxBy { it.quality }
-            }
-
-        } catch (t: Throwable) {
-            null
+        } else {
+            tts.getFineVoiceForLocale(preferredLocale)
         }
+    }
 
+    private fun maybeChangeTtsVoice() {
         if (preferredVoice != null) {
-            preferredVoiceName = preferredVoice.name
             tts.voice = preferredVoice
         }
+    }
+
+    suspend fun loadLocaleVoices(): List<Voice> {
+        return doAfterTtsInitialization { tts.getLocaleVoices(preferredLocale) }
+    }
+
+    fun setPreferredLocale(preferredLocale: Locale) {
+        this.preferredLocale = preferredLocale
+        tts.language = preferredLocale
+        preferencesService.savePreferredLocale(preferredLocale)
+
+        setPreferredVoice(tts.getFineVoiceForLocale(preferredLocale))
+    }
+
+    fun setPreferredVoice(preferredVoice: Voice?) {
+        this.preferredVoice = preferredVoice
+        preferencesService.savePreferredVoice(preferredVoice?.name)
+        maybeChangeTtsVoice()
     }
 
     fun speak(text: String) {
@@ -71,44 +95,25 @@ class TextToSpeechService(private val context: Context) : TextToSpeech.OnInitLis
         tts.stop()
     }
 
-    suspend fun loadVoiceNames(): List<String> {
-        return doAfterTtsInitialization {
-            try {
-                tts.voices.filter { it.locale == preferredLocale }.map { it.name }
-
-            } catch (t: Throwable) {
-                emptyList()
-            }
-        }
-    }
-
-    fun selectLocale(locale: Locale) {
-        preferredLocale = locale
-        tts.language = preferredLocale
-
-        preferredVoiceName = null
-        maybeChangeVoice()
-    }
-
-    fun selectVoice(voiceName: String) {
-        preferredVoiceName = voiceName
-
-        val voice = try {
-            tts.voices.firstOrNull { it.name == voiceName }
-
-        } catch (t: Throwable) {
-            null
-        }
-
-        if (voice != null) {
-            tts.voice = voice
-        }
-    }
-
     private suspend inline fun <T> doAfterTtsInitialization(block: () -> T): T {
         while (!isTtsInitialized) {
             delay(1)
         }
         return block()
+    }
+
+    private fun TextToSpeech.getLocaleVoices(locale: Locale): List<Voice> {
+        // Although voices are available since Lollipop, some Lollipop devices
+        // still don't support them: https://issuetracker.google.com/issues/37012397
+        return try {
+            voices.filter { it.locale == locale }
+
+        } catch (t: Throwable) {
+            emptyList()
+        }
+    }
+
+    private fun TextToSpeech.getFineVoiceForLocale(locale: Locale): Voice? {
+        return getLocaleVoices(locale).maxBy { it.quality }
     }
 }
