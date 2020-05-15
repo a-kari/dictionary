@@ -12,7 +12,16 @@ class DefinitionDeserializer : JsonDeserializer<DefinitionDto> {
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): DefinitionDto {
         val definitionJson = json.asJsonObject
         val definition = definitionJson.getAsJsonPrimitive("definition").asString
-        val partOfSpeech = PartOfSpeechDto.valueOf(definitionJson.getAsJsonPrimitive("partOfSpeech")?.asString)
+
+        val partOfSpeech = PartOfSpeechDto.valueOf(
+            if (definitionJson.get("partOfSpeech").isJsonPrimitive) {
+                definitionJson.getAsJsonPrimitive("partOfSpeech").asString
+
+            } else {
+                null
+            }
+        )
+
         val examples = definitionJson.getAsJsonArray("examples")?.map { it.asString }
         val antonyms = definitionJson.getAsJsonArray("antonyms")?.map { it.asString }
 
