@@ -25,7 +25,8 @@
             <jp.neechan.akari.dictionary.word.WordView
                 android:id="@+id/wordView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/word_fragment_add_button_height" />
 
         </androidx.core.widget.NestedScrollView>
 
