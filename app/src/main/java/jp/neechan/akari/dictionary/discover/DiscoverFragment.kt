@@ -64,7 +64,7 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
                 is Result.Loading -> showProgressBar()
                 is Result.Success -> showContent()
                 is Result.NotFoundError -> showEmptyContent()
-                is Result.Error -> showError(status.errorMessageResource)
+                is Result.Error -> showError(status)
             }
         })
     }
@@ -87,8 +87,8 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
         wordsRv.visibility = GONE
     }
 
-    private fun showError(errorMessageResource: Int) {
-        toast(requireContext(), errorMessageResource)
+    private fun showError(error: Result.Error) {
+        toast(requireContext(), error.errorMessage)
     }
 
     override fun onWordClicked(word: String) {

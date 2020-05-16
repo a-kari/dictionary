@@ -5,21 +5,28 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.common.models.models.Frequency
+import jp.neechan.akari.dictionary.common.models.models.Result
 import jp.neechan.akari.dictionary.common.models.models.Word
+import jp.neechan.akari.dictionary.common.utils.toast
 import jp.neechan.akari.dictionary.common.views.BaseActivity
 import jp.neechan.akari.dictionary.word.WordFragment
 import kotlinx.android.synthetic.main.activity_search_word.*
 
 class SearchWordActivity : BaseActivity() {
 
+    private lateinit var viewModel: SearchWordViewModel
     private lateinit var wordFragment: WordFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SearchWordViewModel::class.java)
+
         setContentView(R.layout.activity_search_word)
-        setupSearchView()
+        setupObservers()
+        setupListeners()
     }
 
     override fun onStart() {
@@ -27,14 +34,26 @@ class SearchWordActivity : BaseActivity() {
         setupBackButton()
     }
 
-    private fun setupSearchView() {
+    override fun onResume() {
+        super.onResume()
+        searchView.requestFocus()
+    }
+
+    private fun setupObservers() {
+        viewModel.resultLiveData.observe(this, Observer { result ->
+            when (result) {
+                is Result.Loading -> showProgressBar()
+                is Result.Success -> showContent(result.value)
+                is Result.NotFoundError -> showEmptyContent()
+                is Result.Error -> showError(result)
+            }
+        })
+    }
+
+    private fun setupListeners() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                when {
-                    query.isBlank() -> showHint()
-                    query.length < 3 -> showEmptyContent()
-                    else -> showContent(Word(query, query, null, Frequency.NORMAL, null))
-                }
+                viewModel.searchWord(query)
                 return true
             }
 
@@ -44,34 +63,35 @@ class SearchWordActivity : BaseActivity() {
         })
     }
 
-    private fun showHint() {
+    private fun showProgressBar() {
+        hintTv.visibility = GONE
         emptyContentTv.visibility = GONE
         content.visibility = GONE
-        hintTv.visibility = VISIBLE
+        progressBar.visibility = VISIBLE
     }
 
     private fun showEmptyContent() {
+        progressBar.visibility = GONE
         hintTv.visibility = GONE
         content.visibility = GONE
         emptyContentTv.visibility = VISIBLE
     }
 
+    // todo: Reusable WordFragment
     private fun showContent(word: Word) {
-        if (!::wordFragment.isInitialized) {
-            wordFragment = WordFragment.newInstance(word.word, true)
-            supportFragmentManager.commit {
-                replace(R.id.content, wordFragment, wordFragment.javaClass.simpleName)
-            }
+        wordFragment = WordFragment.newInstance(word.word, true)
+        supportFragmentManager.commit {
+            replace(R.id.content, wordFragment, wordFragment.javaClass.simpleName)
         }
 
+        progressBar.visibility = GONE
         hintTv.visibility = GONE
         emptyContentTv.visibility = GONE
         content.visibility = VISIBLE
         searchView.clearFocus()
     }
 
-    override fun onResume() {
-        super.onResume()
-        searchView.requestFocus()
+    private fun showError(error: Result.Error) {
+        toast(this, error.errorMessage)
     }
 }

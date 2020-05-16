@@ -86,7 +86,7 @@ class WordFragment : BaseFragment() {
     }
 
     private fun showError(error: Result.Error) {
-        toast(requireContext(), error.errorMessageResource)
+        toast(requireContext(), error.errorMessage)
     }
 
     private fun setupListeners() {
