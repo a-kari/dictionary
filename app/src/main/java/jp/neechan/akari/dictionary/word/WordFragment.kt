@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.common.models.models.Result
 import jp.neechan.akari.dictionary.common.models.models.Word
-import jp.neechan.akari.dictionary.common.utils.isValid
 import jp.neechan.akari.dictionary.common.utils.toast
 import jp.neechan.akari.dictionary.common.views.BaseFragment
 import kotlinx.android.synthetic.main.fragment_word.*
@@ -19,21 +18,26 @@ import kotlinx.android.synthetic.main.fragment_word.*
 class WordFragment : BaseFragment() {
 
     private lateinit var viewModel: WordViewModel
-    private lateinit var word: String
+
+    private lateinit var wordId: String
     private var addToDictionaryEnabled = false
 
     companion object {
-        private const val ARGUMENT_WORD = "word"
+        private const val ARGUMENT_WORD_ID = "wordId"
         private const val ARGUMENT_ADD_TO_DICTIONARY_ENABLED = "addToDictionaryEnabled"
 
-        fun newInstance(word: String, addToDictionaryEnabled: Boolean): WordFragment {
+        fun newInstance(wordId: String, addToDictionaryEnabled: Boolean): WordFragment {
             val arguments = Bundle().apply {
-                putString(ARGUMENT_WORD, word)
+                putString(ARGUMENT_WORD_ID, wordId)
                 putBoolean(ARGUMENT_ADD_TO_DICTIONARY_ENABLED, addToDictionaryEnabled)
             }
             return WordFragment().apply {
                 setArguments(arguments)
             }
+        }
+
+        fun newInstance(addToDictionaryEnabled: Boolean): WordFragment {
+            return newInstance("", addToDictionaryEnabled)
         }
     }
 
@@ -43,20 +47,34 @@ class WordFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(WordViewModel::class.java)
 
-        if (arguments != null) {
-            viewModel = ViewModelProvider(this, viewModelFactory).get(WordViewModel::class.java)
-            requireArguments().let { arguments ->
-                word = arguments.getString(ARGUMENT_WORD).orEmpty()
-                addToDictionaryEnabled = arguments.getBoolean(ARGUMENT_ADD_TO_DICTIONARY_ENABLED)
-            }
-
-            if (word.isValid()) {
-                setupObservers()
-                setupListeners()
-                maybeShowAddToDictionaryButton()
-            }
+        requireArguments().let { arguments ->
+            wordId = arguments.getString(ARGUMENT_WORD_ID).orEmpty()
+            addToDictionaryEnabled = arguments.getBoolean(ARGUMENT_ADD_TO_DICTIONARY_ENABLED)
         }
+
+        // Load a word if its id is passed. Else wait until a word is set from the outside.
+        if (wordId.isNotBlank()) {
+            setupObservers()
+            setupListeners()
+        }
+
+        maybeShowAddToDictionaryButton()
+    }
+
+    private fun setupObservers() {
+        viewModel.wordId = wordId
+        viewModel.wordLiveData.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Result.Success -> showContent(result.value)
+                is Result.Error -> showError(result)
+            }
+        })
+    }
+
+    private fun setupListeners() {
+        wordView.setSpeakCallback { viewModel.speak() }
     }
 
     private fun maybeShowAddToDictionaryButton() {
@@ -69,16 +87,6 @@ class WordFragment : BaseFragment() {
         }
     }
 
-    private fun setupObservers() {
-        viewModel.word = word
-        viewModel.wordLiveData.observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is Result.Success -> showContent(result.value)
-                is Result.Error -> showError(result)
-            }
-        })
-    }
-
     private fun showContent(word: Word) {
         wordView.setWord(word)
         progressBar.visibility = GONE
@@ -89,7 +97,9 @@ class WordFragment : BaseFragment() {
         toast(requireContext(), error.errorMessage)
     }
 
-    private fun setupListeners() {
-        wordView.setSpeakCallback { viewModel.speak() }
+    fun setWord(word: Word) {
+        viewModel.wordId = word.word
+        showContent(word)
+        setupListeners()
     }
 }

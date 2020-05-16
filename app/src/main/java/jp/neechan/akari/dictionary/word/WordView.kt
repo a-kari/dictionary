@@ -75,6 +75,8 @@ class WordView : LinearLayout {
     }
 
     private fun setDefinitions(partOfSpeechToDefinitionsMap: LinkedHashMap<PartOfSpeech, List<Definition>>?) {
+        definitionsView.removeAllViews()
+
         if (partOfSpeechToDefinitionsMap != null && partOfSpeechToDefinitionsMap.isNotEmpty()) {
             for (partOfSpeechToDefinitions in partOfSpeechToDefinitionsMap) {
                 definitionsView.addView(getPartOfSpeechView(partOfSpeechToDefinitions.key))

@@ -14,11 +14,16 @@ class WordDeserializer : JsonDeserializer<WordDto> {
         val wordJson = json.asJsonObject
         val word = wordJson.getAsJsonPrimitive("word").asString
 
-        val pronunciation = if (wordJson.get("pronunciation").isJsonObject) {
-            wordJson.getAsJsonObject("pronunciation")?.getAsJsonPrimitive("all")?.asString
-
-        } else {
-            wordJson.getAsJsonPrimitive("pronunciation")?.asString
+        val pronunciation = when {
+            wordJson.has("pronunciation") && wordJson.get("pronunciation").isJsonObject -> {
+                wordJson.getAsJsonObject("pronunciation").getAsJsonPrimitive("all")?.asString
+            }
+            wordJson.has("pronunciation") && wordJson.get("pronunciation").isJsonPrimitive -> {
+                wordJson.getAsJsonPrimitive("pronunciation")?.asString
+            }
+            else -> {
+                null
+            }
         }
 
         val syllables = wordJson.getAsJsonObject("syllables")?.getAsJsonArray("list")?.map { it.asString }

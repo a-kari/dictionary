@@ -5,19 +5,17 @@ import androidx.lifecycle.liveData
 import jp.neechan.akari.dictionary.common.services.TextToSpeechService
 import jp.neechan.akari.dictionary.discover.WordsRemoteRepository
 
-class WordViewModel(
-    private val wordsRemoteRepository: WordsRemoteRepository,
-    private val ttsService: TextToSpeechService
-) : ViewModel() {
+class WordViewModel(private val wordsRemoteRepository: WordsRemoteRepository,
+                    private val ttsService: TextToSpeechService) : ViewModel() {
 
-    lateinit var word: String
+    lateinit var wordId: String
 
     val wordLiveData = liveData {
-        emit(wordsRemoteRepository.loadWord(word))
+        emit(wordsRemoteRepository.loadWord(wordId))
     }
 
     fun speak() {
-        ttsService.speak(word)
+        ttsService.speak(wordId)
     }
 
     override fun onCleared() {

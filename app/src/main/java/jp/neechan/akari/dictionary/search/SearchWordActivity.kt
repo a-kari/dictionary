@@ -25,6 +25,9 @@ class SearchWordActivity : BaseActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(SearchWordViewModel::class.java)
 
         setContentView(R.layout.activity_search_word)
+        setupWordFragment()
+        showHint()
+
         setupObservers()
         setupListeners()
     }
@@ -39,6 +42,13 @@ class SearchWordActivity : BaseActivity() {
         searchView.requestFocus()
     }
 
+    private fun setupWordFragment() {
+        wordFragment = WordFragment.newInstance(true)
+        supportFragmentManager.commit {
+            replace(R.id.content, wordFragment, wordFragment.javaClass.simpleName)
+        }
+    }
+    
     private fun setupObservers() {
         viewModel.resultLiveData.observe(this, Observer { result ->
             when (result) {
@@ -63,6 +73,13 @@ class SearchWordActivity : BaseActivity() {
         })
     }
 
+    private fun showHint() {
+        progressBar.visibility = GONE
+        emptyContentTv.visibility = GONE
+        content.visibility = GONE
+        hintTv.visibility = VISIBLE
+    }
+
     private fun showProgressBar() {
         hintTv.visibility = GONE
         emptyContentTv.visibility = GONE
@@ -77,12 +94,8 @@ class SearchWordActivity : BaseActivity() {
         emptyContentTv.visibility = VISIBLE
     }
 
-    // todo: Reusable WordFragment
     private fun showContent(word: Word) {
-        wordFragment = WordFragment.newInstance(word.word, true)
-        supportFragmentManager.commit {
-            replace(R.id.content, wordFragment, wordFragment.javaClass.simpleName)
-        }
+        wordFragment.setWord(word)
 
         progressBar.visibility = GONE
         hintTv.visibility = GONE
