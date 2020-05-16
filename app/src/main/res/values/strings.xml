@@ -35,6 +35,7 @@
     <string name="frequency_normal">Normal</string>
     <string name="frequency_frequent">Frequent</string>
     <string name="frequency_very_frequent">Very frequent</string>
+    <string name="frequency_unknown">Unknown</string>
 
     <!-- PartOfSpeech -->
     <string name="part_of_speech_all">All</string>

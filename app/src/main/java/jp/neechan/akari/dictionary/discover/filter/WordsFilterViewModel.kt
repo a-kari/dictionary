@@ -7,7 +7,13 @@ import jp.neechan.akari.dictionary.discover.WordsRemoteRepository
 
 class WordsFilterViewModel(private val wordsRemoteRepository: WordsRemoteRepository) : ViewModel() {
 
-    private val frequencies = Frequency.values()
+    private val frequencies = arrayOf(
+        Frequency.VERY_RARE,
+        Frequency.RARE,
+        Frequency.NORMAL,
+        Frequency.FREQUENT,
+        Frequency.VERY_FREQUENT
+    )
     private val partsOfSpeech = arrayOf(
         PartOfSpeech.ALL,
         PartOfSpeech.NOUN,

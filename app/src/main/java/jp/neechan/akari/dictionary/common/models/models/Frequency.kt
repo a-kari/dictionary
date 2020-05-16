@@ -8,5 +8,6 @@ enum class Frequency(val stringResource: Int) {
     RARE(R.string.frequency_rare),
     NORMAL(R.string.frequency_normal),
     FREQUENT(R.string.frequency_frequent),
-    VERY_FREQUENT(R.string.frequency_very_frequent)
+    VERY_FREQUENT(R.string.frequency_very_frequent),
+    UNKNOWN(R.string.frequency_unknown)
 }

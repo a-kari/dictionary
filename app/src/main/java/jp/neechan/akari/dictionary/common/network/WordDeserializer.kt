@@ -27,7 +27,14 @@ class WordDeserializer : JsonDeserializer<WordDto> {
         }
 
         val syllables = wordJson.getAsJsonObject("syllables")?.getAsJsonArray("list")?.map { it.asString }
-        val frequency = FrequencyDto.valueOf(wordJson.getAsJsonPrimitive("frequency").asFloat)
+        val frequency = FrequencyDto.valueOf(
+            if (wordJson.has("frequency")) {
+                wordJson.getAsJsonPrimitive("frequency").asFloat
+
+            } else {
+                null
+            }
+        )
 
         val definitionsJson = wordJson.getAsJsonArray("results")
         val definitions = definitionsJson?.map { context.deserialize(it, DefinitionDto::class.java) as DefinitionDto }
