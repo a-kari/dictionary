@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val wordsLocalRepository: WordsLocalRepository) : ViewModel() {
 
     val wordsLiveData = wordsLocalRepository.wordsLiveData
+    var isEditMode = false
 
     fun deleteWord(word: String) = viewModelScope.launch(Dispatchers.IO) {
         wordsLocalRepository.deleteWord(word)
