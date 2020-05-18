@@ -6,6 +6,7 @@ import jp.neechan.akari.dictionary.common.services.TextToSpeechService
 import jp.neechan.akari.dictionary.discover.DiscoverViewModel
 import jp.neechan.akari.dictionary.discover.WordsRemoteRepository
 import jp.neechan.akari.dictionary.discover.filter.WordsFilterViewModel
+import jp.neechan.akari.dictionary.home.HomeViewModel
 import jp.neechan.akari.dictionary.home.WordsLocalRepository
 import jp.neechan.akari.dictionary.search.SearchWordViewModel
 import jp.neechan.akari.dictionary.settings.SettingsViewModel
@@ -18,10 +19,11 @@ class ViewModelFactory(private val wordsLocalRepository: WordsLocalRepository,
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
+            HomeViewModel::class.java -> HomeViewModel(wordsLocalRepository)
             SearchWordViewModel::class.java -> SearchWordViewModel(wordsLocalRepository, wordsRemoteRepository)
+            WordViewModel::class.java -> WordViewModel(wordsLocalRepository, wordsRemoteRepository, ttsService)
             DiscoverViewModel::class.java -> DiscoverViewModel(wordsRemoteRepository)
             WordsFilterViewModel::class.java -> WordsFilterViewModel(wordsRemoteRepository)
-            WordViewModel::class.java -> WordViewModel(wordsLocalRepository, wordsRemoteRepository, ttsService)
             SettingsViewModel::class.java -> SettingsViewModel(ttsService)
             else -> throw RuntimeException("Cannot instantiate ViewModel: $modelClass")
         } as T

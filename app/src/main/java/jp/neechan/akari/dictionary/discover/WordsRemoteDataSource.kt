@@ -13,9 +13,9 @@ import java.net.HttpURLConnection
 import java.net.UnknownHostException
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-class WordsDataSource(private val wordsApiService: WordsApiService,
-                      private val wordsFilterParams: WordsFilterParams,
-                      private val coroutineScope: CoroutineScope) : PageKeyedDataSource<Int, String>() {
+class WordsRemoteDataSource(private val wordsApiService: WordsApiService,
+                            private val wordsFilterParams: WordsFilterParams,
+                            private val coroutineScope: CoroutineScope) : PageKeyedDataSource<Int, String>() {
 
     private val _resultLiveData = MutableLiveData<Result<List<String>>>()
     val resultLiveData: LiveData<Result<List<String>>> = _resultLiveData

@@ -6,15 +6,15 @@ import androidx.paging.DataSource
 import jp.neechan.akari.dictionary.discover.filter.WordsFilterParams
 import kotlinx.coroutines.CoroutineScope
 
-class WordsDataSourceFactory(private val wordsApiService: WordsApiService,
-                             private var wordsFilterParams: WordsFilterParams,
-                             private val coroutineScope: CoroutineScope) : DataSource.Factory<Int, String>() {
+class WordsRemoteDataSourceFactory(private val wordsApiService: WordsApiService,
+                                   private var wordsFilterParams: WordsFilterParams,
+                                   private val coroutineScope: CoroutineScope) : DataSource.Factory<Int, String>() {
 
-    private val _wordsDataSource = MutableLiveData<WordsDataSource>()
-    val wordsDataSource: LiveData<WordsDataSource> = _wordsDataSource
+    private val _wordsDataSource = MutableLiveData<WordsRemoteDataSource>()
+    val wordsRemoteDataSource: LiveData<WordsRemoteDataSource> = _wordsDataSource
 
     override fun create(): DataSource<Int, String> {
-        val wordsDataSource = WordsDataSource(wordsApiService, wordsFilterParams, coroutineScope)
+        val wordsDataSource = WordsRemoteDataSource(wordsApiService, wordsFilterParams, coroutineScope)
         _wordsDataSource.postValue(wordsDataSource)
         return wordsDataSource
     }

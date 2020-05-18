@@ -1,15 +1,23 @@
 package jp.neechan.akari.dictionary.home
 
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import jp.neechan.akari.dictionary.common.db.DatabaseService
 import jp.neechan.akari.dictionary.common.models.mappers.WordMapper
 import jp.neechan.akari.dictionary.common.models.models.Word
+import jp.neechan.akari.dictionary.discover.filter.WordsFilterParams
 import java.util.*
 
 class WordsLocalRepository(private val databaseService: DatabaseService,
                            private val wordMapper: WordMapper) {
 
-    suspend fun loadWords(): List<String> {
-        return databaseService.getWordDao().getWords()
+    val wordsLiveData by lazy {
+        val wordsLocalDataSourceFactory = databaseService.getWordDao().getWords()
+        val config = PagedList.Config.Builder()
+                              .setEnablePlaceholders(false)
+                              .setPageSize(WordsFilterParams.DEFAULT_PAGE_SIZE)
+                              .build()
+        LivePagedListBuilder(wordsLocalDataSourceFactory, config).build()
     }
 
     suspend fun loadWord(wordId: String): Word? {
@@ -30,5 +38,9 @@ class WordsLocalRepository(private val databaseService: DatabaseService,
         if (wordDto.definitions != null) {
             databaseService.getWordDao().saveDefinitions(wordDto.definitions!!)
         }
+    }
+
+    suspend fun deleteWord(word: String) {
+        databaseService.getWordDao().deleteWord(word)
     }
 }

@@ -1,5 +1,6 @@
 package jp.neechan.akari.dictionary.common.db.dao
 
+import androidx.paging.DataSource
 import androidx.room.*
 import jp.neechan.akari.dictionary.common.models.dto.DefinitionDto
 import jp.neechan.akari.dictionary.common.models.dto.WordDto
@@ -9,7 +10,7 @@ import jp.neechan.akari.dictionary.common.models.dto.WordWithDefinitionsDto
 interface WordDao {
 
     @Query("SELECT word from Word ORDER BY saveDate DESC")
-    suspend fun getWords(): List<String>
+    fun getWords(): DataSource.Factory<Int, String>
 
     @Transaction
     @Query("SELECT * FROM Word WHERE word = :wordId LIMIT 1")

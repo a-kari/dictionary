@@ -22,7 +22,7 @@ class WordsRemoteRepository(private val wordsApiService: WordsApiService,
                             private val frequencyMapper: FrequencyMapper,
                             private val partOfSpeechMapper: PartOfSpeechMapper) {
 
-    private lateinit var wordsDataSourceFactory: WordsDataSourceFactory
+    private lateinit var wordsRemoteDataSourceFactory: WordsRemoteDataSourceFactory
     private val wordsFilterParams = wordsPreferencesService.loadWordsFilterParams()
 
     val wordsFilterFrequency: Frequency
@@ -32,16 +32,16 @@ class WordsRemoteRepository(private val wordsApiService: WordsApiService,
         get() = partOfSpeechMapper.mapToHigherLayer(wordsFilterParams.partOfSpeech)
 
     fun subscribeToWords(coroutineScope: CoroutineScope): LiveData<PagedList<String>> {
-        wordsDataSourceFactory = WordsDataSourceFactory(wordsApiService, wordsFilterParams, coroutineScope)
+        wordsRemoteDataSourceFactory = WordsRemoteDataSourceFactory(wordsApiService, wordsFilterParams, coroutineScope)
         val config = PagedList.Config.Builder()
                               .setEnablePlaceholders(false)
                               .setPageSize(WordsFilterParams.DEFAULT_PAGE_SIZE)
                               .build()
-        return LivePagedListBuilder(wordsDataSourceFactory, config).build()
+        return LivePagedListBuilder(wordsRemoteDataSourceFactory, config).build()
     }
 
     fun subscribeToWordsResult(): LiveData<Result<List<String>>> {
-        return Transformations.switchMap(wordsDataSourceFactory.wordsDataSource) { wordsDataSource ->
+        return Transformations.switchMap(wordsRemoteDataSourceFactory.wordsRemoteDataSource) { wordsDataSource ->
             wordsDataSource.resultLiveData
         }
     }
@@ -55,7 +55,7 @@ class WordsRemoteRepository(private val wordsApiService: WordsApiService,
             wordsFilterParams.partOfSpeech = partOfSpeechDto
             wordsFilterParams.frequency = frequencyDto
 
-            wordsDataSourceFactory.setWordsFilterParams(wordsFilterParams)
+            wordsRemoteDataSourceFactory.setWordsFilterParams(wordsFilterParams)
             wordsPreferencesService.saveWordsFilterParams(wordsFilterParams)
         }
     }
