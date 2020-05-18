@@ -2,11 +2,9 @@ package jp.neechan.akari.dictionary.common.di
 
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import jp.neechan.akari.dictionary.common.models.dto.DefinitionDto
 import jp.neechan.akari.dictionary.common.models.dto.WordDto
 import jp.neechan.akari.dictionary.common.models.models.Page
 import jp.neechan.akari.dictionary.common.network.AuthorizationInterceptor
-import jp.neechan.akari.dictionary.common.network.DefinitionDeserializer
 import jp.neechan.akari.dictionary.common.network.StringPageDeserializer
 import jp.neechan.akari.dictionary.common.network.WordDeserializer
 import jp.neechan.akari.dictionary.discover.WordsApiService
@@ -21,7 +19,6 @@ object NetworkModule : KoinModule {
         // TypeAdapters
         single { StringPageDeserializer() }
         single { WordDeserializer() }
-        single { DefinitionDeserializer() }
 
         // Interceptors
         single { AuthorizationInterceptor() }
@@ -31,7 +28,6 @@ object NetworkModule : KoinModule {
             val stringPageType = object : TypeToken<Page<String>>(){}.type
             GsonBuilder().registerTypeAdapter(stringPageType, get(StringPageDeserializer::class))
                          .registerTypeAdapter(WordDto::class.java, get(WordDeserializer::class))
-                         .registerTypeAdapter(DefinitionDto::class.java, get(DefinitionDeserializer::class))
                          .create()
         }
 

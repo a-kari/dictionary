@@ -6,6 +6,6 @@ import org.koin.dsl.module
 object ViewModelModule : KoinModule {
 
     override fun get() = module {
-        single { ViewModelFactory(get(), get()) }
+        single { ViewModelFactory(get(), get(), get()) }
     }
 }

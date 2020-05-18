@@ -1,10 +1,7 @@
 package jp.neechan.akari.dictionary
 
 import android.app.Application
-import jp.neechan.akari.dictionary.common.di.NetworkModule
-import jp.neechan.akari.dictionary.common.di.RepositoryModule
-import jp.neechan.akari.dictionary.common.di.ServiceModule
-import jp.neechan.akari.dictionary.common.di.ViewModelModule
+import jp.neechan.akari.dictionary.common.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -17,6 +14,7 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 NetworkModule.get(),
+                DatabaseModule.get(),
                 ServiceModule.get(),
                 RepositoryModule.get(),
                 ViewModelModule.get()

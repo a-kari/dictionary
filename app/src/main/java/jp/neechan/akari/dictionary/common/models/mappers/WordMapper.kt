@@ -13,7 +13,7 @@ class WordMapper(private val definitionMapper: DefinitionMapper,
         var definitions: LinkedHashMap<PartOfSpeech, List<Definition>>? = null
         if (lowerLayerEntity.definitions != null) {
             definitions = LinkedHashMap()
-            for (definitionDto in lowerLayerEntity.definitions) {
+            for (definitionDto in lowerLayerEntity.definitions!!) {
                 val partOfSpeech = partOfSpeechMapper.mapToHigherLayer(definitionDto.partOfSpeech)
                 val partOfSpeechDefinitions = definitions[partOfSpeech] as MutableList<Definition>? ?: mutableListOf()
                 partOfSpeechDefinitions.add(definitionMapper.mapToHigherLayer(definitionDto))
@@ -26,7 +26,8 @@ class WordMapper(private val definitionMapper: DefinitionMapper,
             lowerLayerEntity.pronunciation,
             lowerLayerEntity.syllables?.joinToString(separator = "-"),
             frequencyMapper.mapToHigherLayer(lowerLayerEntity.frequency),
-            definitions
+            definitions,
+            lowerLayerEntity.saveDate
         )
     }
 
@@ -36,7 +37,8 @@ class WordMapper(private val definitionMapper: DefinitionMapper,
             higherLevelEntity.pronunciation,
             higherLevelEntity.syllables?.split("-"),
             frequencyMapper.mapToLowerLayer(higherLevelEntity.frequency),
-            higherLevelEntity.definitions?.values?.flatten()?.map { definitionMapper.mapToLowerLayer(it) }
+            higherLevelEntity.definitions?.values?.flatten()?.map { definitionMapper.mapToLowerLayer(it) },
+            higherLevelEntity.saveDate
         )
     }
 }

@@ -1,17 +1,44 @@
 package jp.neechan.akari.dictionary.word
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import jp.neechan.akari.dictionary.common.models.models.Result
+import jp.neechan.akari.dictionary.common.models.models.Word
 import jp.neechan.akari.dictionary.common.services.TextToSpeechService
 import jp.neechan.akari.dictionary.discover.WordsRemoteRepository
+import jp.neechan.akari.dictionary.home.WordsLocalRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class WordViewModel(private val wordsRemoteRepository: WordsRemoteRepository,
+class WordViewModel(private val wordsLocalRepository: WordsLocalRepository,
+                    private val wordsRemoteRepository: WordsRemoteRepository,
                     private val ttsService: TextToSpeechService) : ViewModel() {
 
     lateinit var wordId: String
 
-    val wordLiveData = liveData {
-        emit(wordsRemoteRepository.loadWord(wordId))
+    private val _wordLiveData: MutableLiveData<Result<Word>> = object : MutableLiveData<Result<Word>>() {
+        override fun onActive() {
+            super.onActive()
+            loadWord()
+        }
+    }
+    val wordLiveData: LiveData<Result<Word>> = _wordLiveData
+
+    private fun loadWord() = viewModelScope.launch(Dispatchers.IO) {
+        val localWord = wordsLocalRepository.loadWord(wordId)
+        if (localWord != null) {
+            _wordLiveData.postValue(Result.Success(localWord))
+
+        } else {
+            _wordLiveData.postValue(wordsRemoteRepository.loadWord(wordId))
+        }
+    }
+
+    fun saveWord(word: Word) = viewModelScope.launch(Dispatchers.IO) {
+        wordsLocalRepository.saveWord(word)
+        loadWord()
     }
 
     fun speak() {

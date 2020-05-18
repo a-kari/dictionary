@@ -5,6 +5,7 @@ import jp.neechan.akari.dictionary.common.models.mappers.FrequencyMapper
 import jp.neechan.akari.dictionary.common.models.mappers.PartOfSpeechMapper
 import jp.neechan.akari.dictionary.common.models.mappers.WordMapper
 import jp.neechan.akari.dictionary.discover.WordsRemoteRepository
+import jp.neechan.akari.dictionary.home.WordsLocalRepository
 import org.koin.dsl.module
 
 object RepositoryModule : KoinModule {
@@ -18,5 +19,6 @@ object RepositoryModule : KoinModule {
 
         // Repositories
         single { WordsRemoteRepository(get(), get(), get(), get(), get()) }
+        single { WordsLocalRepository(get(), get()) }
     }
 }

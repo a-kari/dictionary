@@ -59,8 +59,6 @@ class WordFragment : BaseFragment() {
             setupObservers()
             setupListeners()
         }
-
-        maybeShowAddToDictionaryButton()
     }
 
     private fun setupObservers() {
@@ -77,20 +75,25 @@ class WordFragment : BaseFragment() {
         wordView.setSpeakCallback { viewModel.speak() }
     }
 
-    private fun maybeShowAddToDictionaryButton() {
-        if (addToDictionaryEnabled) {
+    private fun showContent(word: Word) {
+        wordView.setWord(word)
+        maybeShowAddToDictionaryButton(!word.isSaved && addToDictionaryEnabled, word)
+
+        progressBar.visibility = GONE
+        content.visibility = VISIBLE
+    }
+
+    private fun maybeShowAddToDictionaryButton(show: Boolean, word: Word) {
+        if (show) {
             addToDictionaryButton.visibility = VISIBLE
-            addToDictionaryButton.setOnClickListener { toast(requireContext(), "Adding to your dictionary...") }
+            addToDictionaryButton.setOnClickListener {
+                viewModel.saveWord(word)
+                toast(requireContext(), R.string.word_added_to_dictionary)
+            }
 
         } else {
             addToDictionaryButton.visibility = GONE
         }
-    }
-
-    private fun showContent(word: Word) {
-        wordView.setWord(word)
-        progressBar.visibility = GONE
-        content.visibility = VISIBLE
     }
 
     private fun showError(error: Result.Error) {
