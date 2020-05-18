@@ -77,7 +77,7 @@ class WordDeserializer : JsonDeserializer<WordDto> {
             definition,
             partOfSpeech,
             examples,
-            synonyms,
+            if (synonyms.isNotEmpty()) synonyms else null,
             antonyms
         )
     }
