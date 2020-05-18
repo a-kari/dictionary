@@ -1,8 +1,7 @@
 package jp.neechan.akari.dictionary.word
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import jp.neechan.akari.dictionary.common.models.models.Result
 import jp.neechan.akari.dictionary.common.models.models.Word
@@ -18,27 +17,18 @@ class WordViewModel(private val wordsLocalRepository: WordsLocalRepository,
 
     lateinit var wordId: String
 
-    private val _wordLiveData: MutableLiveData<Result<Word>> = object : MutableLiveData<Result<Word>>() {
-        override fun onActive() {
-            super.onActive()
-            loadWord()
-        }
-    }
-    val wordLiveData: LiveData<Result<Word>> = _wordLiveData
-
-    private fun loadWord() = viewModelScope.launch(Dispatchers.IO) {
+    val wordLiveData = liveData {
         val localWord = wordsLocalRepository.loadWord(wordId)
         if (localWord != null) {
-            _wordLiveData.postValue(Result.Success(localWord))
+            emit(Result.Success(localWord))
 
         } else {
-            _wordLiveData.postValue(wordsRemoteRepository.loadWord(wordId))
+            emit(wordsRemoteRepository.loadWord(wordId))
         }
     }
 
     fun saveWord(word: Word) = viewModelScope.launch(Dispatchers.IO) {
         wordsLocalRepository.saveWord(word)
-        loadWord()
     }
 
     fun speak() {

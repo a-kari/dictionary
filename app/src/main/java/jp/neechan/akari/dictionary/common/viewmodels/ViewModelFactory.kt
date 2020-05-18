@@ -18,7 +18,7 @@ class ViewModelFactory(private val wordsLocalRepository: WordsLocalRepository,
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when (modelClass) {
-            SearchWordViewModel::class.java -> SearchWordViewModel(wordsRemoteRepository)
+            SearchWordViewModel::class.java -> SearchWordViewModel(wordsLocalRepository, wordsRemoteRepository)
             DiscoverViewModel::class.java -> DiscoverViewModel(wordsRemoteRepository)
             WordsFilterViewModel::class.java -> WordsFilterViewModel(wordsRemoteRepository)
             WordViewModel::class.java -> WordViewModel(wordsLocalRepository, wordsRemoteRepository, ttsService)

@@ -87,6 +87,7 @@ class WordFragment : BaseFragment() {
         if (show) {
             addToDictionaryButton.visibility = VISIBLE
             addToDictionaryButton.setOnClickListener {
+                addToDictionaryButton.visibility = GONE
                 viewModel.saveWord(word)
                 toast(requireContext(), R.string.word_added_to_dictionary)
             }
