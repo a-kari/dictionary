@@ -24,7 +24,7 @@
         android:layout_marginTop="@dimen/default_padding"
         android:text="@string/settings_voice" />
 
-    <jp.neechan.akari.dictionary.common.views.ReselectableSpinner
+    <jp.neechan.akari.dictionary.base.presentation.views.ReselectableSpinner
         android:id="@+id/voicesSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

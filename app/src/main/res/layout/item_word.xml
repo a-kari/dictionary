@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/default_padding_small"
     android:paddingBottom="@dimen/default_padding">
 
-    <jp.neechan.akari.dictionary.common.views.AvatarView
+    <jp.neechan.akari.dictionary.base.presentation.views.AvatarView
         android:id="@+id/avatarView"
         android:layout_width="@dimen/word_avatar_size"
         android:layout_height="@dimen/word_avatar_size"
