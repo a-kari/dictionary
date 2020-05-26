@@ -1,55 +1,96 @@
 package jp.neechan.akari.dictionary.settings.presentation
 
-import android.speech.tts.Voice
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.base.data.framework.tts.TextToSpeechService
+import jp.neechan.akari.dictionary.base.domain.usecases.SpeakUseCase
+import jp.neechan.akari.dictionary.base.domain.usecases.StopSpeakingUseCase
+import jp.neechan.akari.dictionary.settings.domain.usecases.LoadPreferredPronunciationUseCase
+import jp.neechan.akari.dictionary.settings.domain.usecases.LoadPreferredVoiceUseCase
+import jp.neechan.akari.dictionary.settings.domain.usecases.LoadPronunciationsUseCase
+import jp.neechan.akari.dictionary.settings.domain.usecases.LoadVoicesUseCase
+import jp.neechan.akari.dictionary.settings.domain.usecases.SavePreferredPronunciationUseCase
+import jp.neechan.akari.dictionary.settings.domain.usecases.SavePreferredVoiceUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import java.util.Locale
 
-class SettingsViewModel(private val ttsService: TextToSpeechService) : ViewModel() {
+class SettingsViewModel(private val loadPronunciationsUseCase: LoadPronunciationsUseCase,
+                        private val loadVoicesUseCase: LoadVoicesUseCase,
+                        private val loadPreferredPronunciationUseCase: LoadPreferredPronunciationUseCase,
+                        private val loadPreferredVoiceUseCase: LoadPreferredVoiceUseCase,
+                        private val savePreferredPronunciationUseCase: SavePreferredPronunciationUseCase,
+                        private val savePreferredVoiceUseCase: SavePreferredVoiceUseCase,
+                        private val speakUseCase: SpeakUseCase,
+                        private val stopSpeakingUseCase: StopSpeakingUseCase) : ViewModel() {
 
-    private val pronunciations = ttsService.availableLocales
-    val pronunciationNames = pronunciations.map { it.displayCountry }
-    var preferredPronunciationIndex = pronunciations.indexOf(ttsService.preferredLocale)
-        private set
+    // pronunciationsLiveData will be populated only once.
+    private val pronunciationsLiveData: LiveData<List<Locale>> = liveData {
+        emit(loadPronunciationsUseCase())
+        initializePreferredPronunciation()
+    }
+    val pronunciationNamesLiveData = pronunciationsLiveData.map { pronunciations ->
+        pronunciations.map { it.displayCountry }
+    }
 
-    private val voicesLiveData = MutableLiveData<List<Voice>>()
-    val voiceNamesLiveData = Transformations.map(voicesLiveData) { voices -> voices.map { it.name } }
-    var preferredVoiceIndex = -1
-        private set
+    // _preferredPronunciationIndexLiveData will be populated:
+    // 1. After pronunciations are loaded.
+    // 2. When a user changes the preferred pronunciation.
+    private val _preferredPronunciationIndexLiveData = MutableLiveData<Int>()
+    val preferredPronunciationIndexLiveData: LiveData<Int> = _preferredPronunciationIndexLiveData
+
+    // voicesLiveData will be populated:
+    // 1. When a user changes the preferred pronunciation, so voices will be changed accordingly.
+    val voicesLiveData = _preferredPronunciationIndexLiveData.switchMap { liveData { emit(loadVoicesUseCase()) } }
+    private val voicesObserver: Observer<List<String>>
+
+    // _preferredVoiceIndexLiveData will be populated:
+    // 1. When voices are changed (due to pronunciation change), so we need to update the preferred voice, too.
+    // 2. When a user changes the preferred voice.
+    private val _preferredVoiceIndexLiveData = MutableLiveData<Int>()
+    val preferredVoiceIndexLiveData: LiveData<Int> = _preferredVoiceIndexLiveData
 
     init {
-        refreshVoices()
-    }
-
-    private fun refreshVoices() {
-        viewModelScope.launch {
-            val voices = ttsService.loadLocaleVoices()
-            voicesLiveData.postValue(voices)
-            preferredVoiceIndex = voices.indexOf(ttsService.preferredVoice)
+        // Trigger the preferred voice update when all voices are updated.
+        voicesObserver = Observer { voices ->
+            viewModelScope.launch {
+                _preferredVoiceIndexLiveData.postValue(voices.indexOf(loadPreferredVoiceUseCase()))
+            }
         }
+        voicesLiveData.observeForever(voicesObserver)
     }
 
-    fun selectPronunciation(pronunciationIndex: Int) {
-        preferredPronunciationIndex = pronunciationIndex
-        ttsService.setPreferredLocale(pronunciations[pronunciationIndex])
-        refreshVoices()
+    private fun initializePreferredPronunciation() = viewModelScope.launch(Dispatchers.IO) {
+        val preferredPronunciation = loadPreferredPronunciationUseCase()
+        val preferredPronunciationIndex = pronunciationsLiveData.value!!.indexOf(preferredPronunciation)
+        _preferredPronunciationIndexLiveData.postValue(preferredPronunciationIndex)
     }
 
-    fun selectVoice(voiceIndex: Int) {
-        preferredVoiceIndex = voiceIndex
-        ttsService.setPreferredVoice(voicesLiveData.value!![voiceIndex])
+    fun savePreferredPronunciation(preferredPronunciationIndex: Int) = viewModelScope.launch(Dispatchers.IO) {
+        val preferredPronunciation = pronunciationsLiveData.value!![preferredPronunciationIndex]
+        savePreferredPronunciationUseCase(preferredPronunciation)
+        _preferredPronunciationIndexLiveData.postValue(preferredPronunciationIndex)
     }
 
-    fun testSpeak() {
-        ttsService.speak(R.string.settings_voice_test_phrase)
+    fun savePreferredVoice(preferredVoiceIndex: Int) = viewModelScope.launch(Dispatchers.IO) {
+        val preferredVoice = voicesLiveData.value!![preferredVoiceIndex]
+        savePreferredVoiceUseCase(preferredVoice)
+        _preferredVoiceIndexLiveData.postValue(preferredVoiceIndex)
+    }
+
+    fun speak(text: String) = viewModelScope.launch {
+        speakUseCase(text)
     }
 
     override fun onCleared() {
+        viewModelScope.launch(NonCancellable) { stopSpeakingUseCase() }
+        voicesLiveData.removeObserver(voicesObserver)
         super.onCleared()
-        ttsService.stopSpeaking()
     }
 }

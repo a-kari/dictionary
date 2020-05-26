@@ -1,6 +1,7 @@
 package jp.neechan.akari.dictionary.settings.presentation
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +23,11 @@ class SettingsFragment : BaseFragment() {
 
     private lateinit var voicesAdapter: ArrayAdapter<String>
 
+    private lateinit var pronunciationChangedListener: RadioGroup.OnCheckedChangeListener
+    private lateinit var voiceChangedListener: AdapterView.OnItemSelectedListener
+
     companion object {
-        fun newInstance() =
-            SettingsFragment()
+        fun newInstance() = SettingsFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,38 +53,54 @@ class SettingsFragment : BaseFragment() {
     }
 
     private fun setupObservers() {
-        createPronunciationRadioButtons(viewModel.pronunciationNames)
-        pronunciationsRadioGroup.checkPosition(viewModel.preferredPronunciationIndex)
+        viewModel.pronunciationNamesLiveData.observe(viewLifecycleOwner, Observer { pronunciations ->
+            createPronunciationRadioButtons(pronunciations)
+        })
 
-        viewModel.voiceNamesLiveData.observe(viewLifecycleOwner, Observer { voices ->
+        viewModel.preferredPronunciationIndexLiveData.observe(viewLifecycleOwner, Observer { preferredPronunciationIndex ->
+            pronunciationsRadioGroup.setOnCheckedChangeListener(null)
+            pronunciationsRadioGroup.checkPosition(preferredPronunciationIndex)
+            pronunciationsRadioGroup.setOnCheckedChangeListener(pronunciationChangedListener)
+        })
+
+        viewModel.voicesLiveData.observe(viewLifecycleOwner, Observer { voices ->
+            voicesAdapter.clear()
+
             if (voices.isNotEmpty()) {
-                voicesAdapter.clear()
                 voicesAdapter.addAll(voices)
-                voicesSpinner.setSelection(viewModel.preferredVoiceIndex)
                 voicesSpinner.isEnabled = true
 
             } else {
                 voicesSpinner.isEnabled = false
             }
         })
+
+        viewModel.preferredVoiceIndexLiveData.observe(viewLifecycleOwner, Observer { preferredVoiceIndex ->
+            voicesSpinner.onItemSelectedListener = null
+            voicesSpinner.setSelection(preferredVoiceIndex, false)
+            Handler().post { voicesSpinner.onItemSelectedListener = voiceChangedListener }
+            viewModel.speak(getString(R.string.settings_voice_test_phrase))
+        })
     }
 
     private fun setupListeners() {
-        pronunciationsRadioGroup.setOnCheckedChangeListener { _, checkedId ->
-            viewModel.selectPronunciation(pronunciationsRadioGroup.getCheckedPosition(checkedId))
+        pronunciationChangedListener = RadioGroup.OnCheckedChangeListener { _, checkedId ->
+            viewModel.savePreferredPronunciation(pronunciationsRadioGroup.getCheckedPosition(checkedId))
         }
+        pronunciationsRadioGroup.setOnCheckedChangeListener(pronunciationChangedListener)
 
-        voicesSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        voiceChangedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                viewModel.selectVoice(position)
-                viewModel.testSpeak()
+                viewModel.savePreferredVoice(position)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+        voicesSpinner.onItemSelectedListener = voiceChangedListener
     }
 
     private fun createPronunciationRadioButtons(pronunciations: List<String>) {
+        pronunciationsRadioGroup.removeAllViews()
         pronunciations.forEach { pronunciation ->
             val radioButton = RadioButton(requireContext())
             radioButton.text = pronunciation

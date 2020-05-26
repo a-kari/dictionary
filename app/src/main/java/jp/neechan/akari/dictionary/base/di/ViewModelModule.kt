@@ -18,10 +18,17 @@ object ViewModelModule : KoinModule {
                 get(),
                 get(),
                 get(),
-                get(),
                 get(WordToWordUIMapper::class),
                 get(FrequencyToFrequencyUIMapper::class),
-                get(PartOfSpeechToPartOfSpeechUIMapper::class)
+                get(PartOfSpeechToPartOfSpeechUIMapper::class),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get(),
+                get()
             )
         }
     }

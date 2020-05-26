@@ -1,10 +1,11 @@
-package jp.neechan.akari.dictionary.base.data.framework.tts
+package jp.neechan.akari.dictionary.base.data.framework.shared_preferences
 
 import android.content.Context
 import androidx.core.content.edit
-import java.util.*
+import jp.neechan.akari.dictionary.base.data.interface_adapters.TextToSpeechPreferencesService
+import java.util.Locale
 
-class TextToSpeechPreferencesService(context: Context) {
+class TextToSpeechPreferencesServiceImpl(context: Context) : TextToSpeechPreferencesService {
 
     private val preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 
@@ -15,7 +16,7 @@ class TextToSpeechPreferencesService(context: Context) {
         private const val VOICE = "voice"
     }
 
-    fun loadPreferredLocale(): Locale? {
+    override suspend fun loadPreferredLocale(): Locale? {
         val localeLanguage = preferences.getString(LOCALE_LANGUAGE, null)
         val localeCountry = preferences.getString(LOCALE_COUNTRY, null)
 
@@ -27,18 +28,18 @@ class TextToSpeechPreferencesService(context: Context) {
         }
     }
 
-    fun loadPreferredVoice(): String? {
+    override suspend fun loadPreferredVoice(): String? {
         return preferences.getString(VOICE, null)
     }
 
-    fun savePreferredLocale(locale: Locale) {
+    override suspend fun savePreferredLocale(locale: Locale) {
         preferences.edit {
             putString(LOCALE_LANGUAGE, locale.language)
             putString(LOCALE_COUNTRY, locale.country)
         }
     }
 
-    fun savePreferredVoice(voice: String?) {
+    override suspend fun savePreferredVoice(voice: String) {
         preferences.edit {
             putString(VOICE, voice)
         }
