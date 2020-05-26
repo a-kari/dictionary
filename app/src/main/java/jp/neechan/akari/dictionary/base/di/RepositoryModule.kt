@@ -1,10 +1,14 @@
 package jp.neechan.akari.dictionary.base.di
 
-import jp.neechan.akari.dictionary.base.data.interface_adapters.WordsRepositoryImpl
-import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.*
-import jp.neechan.akari.dictionary.base.domain.usecases.WordsRepository
+import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.DefinitionToDefinitionDtoMapper
+import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.FilterParamsToFilterParamsDtoMapper
+import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.FrequencyToFrequencyDtoMapper
+import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.PartOfSpeechToPartOfSpeechDtoMapper
+import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.WordToWordDtoMapper
 import jp.neechan.akari.dictionary.base.data.interface_adapters.FilterParamsRepositoryImpl
+import jp.neechan.akari.dictionary.base.data.interface_adapters.WordsRepositoryImpl
 import jp.neechan.akari.dictionary.base.domain.usecases.FilterParamsRepository
+import jp.neechan.akari.dictionary.base.domain.usecases.WordsRepository
 import org.koin.dsl.module
 
 object RepositoryModule : KoinModule {
@@ -36,17 +40,12 @@ object RepositoryModule : KoinModule {
             WordsRepositoryImpl(
                 get(),
                 get(),
-                get(),
-                get(FilterParamsToFilterParamsDtoMapper::class),
-                get(WordToWordDtoMapper::class)
+                get()
             ) as WordsRepository
         }
 
         single {
-            FilterParamsRepositoryImpl(
-                get(),
-                get(FilterParamsToFilterParamsDtoMapper::class)
-            ) as FilterParamsRepository
+            FilterParamsRepositoryImpl(get()) as FilterParamsRepository
         }
     }
 }

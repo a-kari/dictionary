@@ -1,44 +1,28 @@
 package jp.neechan.akari.dictionary.base.data.interface_adapters
 
-import jp.neechan.akari.dictionary.base.data.framework.dto.FilterParamsDto
-import jp.neechan.akari.dictionary.base.data.framework.dto.WordDto
 import jp.neechan.akari.dictionary.base.domain.entities.FilterParams
 import jp.neechan.akari.dictionary.base.domain.entities.Page
 import jp.neechan.akari.dictionary.base.domain.entities.Result
 import jp.neechan.akari.dictionary.base.domain.entities.Word
-import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
 import jp.neechan.akari.dictionary.base.domain.usecases.WordsRepository
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import java.util.Date
 
 class WordsRepositoryImpl(private val localSource: WordsLocalSource,
                           private val remoteSource: WordsRemoteSource,
-                          private val resultWrapper: ResultWrapper,
-                          private val paramsMapper: ModelMapper<FilterParams, FilterParamsDto>,
-                          private val wordMapper: ModelMapper<Word, WordDto>) : WordsRepository {
+                          private val resultWrapper: ResultWrapper) : WordsRepository {
 
     override val allWordsRecentlyUpdated = ConflatedBroadcastChannel(false)
 
     override val savedWordsRecentlyUpdated = ConflatedBroadcastChannel(false)
 
     override suspend fun loadWords(params: FilterParams): Result<Page<String>> {
-        val paramsDto = paramsMapper.mapToExternalLayer(params)
-        return resultWrapper.wrapWithResult {
-            remoteSource.loadWords(paramsDto.toMap())
-        }
+        return resultWrapper.wrapWithResult { remoteSource.loadWords(params) }
     }
 
     override suspend fun loadSavedWords(params: FilterParams): Result<Page<String>> {
-        val page = params.page
-        val limit = FilterParams.DEFAULT_PAGE_SIZE
-        val offset = (page - 1) * limit
-        val savedWords = localSource.getWords(limit, offset)
-
+        val savedWords = localSource.loadWords(params)
         return if (savedWords.isNotEmpty()) {
-            val total = localSource.getWordsCount()
-            val hasNextPage = total > page * limit
-            val wordsPage = Page(savedWords, page, hasNextPage)
-            Result.Success(wordsPage)
+            Result.Success(savedWords)
 
         } else {
             Result.NotFoundError
@@ -54,28 +38,18 @@ class WordsRepositoryImpl(private val localSource: WordsLocalSource,
     }
 
     override suspend fun loadWord(wordId: String): Result<Word> {
-        val localWord = localSource.getWord(wordId)
+        val localWord = localSource.loadWord(wordId)
 
         return if (localWord != null) {
-            Result.Success(localWord.let {
-                val word = it.word
-                word.definitions = it.definitions
-                wordMapper.mapToInternalLayer(word)
-            })
+            Result.Success(localWord)
 
         } else {
-            resultWrapper.wrapWithResult({ remoteSource.loadWord(wordId) }, wordMapper)
+            resultWrapper.wrapWithResult { remoteSource.loadWord(wordId) }
         }
     }
 
     override suspend fun saveWord(word: Word) {
-        val wordDto = wordMapper.mapToExternalLayer(word)
-        wordDto.saveDate = Date()
-        localSource.saveWord(wordDto)
-
-        if (wordDto.definitions != null) {
-            localSource.saveDefinitions(wordDto.definitions!!)
-        }
+        localSource.saveWord(word)
     }
 
     override suspend fun deleteWord(wordId: String) {

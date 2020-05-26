@@ -1,20 +1,16 @@
 package jp.neechan.akari.dictionary.base.data.interface_adapters
 
-import jp.neechan.akari.dictionary.base.data.framework.dto.DefinitionDto
-import jp.neechan.akari.dictionary.base.data.framework.dto.WordDto
-import jp.neechan.akari.dictionary.base.data.framework.dto.WordWithDefinitionsDto
+import jp.neechan.akari.dictionary.base.domain.entities.FilterParams
+import jp.neechan.akari.dictionary.base.domain.entities.Page
+import jp.neechan.akari.dictionary.base.domain.entities.Word
 
 interface WordsLocalSource {
 
-    suspend fun getWords(limit: Int, offset: Int): List<String>
+    suspend fun loadWords(params: FilterParams): Page<String>
 
-    suspend fun getWordsCount(): Int
+    suspend fun loadWord(wordId: String): Word?
 
-    suspend fun getWord(wordId: String): WordWithDefinitionsDto?
-
-    suspend fun saveWord(word: WordDto)
-
-    suspend fun saveDefinitions(definitions: List<DefinitionDto>)
+    suspend fun saveWord(word: Word)
 
     suspend fun deleteWord(wordId: String)
 }

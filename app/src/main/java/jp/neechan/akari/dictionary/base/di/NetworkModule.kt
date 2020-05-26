@@ -2,14 +2,17 @@ package jp.neechan.akari.dictionary.base.di
 
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import jp.neechan.akari.dictionary.base.data.interface_adapters.ResultWrapper
-import jp.neechan.akari.dictionary.base.data.framework.network.RetrofitResultWrapper
-import jp.neechan.akari.dictionary.base.data.interface_adapters.WordsRemoteSource
 import jp.neechan.akari.dictionary.base.data.framework.dto.WordDto
+import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.FilterParamsToFilterParamsDtoMapper
+import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.WordToWordDtoMapper
 import jp.neechan.akari.dictionary.base.data.framework.network.AuthorizationInterceptor
+import jp.neechan.akari.dictionary.base.data.framework.network.RetrofitResultWrapper
 import jp.neechan.akari.dictionary.base.data.framework.network.StringPageDeserializer
 import jp.neechan.akari.dictionary.base.data.framework.network.WordDeserializer
-import jp.neechan.akari.dictionary.base.data.framework.network.WordsApiService
+import jp.neechan.akari.dictionary.base.data.framework.network.WordsApi
+import jp.neechan.akari.dictionary.base.data.framework.network.WordsRemoteSourceImpl
+import jp.neechan.akari.dictionary.base.data.interface_adapters.ResultWrapper
+import jp.neechan.akari.dictionary.base.data.interface_adapters.WordsRemoteSource
 import jp.neechan.akari.dictionary.base.domain.entities.Page
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
@@ -53,10 +56,18 @@ object NetworkModule : KoinModule {
         // Network services
         single {
             val retrofit: Retrofit = get()
-            retrofit.create(WordsApiService::class.java) as WordsRemoteSource
+            retrofit.create(WordsApi::class.java)
         }
 
         // ResultWrapper
         single { RetrofitResultWrapper() as ResultWrapper }
+
+        single {
+            WordsRemoteSourceImpl(
+                get(),
+                get(WordToWordDtoMapper::class),
+                get(FilterParamsToFilterParamsDtoMapper::class)
+            ) as WordsRemoteSource
+        }
     }
 }

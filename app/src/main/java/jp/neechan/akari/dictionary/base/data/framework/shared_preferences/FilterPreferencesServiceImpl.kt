@@ -2,10 +2,10 @@ package jp.neechan.akari.dictionary.base.data.framework.shared_preferences
 
 import android.content.Context
 import androidx.core.content.edit
-import jp.neechan.akari.dictionary.base.data.framework.dto.FilterParamsDto
-import jp.neechan.akari.dictionary.base.data.framework.dto.FrequencyDto
-import jp.neechan.akari.dictionary.base.data.framework.dto.PartOfSpeechDto
 import jp.neechan.akari.dictionary.base.data.interface_adapters.FilterPreferencesService
+import jp.neechan.akari.dictionary.base.domain.entities.FilterParams
+import jp.neechan.akari.dictionary.base.domain.entities.Frequency
+import jp.neechan.akari.dictionary.base.domain.entities.PartOfSpeech
 
 class FilterPreferencesServiceImpl(context: Context) : FilterPreferencesService {
 
@@ -17,20 +17,20 @@ class FilterPreferencesServiceImpl(context: Context) : FilterPreferencesService 
         private const val PART_OF_SPEECH = "partOfSpeech"
     }
 
-    override suspend fun loadFilterParams(): FilterParamsDto {
-        val frequency = preferences.getString(FREQUENCY, null)?.let { FrequencyDto.valueOf(it) }
-            ?: FilterParamsDto.DEFAULT_FREQUENCY
-        val partOfSpeech = preferences.getString(PART_OF_SPEECH, null)?.let { PartOfSpeechDto.valueOf(it) }
-            ?: FilterParamsDto.DEFAULT_PART_OF_SPEECH
+    override suspend fun loadFilterParams(): FilterParams {
+        val frequency = preferences.getString(FREQUENCY, null)?.let { Frequency.valueOf(it) }
+            ?: FilterParams.DEFAULT_FREQUENCY
+        val partOfSpeech = preferences.getString(PART_OF_SPEECH, null)?.let { PartOfSpeech.valueOf(it) }
+            ?: FilterParams.DEFAULT_PART_OF_SPEECH
 
-        return FilterParamsDto(
-            FilterParamsDto.DEFAULT_PAGE,
+        return FilterParams(
+            FilterParams.DEFAULT_PAGE,
             partOfSpeech,
             frequency
         )
     }
 
-    override suspend fun saveFilterParams(params: FilterParamsDto) {
+    override suspend fun saveFilterParams(params: FilterParams) {
         preferences.edit {
             putString(FREQUENCY, params.frequency.name)
             putString(PART_OF_SPEECH, params.partOfSpeech.name)
