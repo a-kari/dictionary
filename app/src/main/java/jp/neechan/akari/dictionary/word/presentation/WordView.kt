@@ -10,7 +10,6 @@ import jp.neechan.akari.dictionary.base.presentation.models.DefinitionUI
 import jp.neechan.akari.dictionary.base.presentation.models.FrequencyUI
 import jp.neechan.akari.dictionary.base.presentation.models.PartOfSpeechUI
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
-import jp.neechan.akari.dictionary.base.presentation.extensions.isValid
 import kotlinx.android.synthetic.main.view_word.view.*
 import kotlinx.android.synthetic.main.view_word_definition.view.*
 import kotlinx.android.synthetic.main.view_word_part_of_speech.view.*
@@ -136,4 +135,6 @@ class WordView : LinearLayout {
     private fun setupListeners() {
         speakButton.setOnClickListener { speakCallback() }
     }
+
+    private fun String?.isValid() = this != null && isNotBlank()
 }

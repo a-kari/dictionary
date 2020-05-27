@@ -7,8 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.base.presentation.extensions.getFirstCharacter
-import java.util.*
+import java.util.Locale
 import kotlin.math.abs
 
 class AvatarView : View {
@@ -60,5 +59,14 @@ class AvatarView : View {
 
     private fun getColorForText(text: String?): Int {
         return circleColors[abs(text.hashCode()) % circleColors.size]
+    }
+
+    private fun String?.getFirstCharacter(): String {
+        return if (this != null && this.isNotEmpty()) {
+            this.substring(0, 1)
+
+        } else {
+            ""
+        }
     }
 }
