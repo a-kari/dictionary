@@ -105,6 +105,6 @@ class SearchWordActivity : BaseActivity() {
     }
 
     private fun showError(error: Result.Error) {
-        toast(this, error.errorMessage)
+        toast(error.errorMessage)
     }
 }

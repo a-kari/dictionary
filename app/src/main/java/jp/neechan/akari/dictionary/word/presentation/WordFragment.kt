@@ -89,7 +89,7 @@ class WordFragment : BaseFragment() {
             addToDictionaryButton.setOnClickListener {
                 addToDictionaryButton.visibility = GONE
                 viewModel.saveWord(word)
-                toast(requireContext(), R.string.word_added_to_dictionary)
+                requireContext().toast(R.string.word_added_to_dictionary)
             }
 
         } else {
@@ -98,7 +98,7 @@ class WordFragment : BaseFragment() {
     }
 
     private fun showError(error: Result.Error) {
-        toast(requireContext(), error.errorMessage)
+        requireContext().toast(error.errorMessage)
     }
 
     fun setWord(word: WordUI) {

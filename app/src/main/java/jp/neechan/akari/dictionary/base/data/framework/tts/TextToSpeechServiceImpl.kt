@@ -94,7 +94,7 @@ class TextToSpeechServiceImpl(
         doAfterTtsInitialization {
             val result = tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
             if (result == TextToSpeech.ERROR) {
-                toast(context, R.string.tts_cant_play)
+                context.toast(R.string.tts_cant_play)
             }
         }
     }

@@ -2,9 +2,14 @@ package jp.neechan.akari.dictionary.home.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
@@ -85,7 +90,7 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
     }
 
     private fun showError(error: Result.Error) {
-        toast(requireContext(), error.errorMessage)
+        requireContext().toast(error.errorMessage)
     }
 
     private fun setupListeners() {
