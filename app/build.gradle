@@ -78,6 +78,7 @@ dependencies {
 
     // Koin (it's just for a quick start, needs to be replaced with Dagger 2 soon)
     implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

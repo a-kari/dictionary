@@ -8,17 +8,17 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.extensions.toast
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import kotlinx.android.synthetic.main.fragment_word.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WordFragment : BaseFragment() {
 
-    private lateinit var viewModel: WordViewModel
+    private val viewModel: WordViewModel by viewModel()
 
     private lateinit var wordId: String
     private var addToDictionaryEnabled = false
@@ -48,7 +48,6 @@ class WordFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(WordViewModel::class.java)
 
         requireArguments().let { arguments ->
             wordId = arguments.getString(ARGUMENT_WORD_ID).orEmpty()

@@ -5,12 +5,8 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
-import jp.neechan.akari.dictionary.base.presentation.viewmodels.ViewModelFactory
-import org.koin.android.ext.android.inject
 
 abstract class BaseDialog : DialogFragment() {
-
-    protected val viewModelFactory: ViewModelFactory by inject()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).apply {

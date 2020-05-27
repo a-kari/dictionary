@@ -4,5 +4,5 @@ import org.koin.core.module.Module
 
 interface KoinModule {
 
-    fun get(): Module
+    val module: Module
 }

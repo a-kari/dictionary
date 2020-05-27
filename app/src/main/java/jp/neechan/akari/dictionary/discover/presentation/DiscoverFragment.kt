@@ -12,7 +12,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.adapters.WordsAdapter
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
@@ -22,10 +21,11 @@ import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import jp.neechan.akari.dictionary.discover.filter.presentation.WordsFilterDialog
 import jp.neechan.akari.dictionary.word.presentation.WordActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
-    private lateinit var viewModel: DiscoverViewModel
+    private val viewModel: DiscoverViewModel by viewModel()
     private lateinit var wordsAdapter: WordsAdapter
 
     companion object {
@@ -43,8 +43,6 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(DiscoverViewModel::class.java)
-
         setupRecyclerView()
         setupObservers()
     }

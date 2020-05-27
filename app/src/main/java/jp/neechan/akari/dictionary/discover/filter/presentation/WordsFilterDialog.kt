@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.views.BaseDialog
 import kotlinx.android.synthetic.main.dialog_words_filter.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WordsFilterDialog : BaseDialog() {
 
-    private lateinit var viewModel: WordsFilterViewModel
+    private val viewModel: WordsFilterViewModel by viewModel()
 
     companion object {
         fun newInstance() = WordsFilterDialog()
@@ -26,8 +26,6 @@ class WordsFilterDialog : BaseDialog() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(WordsFilterViewModel::class.java)
-
         setupSeekBar()
         setupSpinner()
         setupFilterButton()

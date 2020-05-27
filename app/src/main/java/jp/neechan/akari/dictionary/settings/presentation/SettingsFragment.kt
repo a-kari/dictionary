@@ -12,14 +12,14 @@ import android.widget.RadioGroup
 import androidx.annotation.IdRes
 import androidx.core.view.children
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import kotlinx.android.synthetic.main.fragment_settings.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment() {
 
-    private lateinit var viewModel: SettingsViewModel
+    private val viewModel: SettingsViewModel by viewModel()
 
     private lateinit var voicesAdapter: ArrayAdapter<String>
 
@@ -36,8 +36,6 @@ class SettingsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(SettingsViewModel::class.java)
-
         setupVoicesSpinner()
         setupObservers()
         setupListeners()
