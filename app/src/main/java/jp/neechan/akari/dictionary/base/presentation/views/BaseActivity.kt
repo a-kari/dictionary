@@ -23,6 +23,10 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    protected fun setTitle(title: String) {
+        supportActionBar?.title = title
+    }
+
     protected fun setupBackButton() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

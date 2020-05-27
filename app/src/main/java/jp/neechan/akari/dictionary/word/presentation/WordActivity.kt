@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.fragment.app.commit
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.views.BaseActivity
-import kotlinx.android.synthetic.main.activity_word.*
 
 class WordActivity : BaseActivity() {
 
@@ -28,7 +27,7 @@ class WordActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        toolbar.title = word
+        setTitle(word)
         setupBackButton()
     }
 
