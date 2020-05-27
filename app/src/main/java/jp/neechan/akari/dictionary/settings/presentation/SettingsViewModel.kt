@@ -30,58 +30,58 @@ class SettingsViewModel(private val loadPronunciationsUseCase: LoadPronunciation
                         private val speakUseCase: SpeakUseCase,
                         private val stopSpeakingUseCase: StopSpeakingUseCase) : ViewModel() {
 
-    // pronunciationsLiveData will be populated only once.
-    private val pronunciationsLiveData: LiveData<List<Locale>> = liveData {
+    // pronunciations will be populated only once.
+    private val pronunciations: LiveData<List<Locale>> = liveData {
         emit(loadPronunciationsUseCase())
         initializePreferredPronunciation()
     }
-    val pronunciationNamesLiveData = pronunciationsLiveData.map { pronunciations ->
+    val pronunciationNames = pronunciations.map { pronunciations ->
         pronunciations.map { it.displayCountry }
     }
 
-    // _preferredPronunciationIndexLiveData will be populated:
+    // _preferredPronunciationIndex will be populated:
     // 1. After pronunciations are loaded.
     // 2. When a user changes the preferred pronunciation.
-    private val _preferredPronunciationIndexLiveData = MutableLiveData<Int>()
-    val preferredPronunciationIndexLiveData: LiveData<Int> = _preferredPronunciationIndexLiveData
+    private val _preferredPronunciationIndex = MutableLiveData<Int>()
+    val preferredPronunciationIndex: LiveData<Int> = _preferredPronunciationIndex
 
-    // voicesLiveData will be populated:
+    // voices will be populated:
     // 1. When a user changes the preferred pronunciation, so voices will be changed accordingly.
-    val voicesLiveData = _preferredPronunciationIndexLiveData.switchMap { liveData { emit(loadVoicesUseCase()) } }
+    val voices = _preferredPronunciationIndex.switchMap { liveData { emit(loadVoicesUseCase()) } }
     private val voicesObserver: Observer<List<String>>
 
-    // _preferredVoiceIndexLiveData will be populated:
+    // _preferredVoiceIndex will be populated:
     // 1. When voices are changed (due to pronunciation change), so we need to update the preferred voice, too.
     // 2. When a user changes the preferred voice.
-    private val _preferredVoiceIndexLiveData = MutableLiveData<Int>()
-    val preferredVoiceIndexLiveData: LiveData<Int> = _preferredVoiceIndexLiveData
+    private val _preferredVoiceIndex = MutableLiveData<Int>()
+    val preferredVoiceIndex: LiveData<Int> = _preferredVoiceIndex
 
     init {
         // Trigger the preferred voice update when all voices are updated.
         voicesObserver = Observer { voices ->
             viewModelScope.launch {
-                _preferredVoiceIndexLiveData.postValue(voices.indexOf(loadPreferredVoiceUseCase()))
+                _preferredVoiceIndex.postValue(voices.indexOf(loadPreferredVoiceUseCase()))
             }
         }
-        voicesLiveData.observeForever(voicesObserver)
+        voices.observeForever(voicesObserver)
     }
 
     private fun initializePreferredPronunciation() = viewModelScope.launch(Dispatchers.IO) {
         val preferredPronunciation = loadPreferredPronunciationUseCase()
-        val preferredPronunciationIndex = pronunciationsLiveData.value!!.indexOf(preferredPronunciation)
-        _preferredPronunciationIndexLiveData.postValue(preferredPronunciationIndex)
+        val preferredPronunciationIndex = pronunciations.value!!.indexOf(preferredPronunciation)
+        _preferredPronunciationIndex.postValue(preferredPronunciationIndex)
     }
 
     fun savePreferredPronunciation(preferredPronunciationIndex: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val preferredPronunciation = pronunciationsLiveData.value!![preferredPronunciationIndex]
+        val preferredPronunciation = pronunciations.value!![preferredPronunciationIndex]
         savePreferredPronunciationUseCase(preferredPronunciation)
-        _preferredPronunciationIndexLiveData.postValue(preferredPronunciationIndex)
+        _preferredPronunciationIndex.postValue(preferredPronunciationIndex)
     }
 
     fun savePreferredVoice(preferredVoiceIndex: Int) = viewModelScope.launch(Dispatchers.IO) {
-        val preferredVoice = voicesLiveData.value!![preferredVoiceIndex]
+        val preferredVoice = voices.value!![preferredVoiceIndex]
         savePreferredVoiceUseCase(preferredVoice)
-        _preferredVoiceIndexLiveData.postValue(preferredVoiceIndex)
+        _preferredVoiceIndex.postValue(preferredVoiceIndex)
     }
 
     fun speak(text: String) = viewModelScope.launch {
@@ -90,7 +90,7 @@ class SettingsViewModel(private val loadPronunciationsUseCase: LoadPronunciation
 
     override fun onCleared() {
         viewModelScope.launch(NonCancellable) { stopSpeakingUseCase() }
-        voicesLiveData.removeObserver(voicesObserver)
+        voices.removeObserver(voicesObserver)
         super.onCleared()
     }
 }

@@ -53,17 +53,17 @@ class SettingsFragment : BaseFragment() {
     }
 
     private fun setupObservers() {
-        viewModel.pronunciationNamesLiveData.observe(viewLifecycleOwner, Observer { pronunciations ->
+        viewModel.pronunciationNames.observe(viewLifecycleOwner, Observer { pronunciations ->
             createPronunciationRadioButtons(pronunciations)
         })
 
-        viewModel.preferredPronunciationIndexLiveData.observe(viewLifecycleOwner, Observer { preferredPronunciationIndex ->
+        viewModel.preferredPronunciationIndex.observe(viewLifecycleOwner, Observer { preferredPronunciationIndex ->
             pronunciationsRadioGroup.setOnCheckedChangeListener(null)
             pronunciationsRadioGroup.checkPosition(preferredPronunciationIndex)
             pronunciationsRadioGroup.setOnCheckedChangeListener(pronunciationChangedListener)
         })
 
-        viewModel.voicesLiveData.observe(viewLifecycleOwner, Observer { voices ->
+        viewModel.voices.observe(viewLifecycleOwner, Observer { voices ->
             voicesAdapter.clear()
 
             if (voices.isNotEmpty()) {
@@ -75,7 +75,7 @@ class SettingsFragment : BaseFragment() {
             }
         })
 
-        viewModel.preferredVoiceIndexLiveData.observe(viewLifecycleOwner, Observer { preferredVoiceIndex ->
+        viewModel.preferredVoiceIndex.observe(viewLifecycleOwner, Observer { preferredVoiceIndex ->
             voicesSpinner.onItemSelectedListener = null
             voicesSpinner.setSelection(preferredVoiceIndex, false)
             Handler().post { voicesSpinner.onItemSelectedListener = voiceChangedListener }
