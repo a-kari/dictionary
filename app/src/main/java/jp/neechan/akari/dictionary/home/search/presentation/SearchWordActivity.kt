@@ -3,13 +3,14 @@ package jp.neechan.akari.dictionary.home.search.presentation
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.annotation.StringRes
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.base.domain.entities.Result
 import jp.neechan.akari.dictionary.base.presentation.extensions.toast
+import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
 import jp.neechan.akari.dictionary.base.presentation.views.BaseActivity
 import jp.neechan.akari.dictionary.word.presentation.WordFragment
@@ -50,12 +51,12 @@ class SearchWordActivity : BaseActivity() {
     }
     
     private fun setupObservers() {
-        viewModel.resultLiveData.observe(this, Observer { result ->
-            when (result) {
-                is Result.Loading -> showProgressBar()
-                is Result.Success -> showContent(result.value)
-                is Result.NotFoundError -> showEmptyContent()
-                is Result.Error -> showError(result)
+        viewModel.wordLiveData.observe(this, Observer { state ->
+            when (state) {
+                is UIState.ShowLoading -> showProgressBar()
+                is UIState.ShowContent -> showContent(state.content)
+                is UIState.ShowNotFoundError -> showEmptyContent()
+                is UIState.ShowError -> showError(state.errorMessage)
             }
         })
     }
@@ -104,7 +105,7 @@ class SearchWordActivity : BaseActivity() {
         searchView.clearFocus()
     }
 
-    private fun showError(error: Result.Error) {
-        toast(error.errorMessage)
+    private fun showError(@StringRes errorMessage: Int) {
+        toast(errorMessage)
     }
 }

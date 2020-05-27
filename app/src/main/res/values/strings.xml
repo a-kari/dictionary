@@ -9,10 +9,10 @@
     <string name="filter">Filter</string>
     <string name="bullet">\u2022</string>
 
-    <!-- Network -->
-    <string name="network_connection_error">No connection</string>
-    <string name="network_not_found_error">Not found</string>
-    <string name="network_unknown_error">Unknown error</string>
+    <!-- UI state -->
+    <string name="ui_state_connection_error">No connection</string>
+    <string name="ui_state_not_found_error">Not found</string>
+    <string name="ui_state_unknown_error">Unknown error</string>
 
     <!-- MainActivity -->
     <string name="main_bottom_navigation_home">Home</string>

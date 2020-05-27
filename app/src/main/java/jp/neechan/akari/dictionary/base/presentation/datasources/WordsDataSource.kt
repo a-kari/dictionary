@@ -6,25 +6,28 @@ import androidx.paging.PageKeyedDataSource
 import jp.neechan.akari.dictionary.base.domain.entities.FilterParams
 import jp.neechan.akari.dictionary.base.domain.entities.Page
 import jp.neechan.akari.dictionary.base.domain.entities.Result
+import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
 import jp.neechan.akari.dictionary.base.domain.usecases.LoadFilterParamsUseCase
 import jp.neechan.akari.dictionary.base.domain.usecases.LoadWordsUseCase
+import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
 class WordsDataSource(private val loadWords: LoadWordsUseCase,
                       private val loadFilterParams: LoadFilterParamsUseCase,
+                      private val resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>,
                       private val coroutineScope: CoroutineScope) : PageKeyedDataSource<Int, String>() {
 
-    private val _resultLiveData = MutableLiveData<Result<Page<String>>>()
-    val resultLiveData: LiveData<Result<Page<String>>> = _resultLiveData
+    private val _uiStateLiveData = MutableLiveData<UIState<Page<String>>>()
+    val uiStateLiveData: LiveData<UIState<Page<String>>> = _uiStateLiveData
 
     companion object {
         private const val FIRST_PAGE = FilterParams.DEFAULT_PAGE
     }
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, String>) {
-        _resultLiveData.postValue(Result.Loading)
+        _uiStateLiveData.postValue(UIState.ShowLoading)
         loadPage(FIRST_PAGE) { words, previousPage, nextPage ->
             callback.onResult(words, null, nextPage)
         }
@@ -46,15 +49,15 @@ class WordsDataSource(private val loadWords: LoadWordsUseCase,
         coroutineScope.launch {
             val params: FilterParams = loadFilterParams()
             params.page = page
-            val result = loadWords(params)
+            val uiState = resultMapper.mapToExternalLayer(loadWords(params))
 
-            if (result is Result.Success) {
-                val wordsPage = result.value
+            if (uiState is UIState.ShowContent) {
+                val wordsPage = uiState.content
                 val previousPage = if (wordsPage.pageNumber > FIRST_PAGE) wordsPage.pageNumber - 1 else null
                 val nextPage = if (wordsPage.hasNextPage) wordsPage.pageNumber + 1 else null
                 callback(wordsPage.content, previousPage, nextPage)
             }
-            _resultLiveData.postValue(result)
+            _uiStateLiveData.postValue(uiState)
         }
     }
 }

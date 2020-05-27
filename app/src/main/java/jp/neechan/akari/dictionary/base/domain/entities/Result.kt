@@ -1,18 +1,14 @@
 package jp.neechan.akari.dictionary.base.domain.entities
 
-import androidx.annotation.StringRes
-import jp.neechan.akari.dictionary.R
-
 sealed class Result<out T> {
 
     data class Success<out T>(val value: T) : Result<T>()
 
-    open class Error(val error: Throwable? = null,
-                     @StringRes val errorMessage: Int = R.string.network_unknown_error) : Result<Nothing>()
+    open class Error(val error: Throwable? = null) : Result<Nothing>()
 
-    object ConnectionError : Error(errorMessage = R.string.network_connection_error)
+    object ConnectionError : Error()
 
-    object NotFoundError : Error(errorMessage = R.string.network_not_found_error)
+    object NotFoundError : Error()
 
     object Loading : Result<Nothing>()
 }

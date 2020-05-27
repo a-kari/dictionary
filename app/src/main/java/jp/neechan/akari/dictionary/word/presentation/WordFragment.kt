@@ -6,11 +6,12 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.base.domain.entities.Result
 import jp.neechan.akari.dictionary.base.presentation.extensions.toast
+import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import kotlinx.android.synthetic.main.fragment_word.*
@@ -63,16 +64,22 @@ class WordFragment : BaseFragment() {
 
     private fun setupObservers() {
         viewModel.wordId = wordId
-        viewModel.wordLiveData.observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is Result.Success -> showContent(result.value)
-                is Result.Error -> showError(result)
+        viewModel.wordLiveData.observe(viewLifecycleOwner, Observer { state ->
+            when (state) {
+                is UIState.ShowLoading -> showProgressBar()
+                is UIState.ShowContent -> showContent(state.content)
+                is UIState.ShowError -> showError(state.errorMessage)
             }
         })
     }
 
     private fun setupListeners() {
         wordView.setSpeakCallback { viewModel.speak() }
+    }
+
+    private fun showProgressBar() {
+        content.visibility = GONE
+        progressBar.visibility = VISIBLE
     }
 
     private fun showContent(word: WordUI) {
@@ -97,8 +104,8 @@ class WordFragment : BaseFragment() {
         }
     }
 
-    private fun showError(error: Result.Error) {
-        requireContext().toast(error.errorMessage)
+    private fun showError(@StringRes errorMessage: Int) {
+        requireContext().toast(errorMessage)
     }
 
     fun setWord(word: WordUI) {

@@ -6,20 +6,34 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import jp.neechan.akari.dictionary.base.domain.entities.FilterParams
+import jp.neechan.akari.dictionary.base.domain.entities.Page
+import jp.neechan.akari.dictionary.base.domain.entities.Result
+import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
 import jp.neechan.akari.dictionary.base.domain.usecases.LoadFilterParamsUseCase
 import jp.neechan.akari.dictionary.base.presentation.datasources.WordsDataSourceFactory
+import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.home.domain.usecases.DeleteWordUseCase
 import jp.neechan.akari.dictionary.home.domain.usecases.LoadSavedWordsUseCase
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 
 class HomeViewModel(private val loadWordsUseCase: LoadSavedWordsUseCase,
                     loadFilterParamsUseCase: LoadFilterParamsUseCase,
-                    private val deleteWordUseCase: DeleteWordUseCase) : ViewModel() {
+                    private val deleteWordUseCase: DeleteWordUseCase,
+                    resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>) : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    private val wordsDataSourceFactory = WordsDataSourceFactory(loadWordsUseCase, loadFilterParamsUseCase, ioScope)
+    private val wordsDataSourceFactory = WordsDataSourceFactory(
+        loadWordsUseCase,
+        loadFilterParamsUseCase,
+        resultMapper,
+        ioScope
+    )
 
     val wordsLiveData by lazy {
         val config = PagedList.Config.Builder()
@@ -29,8 +43,8 @@ class HomeViewModel(private val loadWordsUseCase: LoadSavedWordsUseCase,
         LivePagedListBuilder(wordsDataSourceFactory, config).build()
     }
 
-    val wordsStatusLiveData = Transformations.switchMap(wordsDataSourceFactory.wordsDataSource) { wordsDataSource ->
-        wordsDataSource.resultLiveData
+    val uiStateLiveData = Transformations.switchMap(wordsDataSourceFactory.wordsDataSource) { wordsDataSource ->
+        wordsDataSource.uiStateLiveData
     }
 
     var isEditMode = false

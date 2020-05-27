@@ -10,12 +10,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.base.domain.entities.Result
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
 import jp.neechan.akari.dictionary.base.presentation.extensions.toast
+import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import jp.neechan.akari.dictionary.home.search.presentation.SearchWordActivity
 import jp.neechan.akari.dictionary.word.presentation.WordActivity
@@ -61,12 +62,12 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
             wordsAdapter.submitList(words)
         })
 
-        viewModel.wordsStatusLiveData.observe(viewLifecycleOwner, Observer { status ->
-            when (status) {
-                is Result.Loading -> showProgressBar()
-                is Result.Success -> showContent()
-                is Result.NotFoundError -> showEmptyContent()
-                is Result.Error -> showError(status)
+        viewModel.uiStateLiveData.observe(viewLifecycleOwner, Observer { state ->
+            when (state) {
+                is UIState.ShowLoading -> showProgressBar()
+                is UIState.ShowContent -> showContent()
+                is UIState.ShowNotFoundError -> showEmptyContent()
+                is UIState.ShowError -> showError(state.errorMessage)
             }
         })
     }
@@ -89,8 +90,8 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
         wordsRv.visibility = GONE
     }
 
-    private fun showError(error: Result.Error) {
-        requireContext().toast(error.errorMessage)
+    private fun showError(@StringRes errorMessage: Int) {
+        requireContext().toast(errorMessage)
     }
 
     private fun setupListeners() {

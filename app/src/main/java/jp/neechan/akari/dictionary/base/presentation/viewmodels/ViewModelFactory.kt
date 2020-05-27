@@ -3,7 +3,9 @@ package jp.neechan.akari.dictionary.base.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.base.domain.entities.Frequency
+import jp.neechan.akari.dictionary.base.domain.entities.Page
 import jp.neechan.akari.dictionary.base.domain.entities.PartOfSpeech
+import jp.neechan.akari.dictionary.base.domain.entities.Result
 import jp.neechan.akari.dictionary.base.domain.entities.Word
 import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
 import jp.neechan.akari.dictionary.base.domain.usecases.LoadFilterParamsUseCase
@@ -12,6 +14,7 @@ import jp.neechan.akari.dictionary.base.domain.usecases.SpeakUseCase
 import jp.neechan.akari.dictionary.base.domain.usecases.StopSpeakingUseCase
 import jp.neechan.akari.dictionary.base.presentation.models.FrequencyUI
 import jp.neechan.akari.dictionary.base.presentation.models.PartOfSpeechUI
+import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
 import jp.neechan.akari.dictionary.discover.domain.usecases.LoadAllWordsUseCase
 import jp.neechan.akari.dictionary.discover.filter.domain.usecases.SaveFilterParamsUseCase
@@ -49,7 +52,9 @@ class ViewModelFactory(
     private val savePreferredPronunciationUseCase: SavePreferredPronunciationUseCase,
     private val savePreferredVoiceUseCase: SavePreferredVoiceUseCase,
     private val speakUseCase: SpeakUseCase,
-    private val stopSpeakingUseCase: StopSpeakingUseCase
+    private val stopSpeakingUseCase: StopSpeakingUseCase,
+    private val resultWordMapper: ModelMapper<Result<Word>, UIState<WordUI>>,
+    private val resultStringPageMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
@@ -58,19 +63,25 @@ class ViewModelFactory(
             HomeViewModel::class.java -> HomeViewModel(
                 loadSavedWordsUseCase,
                 loadFilterParamsUseCase,
-                deleteWordUseCase
+                deleteWordUseCase,
+                resultStringPageMapper
             )
-            SearchWordViewModel::class.java -> SearchWordViewModel(loadWordUseCase, wordMapper)
+            SearchWordViewModel::class.java -> SearchWordViewModel(
+                loadWordUseCase,
+                resultWordMapper
+            )
             WordViewModel::class.java -> WordViewModel(
                 loadWordUseCase,
                 saveWordUseCase,
+                resultWordMapper,
                 wordMapper,
                 speakUseCase,
                 stopSpeakingUseCase
             )
             DiscoverViewModel::class.java -> DiscoverViewModel(
                 loadAllWordsUseCase,
-                loadFilterParamsUseCase
+                loadFilterParamsUseCase,
+                resultStringPageMapper
             )
             WordsFilterViewModel::class.java -> WordsFilterViewModel(
                 loadFilterParamsUseCase,
