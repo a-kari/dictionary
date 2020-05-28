@@ -4,9 +4,6 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.discover.presentation.DiscoverFragment
-import jp.neechan.akari.dictionary.home.presentation.HomeFragment
-import jp.neechan.akari.dictionary.settings.presentation.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {

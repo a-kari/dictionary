@@ -3,7 +3,6 @@ package jp.neechan.akari.dictionary.base.data.framework.network
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import jp.neechan.akari.dictionary.base.domain.entities.Page
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 

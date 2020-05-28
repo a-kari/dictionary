@@ -1,13 +1,6 @@
 package jp.neechan.akari.dictionary.settings.di
 
 import jp.neechan.akari.dictionary.base.di.KoinModule
-import jp.neechan.akari.dictionary.settings.domain.usecases.LoadPreferredPronunciationUseCase
-import jp.neechan.akari.dictionary.settings.domain.usecases.LoadPreferredVoiceUseCase
-import jp.neechan.akari.dictionary.settings.domain.usecases.LoadPronunciationsUseCase
-import jp.neechan.akari.dictionary.settings.domain.usecases.LoadVoicesUseCase
-import jp.neechan.akari.dictionary.settings.domain.usecases.SavePreferredPronunciationUseCase
-import jp.neechan.akari.dictionary.settings.domain.usecases.SavePreferredVoiceUseCase
-import jp.neechan.akari.dictionary.settings.presentation.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module

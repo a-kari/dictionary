@@ -2,10 +2,6 @@ package jp.neechan.akari.dictionary.word.di
 
 import jp.neechan.akari.dictionary.base.di.BaseModule
 import jp.neechan.akari.dictionary.base.di.KoinModule
-import jp.neechan.akari.dictionary.base.presentation.models.mappers.ResultToUIStateMapper
-import jp.neechan.akari.dictionary.base.presentation.models.mappers.WordToWordUIMapper
-import jp.neechan.akari.dictionary.word.domain.usecases.SaveWordUseCase
-import jp.neechan.akari.dictionary.word.presentation.WordViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
