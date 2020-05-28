@@ -13,10 +13,10 @@ import jp.neechan.akari.dictionary.base.data.framework.dto.WordWithDefinitionsDt
 interface WordsDao {
 
     @Query("SELECT word FROM Word ORDER BY saveDate DESC LIMIT :limit OFFSET :offset")
-    suspend fun getWords(limit: Int, offset: Int): List<String>
+    fun getWords(limit: Int, offset: Int): List<String>
 
     @Query("SELECT COUNT(1) FROM WORD")
-    suspend fun getWordsCount(): Int
+    fun getWordsCount(): Int
 
     @Transaction
     @Query("SELECT * FROM Word WHERE word = :wordId LIMIT 1")

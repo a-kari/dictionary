@@ -26,13 +26,19 @@ class HomeViewModel(private val loadWordsUseCase: LoadSavedWordsUseCase,
                     private val deleteWordUseCase: DeleteWordUseCase,
                     resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>) : ViewModel() {
 
-    private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    // It's needed to use Paging Library's own background threads here for smooth work.
+    // As deleting a word invalidates the whole DataSource, data will be re-fetched.
+    //
+    // And if re-fetching is not in Paging Library thread, it will cause
+    // an excess empty list submitting before a fresh non-empty one,
+    // which in turn leads to the whole RecyclerView state wiping and jumping to its beginning.
+    private val unconfinedScope = CoroutineScope(Dispatchers.Unconfined + SupervisorJob())
 
     private val wordsDataSourceFactory = WordsDataSourceFactory(
         loadWordsUseCase,
         loadFilterParamsUseCase,
         resultMapper,
-        ioScope
+        unconfinedScope
     )
 
     val wordsLiveData by lazy {
@@ -65,6 +71,6 @@ class HomeViewModel(private val loadWordsUseCase: LoadSavedWordsUseCase,
 
     override fun onCleared() {
         super.onCleared()
-        ioScope.cancel()
+        unconfinedScope.cancel()
     }
 }
