@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".base.presentation.views.MainActivity">
+        <activity
+            android:name=".base.presentation.views.MainActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,9 +24,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".word.presentation.WordActivity" />
+        <activity
+            android:name=".word.presentation.WordActivity"
+            android:launchMode="singleTop" />
 
-        <activity android:name=".home.search.presentation.SearchWordActivity" />
+        <activity
+            android:name=".home.search.presentation.SearchWordActivity"
+            android:launchMode="singleTop" />
 
     </application>
 
