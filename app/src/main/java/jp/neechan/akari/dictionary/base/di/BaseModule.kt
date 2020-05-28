@@ -12,9 +12,9 @@ import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.FrequencyToFr
 import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.PartOfSpeechToPartOfSpeechDtoMapper
 import jp.neechan.akari.dictionary.base.data.framework.dto.mappers.WordToWordDtoMapper
 import jp.neechan.akari.dictionary.base.data.framework.network.AuthorizationInterceptor
+import jp.neechan.akari.dictionary.base.data.framework.network.PageDeserializer
 import jp.neechan.akari.dictionary.base.data.framework.network.RetrofitResultWrapper
-import jp.neechan.akari.dictionary.base.data.framework.network.StringPageDeserializer
-import jp.neechan.akari.dictionary.base.data.framework.network.WordDeserializer
+import jp.neechan.akari.dictionary.base.data.framework.network.WordDtoDeserializer
 import jp.neechan.akari.dictionary.base.data.framework.network.WordsApi
 import jp.neechan.akari.dictionary.base.data.framework.network.WordsRemoteSourceImpl
 import jp.neechan.akari.dictionary.base.data.framework.shared_preferences.FilterPreferencesServiceImpl
@@ -130,8 +130,8 @@ object BaseModule : KoinModule {
 
     private fun Module.provideNetwork() {
         // TypeAdapters
-        single { StringPageDeserializer() }
-        single { WordDeserializer() }
+        single { PageDeserializer<String>() }
+        single { WordDtoDeserializer() }
 
         // Interceptors
         single { AuthorizationInterceptor() }
@@ -139,8 +139,8 @@ object BaseModule : KoinModule {
         // Gson
         single {
             val stringPageType = object : TypeToken<Page<String>>() {}.type
-            GsonBuilder().registerTypeAdapter(stringPageType, get(StringPageDeserializer::class))
-                         .registerTypeAdapter(WordDto::class.java, get(WordDeserializer::class))
+            GsonBuilder().registerTypeAdapter(stringPageType, get(PageDeserializer::class))
+                         .registerTypeAdapter(WordDto::class.java, get(WordDtoDeserializer::class))
                          .create()
         }
 

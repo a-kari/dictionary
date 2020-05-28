@@ -17,8 +17,7 @@ class WordsLocalSourceImpl(private val wordsDao: WordsDao,
         val offset = (page - 1) * limit
         val words = wordsDao.getWords(limit, offset)
         val total = wordsDao.getWordsCount()
-        val hasNextPage = total > page * limit
-        return Page(words, page, hasNextPage)
+        return Page(words, page, limit, total)
     }
 
     override suspend fun loadWord(wordId: String): Word? {
