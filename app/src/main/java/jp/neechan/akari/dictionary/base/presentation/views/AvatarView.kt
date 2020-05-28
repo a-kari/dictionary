@@ -12,7 +12,6 @@ import kotlin.math.abs
 
 class AvatarView : View {
 
-    private var text: String = ""
     private var letter: String = ""
 
     private val circleColors = context.resources.getIntArray(R.array.avatarColors)
@@ -36,8 +35,8 @@ class AvatarView : View {
     }
 
     fun setText(text: String) {
-        this.text = text
-        this.letter = text.getFirstCharacter().toUpperCase(Locale.getDefault())
+        letter = text.getFirstCharacter().toUpperCase(Locale.getDefault())
+        circlePaint.color = circleColors[abs(text.hashCode()) % circleColors.size]
         invalidate()
     }
 
@@ -48,7 +47,6 @@ class AvatarView : View {
             val centerY = height / 2f
 
             val circleRadius = width / 2f
-            circlePaint.color = getColorForText(text)
             drawCircle(centerX, centerY, circleRadius, circlePaint)
 
             val textStartX = centerX
@@ -57,16 +55,7 @@ class AvatarView : View {
         }
     }
 
-    private fun getColorForText(text: String?): Int {
-        return circleColors[abs(text.hashCode()) % circleColors.size]
-    }
-
-    private fun String?.getFirstCharacter(): String {
-        return if (this != null && this.isNotEmpty()) {
-            this.substring(0, 1)
-
-        } else {
-            ""
-        }
+    private fun String.getFirstCharacter(): String {
+        return if (isNotEmpty()) this[0].toString() else ""
     }
 }
