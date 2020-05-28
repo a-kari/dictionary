@@ -24,8 +24,10 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected fun setupBackButton() {
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.apply {
+            setDisplayShowHomeEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
