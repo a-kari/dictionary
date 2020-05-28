@@ -52,7 +52,6 @@ class WordsFilterViewModel(private val loadFilterParams: LoadFilterParamsUseCase
         emit(partsOfSpeech.indexOf(preferredPartOfSpeechUI))
     }
 
-    // todo: Update preferred values.
     fun updateWordsFilterParams(frequencyIndex: Int, partOfSpeechIndex: Int) = viewModelScope.launch(Dispatchers.IO) {
         val frequency = frequencyMapper.mapToInternalLayer(frequencies[frequencyIndex])
         val partOfSpeech = partOfSpeechMapper.mapToInternalLayer(partsOfSpeech[partOfSpeechIndex])

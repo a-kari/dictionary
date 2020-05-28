@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="@dimen/default_padding">
+    android:scrollbars="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/settings_pronunciation" />
+        android:orientation="vertical"
+        android:padding="@dimen/default_padding">
 
-    <RadioGroup
-        android:id="@+id/pronunciationsRadioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_padding_small" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_pronunciation" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_padding"
-        android:text="@string/settings_voice" />
+        <RadioGroup
+            android:id="@+id/pronunciationsRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_small" />
 
-    <jp.neechan.akari.dictionary.base.presentation.views.ReselectableSpinner
-        android:id="@+id/voicesSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_padding_small"
-        android:minWidth="@dimen/spinner_min_width"
-        tools:listitem="@android:layout/simple_spinner_dropdown_item" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/settings_voice" />
 
-</LinearLayout>
+        <jp.neechan.akari.dictionary.base.presentation.views.ReselectableSpinner
+            android:id="@+id/voicesSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding_small"
+            android:minWidth="@dimen/spinner_min_width"
+            tools:listitem="@android:layout/simple_spinner_dropdown_item" />
+
+    </LinearLayout>
+
+</ScrollView>

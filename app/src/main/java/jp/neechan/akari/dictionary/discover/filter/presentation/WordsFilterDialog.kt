@@ -42,8 +42,6 @@ class WordsFilterDialog : BaseDialog() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        // todo: It seems that I need to emit fresh values to the LiveData when new filter params are chosen,
-        // todo: because if a user rotates a device, old filter values will come here.
         viewModel.preferredFrequencyIndex.observe(viewLifecycleOwner, Observer { preferredFrequencyIndex ->
             frequencySeekBar.progress = preferredFrequencyIndex
         })

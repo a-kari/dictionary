@@ -10,6 +10,12 @@ import jp.neechan.akari.dictionary.settings.presentation.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
+    
+    private var selectedNavigationItemId = 0
+
+    companion object {
+        private const val SELECTED_NAVIGATION_ITEM_ID = "selectedNavigationItemId"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,15 +26,16 @@ class MainActivity : BaseActivity() {
     private fun setupBottomNavigation() {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             toolbar.title = menuItem.title
-            when (menuItem.itemId) {
+            selectedNavigationItemId = menuItem.itemId
+
+            when (selectedNavigationItemId) {
                 R.id.discover -> loadFragment(DiscoverFragment::class.java)
                 R.id.settings -> loadFragment(SettingsFragment::class.java)
                 else -> loadFragment(HomeFragment::class.java)
             }
             true
         }
-        bottomNavigationView.selectedItemId =
-            R.id.home
+        bottomNavigationView.selectedItemId = R.id.home
     }
 
     private fun <T : Fragment> loadFragment(clazz: Class<T>) {
@@ -40,5 +47,15 @@ class MainActivity : BaseActivity() {
         }
 
         supportFragmentManager.commit { replace(R.id.fragmentContainer, fragment, tag) }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(SELECTED_NAVIGATION_ITEM_ID, selectedNavigationItemId)
+        super.onSaveInstanceState(outState)
+    }
+    
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        bottomNavigationView.selectedItemId = savedInstanceState.getInt(SELECTED_NAVIGATION_ITEM_ID, R.id.home)
     }
 }

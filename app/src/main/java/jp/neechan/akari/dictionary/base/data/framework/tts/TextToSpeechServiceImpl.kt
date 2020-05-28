@@ -25,7 +25,7 @@ class TextToSpeechServiceImpl(
     @Volatile
     private var isTtsInitialized = false
 
-    private lateinit var ttsLocale: Locale
+    private var ttsLocale: Locale
 
     private val availableLocales: List<Locale>
 
@@ -38,6 +38,9 @@ class TextToSpeechServiceImpl(
                 add(Locale("en", "au"))
             }
         }
+
+        // Init with a default value just in case. Will be redefined soon.
+        ttsLocale = availableLocales.first()
     }
 
     override fun onInit(status: Int) {
