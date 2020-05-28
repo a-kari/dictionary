@@ -78,6 +78,7 @@ class WordFragment : BaseFragment() {
 
     private fun showProgressBar() {
         content.visibility = GONE
+        errorTv.visibility = GONE
         progressBar.visibility = VISIBLE
     }
 
@@ -86,6 +87,7 @@ class WordFragment : BaseFragment() {
         maybeShowAddToDictionaryButton(!word.isSaved && addToDictionaryEnabled, word)
 
         progressBar.visibility = GONE
+        errorTv.visibility = GONE
         content.visibility = VISIBLE
     }
 
@@ -104,7 +106,10 @@ class WordFragment : BaseFragment() {
     }
 
     private fun showError(@StringRes errorMessage: Int) {
-        requireContext().toast(errorMessage)
+        errorTv.setText(errorMessage)
+        progressBar.visibility = GONE
+        content.visibility = GONE
+        errorTv.visibility = VISIBLE
     }
 
     fun setWord(word: WordUI) {

@@ -14,7 +14,6 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
-import jp.neechan.akari.dictionary.base.presentation.extensions.toast
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import jp.neechan.akari.dictionary.home.search.presentation.SearchWordActivity
@@ -72,6 +71,7 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
 
     private fun showProgressBar() {
         noWordsTv.visibility = GONE
+        errorTv.visibility = GONE
         wordsRv.visibility = GONE
         progressBar.visibility = VISIBLE
     }
@@ -79,17 +79,23 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
     private fun showContent() {
         progressBar.visibility = GONE
         noWordsTv.visibility = GONE
+        errorTv.visibility = GONE
         wordsRv.visibility = VISIBLE
     }
 
     private fun showEmptyContent() {
-        noWordsTv.visibility = VISIBLE
         progressBar.visibility = GONE
+        errorTv.visibility = GONE
         wordsRv.visibility = GONE
+        noWordsTv.visibility = VISIBLE
     }
 
     private fun showError(@StringRes errorMessage: Int) {
-        requireContext().toast(errorMessage)
+        errorTv.setText(errorMessage)
+        progressBar.visibility = GONE
+        noWordsTv.visibility = GONE
+        wordsRv.visibility = GONE
+        errorTv.visibility = VISIBLE
     }
 
     private fun setupListeners() {

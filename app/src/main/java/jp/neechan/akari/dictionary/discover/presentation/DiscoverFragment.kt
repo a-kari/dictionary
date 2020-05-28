@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.adapters.WordsAdapter
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
-import jp.neechan.akari.dictionary.base.presentation.extensions.toast
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import jp.neechan.akari.dictionary.discover.filter.presentation.WordsFilterDialog
@@ -76,6 +75,7 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
     private fun showProgressBar() {
         noWordsTv.visibility = GONE
+        errorTv.visibility = GONE
         wordsRv.visibility = GONE
         progressBar.visibility = VISIBLE
     }
@@ -83,17 +83,23 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
     private fun showContent() {
         progressBar.visibility = GONE
         noWordsTv.visibility = GONE
+        errorTv.visibility = GONE
         wordsRv.visibility = VISIBLE
     }
 
     private fun showEmptyContent() {
-        noWordsTv.visibility = VISIBLE
         progressBar.visibility = GONE
+        errorTv.visibility = GONE
         wordsRv.visibility = GONE
+        noWordsTv.visibility = VISIBLE
     }
 
     private fun showError(@StringRes errorMessage: Int) {
-        requireContext().toast(errorMessage)
+        errorTv.setText(errorMessage)
+        progressBar.visibility = GONE
+        noWordsTv.visibility = GONE
+        wordsRv.visibility = GONE
+        errorTv.visibility = VISIBLE
     }
 
     override fun onWordClicked(word: String) {

@@ -8,7 +8,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import jp.neechan.akari.dictionary.R
-import jp.neechan.akari.dictionary.base.presentation.extensions.toast
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
 import jp.neechan.akari.dictionary.base.presentation.views.BaseActivity
@@ -75,6 +74,7 @@ class SearchWordActivity : BaseActivity() {
     private fun showHint() {
         progressBar.visibility = GONE
         emptyContentTv.visibility = GONE
+        errorTv.visibility = GONE
         content.visibility = GONE
         hintTv.visibility = VISIBLE
     }
@@ -82,6 +82,7 @@ class SearchWordActivity : BaseActivity() {
     private fun showProgressBar() {
         hintTv.visibility = GONE
         emptyContentTv.visibility = GONE
+        errorTv.visibility = GONE
         content.visibility = GONE
         progressBar.visibility = VISIBLE
     }
@@ -89,6 +90,7 @@ class SearchWordActivity : BaseActivity() {
     private fun showEmptyContent() {
         progressBar.visibility = GONE
         hintTv.visibility = GONE
+        errorTv.visibility = GONE
         content.visibility = GONE
         emptyContentTv.visibility = VISIBLE
     }
@@ -99,11 +101,17 @@ class SearchWordActivity : BaseActivity() {
         progressBar.visibility = GONE
         hintTv.visibility = GONE
         emptyContentTv.visibility = GONE
+        errorTv.visibility = GONE
         content.visibility = VISIBLE
         searchView.clearFocus()
     }
 
     private fun showError(@StringRes errorMessage: Int) {
-        toast(errorMessage)
+        errorTv.setText(errorMessage)
+        progressBar.visibility = GONE
+        hintTv.visibility = GONE
+        emptyContentTv.visibility = GONE
+        content.visibility = GONE
+        errorTv.visibility = VISIBLE
     }
 }
