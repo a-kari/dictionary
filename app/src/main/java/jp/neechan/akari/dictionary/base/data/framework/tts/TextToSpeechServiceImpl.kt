@@ -23,13 +23,40 @@ class TextToSpeechServiceImpl(
     private val tts = TextToSpeech(context, this)
 
     @Volatile
-    private var isTtsInitialized = false
+    private var ttsState = TextToSpeechState.CREATING
 
-    private var ttsLocale: Locale
+    private lateinit var ttsLocale: Locale
 
     private val availableLocales: List<Locale>
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+
+    /** The service goes through these states in order:
+     *
+     * 1. CREATING
+     * 2. CREATED or ERROR_CREATING
+     * 3. LOCALE_CONFIGURED
+     * 4. VOICE_CONFIGURED
+     *
+     * To perform some action, the service must be in (or pass through) the needed state.
+     */
+    private enum class TextToSpeechState(val stateOrder: Int) {
+
+        /** TTS is being created. */
+        CREATING(0),
+
+        /** TTS has been successfully created. */
+        CREATED(1),
+
+        /** Error creating TTS. */
+        ERROR_CREATING(-1),
+
+        /** TTS' locale is configured. */
+        LOCALE_CONFIGURED(2),
+
+        /** TTS' voice is configured. */
+        VOICE_CONFIGURED(3)
+    }
 
     init {
         availableLocales = mutableListOf(Locale.UK, Locale.US).apply {
@@ -38,22 +65,26 @@ class TextToSpeechServiceImpl(
                 add(Locale("en", "au"))
             }
         }
-
-        // Init with a default value just in case. Will be redefined soon.
-        ttsLocale = availableLocales.first()
     }
 
     override fun onInit(status: Int) {
-        isTtsInitialized = true
-        scope.launch { setup() }
+        if (status == TextToSpeech.SUCCESS) {
+            ttsState = TextToSpeechState.CREATED
+            scope.launch { configure() }
+
+        } else {
+            ttsState = TextToSpeechState.ERROR_CREATING
+        }
     }
 
-    private suspend fun setup() {
+    private suspend fun configure() {
         val preferredLocale = preferencesRepository.loadPreferredLocale() ?: loadDefaultLocale()
         setPreferredLocale(preferredLocale)
+        ttsState = TextToSpeechState.LOCALE_CONFIGURED
 
         val preferredVoice = preferencesRepository.loadPreferredVoice() ?: loadDefaultVoice()
         setPreferredVoice(preferredVoice)
+        ttsState = TextToSpeechState.VOICE_CONFIGURED
     }
 
     override suspend fun loadDefaultLocale(): Locale {
@@ -61,7 +92,7 @@ class TextToSpeechServiceImpl(
     }
 
     override suspend fun loadDefaultVoice(): String {
-        return doAfterTtsInitialization {
+        return doWhenTtsStateIsAtLeast(TextToSpeechState.LOCALE_CONFIGURED) {
             tts.getFineLocaleVoice(ttsLocale)?.name.orEmpty()
         }
     }
@@ -71,21 +102,20 @@ class TextToSpeechServiceImpl(
     }
 
     override suspend fun loadLocaleVoices(): List<String> {
-        return doAfterTtsInitialization {
+        return doWhenTtsStateIsAtLeast(TextToSpeechState.LOCALE_CONFIGURED) {
             tts.getLocaleVoices(ttsLocale).map { it.name }
         }
     }
 
     override suspend fun setPreferredLocale(locale: Locale) {
-        doAfterTtsInitialization {
+        doWhenTtsStateIsAtLeast(TextToSpeechState.CREATED) {
             tts.language = locale
             ttsLocale = locale
-            setPreferredVoice(loadDefaultVoice())
         }
     }
 
     override suspend fun setPreferredVoice(voiceName: String) {
-        doAfterTtsInitialization {
+        doWhenTtsStateIsAtLeast(TextToSpeechState.LOCALE_CONFIGURED) {
             val voice = tts.getLocaleVoices(ttsLocale).firstOrNull { it.name == voiceName }
             if (voice != null) {
                 tts.voice = voice
@@ -94,7 +124,7 @@ class TextToSpeechServiceImpl(
     }
 
     override suspend fun speak(text: String) {
-        doAfterTtsInitialization {
+        doWhenTtsStateIsAtLeast(TextToSpeechState.VOICE_CONFIGURED) {
             val result = tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
             if (result == TextToSpeech.ERROR) {
                 context.toast(R.string.tts_cant_play)
@@ -103,13 +133,14 @@ class TextToSpeechServiceImpl(
     }
 
     override suspend fun stopSpeaking() {
-        tts.stop()
+        doWhenTtsStateIsAtLeast(TextToSpeechState.CREATED) {
+            tts.stop()
+        }
     }
 
-    private suspend inline fun <T> doAfterTtsInitialization(block: () -> T): T {
-        while (!isTtsInitialized) {
-            delay(1)
-        }
+    /** Wait until the service is (at least) in the needed state and perform an action. */
+    private suspend inline fun <T> doWhenTtsStateIsAtLeast(neededState: TextToSpeechState, block: () -> T): T {
+        while (ttsState.stateOrder < neededState.stateOrder) { delay(1) }
         return block()
     }
 

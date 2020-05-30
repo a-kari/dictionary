@@ -13,6 +13,8 @@ class SavePreferredPronunciationUseCase(private val ttsPreferencesRepository: Te
 
         // Voice should be changed, too,
         // because the old preferred voice belongs to the old preferred pronunciation.
-        ttsPreferencesRepository.savePreferredVoice(ttsService.loadDefaultVoice())
+        val defaultVoice = ttsService.loadDefaultVoice()
+        ttsService.setPreferredVoice(defaultVoice)
+        ttsPreferencesRepository.savePreferredVoice(defaultVoice)
     }
 }
