@@ -11,7 +11,9 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
@@ -72,6 +74,7 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
         noWordsTv.visibility = GONE
         errorTv.visibility = GONE
         wordsRv.visibility = VISIBLE
+        maybeShowFab()
     }
 
     private fun showEmptyContent() {
@@ -129,5 +132,24 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
 
     override fun onWordDeleted(word: String) {
         viewModel.deleteWord(word)
+    }
+
+    /**
+     * Here we consider a case when a user scrolls down and the fab hides.
+     * Then he deletes some words and the RecyclerView becomes non-scrollable,
+     * so he can't return the fab back with scrolling up. So we need to check
+     * if the RecyclerView has become non-scrollable and if so, then return the fab back.
+     */
+    private fun maybeShowFab() {
+        if (!wordsRv.canScrollVertically()) {
+            val coordinatorLayoutParams = addWordButton.layoutParams as CoordinatorLayout.LayoutParams
+            val behavior = coordinatorLayoutParams.behavior as ScrollAwareFABBehavior
+            behavior.show(addWordButton)
+        }
+    }
+
+    /** Is RecyclerView can be scrolled vertically up or down? */
+    private fun RecyclerView.canScrollVertically(): Boolean {
+        return canScrollVertically(-1) || canScrollVertically(1)
     }
 }

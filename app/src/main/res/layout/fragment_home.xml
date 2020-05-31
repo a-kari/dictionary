@@ -51,6 +51,6 @@
         android:layout_margin="@dimen/default_padding"
         android:src="@drawable/ic_add"
         app:elevation="@dimen/default_padding"
-        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
+        app:layout_behavior=".home.presentation.ScrollAwareFABBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
