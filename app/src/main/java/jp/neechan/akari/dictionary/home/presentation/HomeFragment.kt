@@ -51,7 +51,6 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
         wordsAdapter = EditableWordsAdapter(this)
         wordsRv.adapter = wordsAdapter
         wordsRv.addVerticalDividers()
-        wordsRv.itemAnimator = null
     }
 
     private fun setupObservers() {
