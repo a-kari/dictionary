@@ -60,19 +60,11 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
 
         viewModel.uiStateLiveData.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
-                is UIState.ShowLoading -> showProgressBar()
                 is UIState.ShowContent -> showContent()
                 is UIState.ShowNotFoundError -> showEmptyContent()
                 is UIState.ShowError -> showError(state.errorMessage)
             }
         })
-    }
-
-    private fun showProgressBar() {
-        noWordsTv.visibility = GONE
-        errorTv.visibility = GONE
-        wordsRv.visibility = GONE
-        progressBar.visibility = VISIBLE
     }
 
     private fun showContent() {

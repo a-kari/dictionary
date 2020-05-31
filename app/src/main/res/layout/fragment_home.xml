@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,55 +10,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/noWordsTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/default_padding"
+        android:text="@string/home_empty_content"
+        android:textSize="@dimen/text_size_large"
         android:visibility="gone" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/content"
+    <TextView
+        android:id="@+id/errorTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/default_padding"
+        android:textSize="@dimen/text_size_large"
+        android:visibility="gone"
+        tools:text="An error occurred" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/wordsRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:scrollbars="vertical"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
-        <TextView
-            android:id="@+id/noWordsTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="@dimen/default_padding"
-            android:text="@string/home_empty_content"
-            android:textSize="@dimen/text_size_large"
-            android:visibility="gone" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addWordButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/default_padding"
+        android:src="@drawable/ic_add"
+        app:elevation="@dimen/default_padding"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
-        <TextView
-            android:id="@+id/errorTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="@dimen/default_padding"
-            android:textSize="@dimen/text_size_large"
-            android:visibility="gone"
-            tools:text="An error occurred" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/wordsRv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:visibility="visible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addWordButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/default_padding"
-            android:src="@drawable/ic_add"
-            app:elevation="@dimen/default_padding"
-            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
