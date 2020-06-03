@@ -3,6 +3,10 @@ package jp.neechan.akari.dictionary.base.data.framework.network
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
+import jp.neechan.akari.dictionary.base.data.framework.dto.DefinitionDto
+import jp.neechan.akari.dictionary.base.data.framework.dto.FrequencyDto
+import jp.neechan.akari.dictionary.base.data.framework.dto.PartOfSpeechDto
+import jp.neechan.akari.dictionary.base.data.framework.dto.WordDto
 import java.lang.reflect.Type
 
 /**
