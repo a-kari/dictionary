@@ -1,4 +1,4 @@
-package jp.neechan.akari.dictionary.home.search.presentation
+package jp.neechan.akari.dictionary.search.presentation
 
 import android.os.Bundle
 import android.view.View.GONE

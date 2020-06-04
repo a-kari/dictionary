@@ -18,7 +18,7 @@ import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
-import jp.neechan.akari.dictionary.home.search.presentation.SearchWordActivity
+import jp.neechan.akari.dictionary.search.presentation.SearchWordActivity
 import jp.neechan.akari.dictionary.word.presentation.WordActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel

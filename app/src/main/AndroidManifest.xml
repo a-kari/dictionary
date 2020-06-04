@@ -29,7 +29,7 @@
             android:launchMode="singleTop" />
 
         <activity
-            android:name=".home.search.presentation.SearchWordActivity"
+            android:name=".search.presentation.SearchWordActivity"
             android:launchMode="singleTop" />
 
     </application>

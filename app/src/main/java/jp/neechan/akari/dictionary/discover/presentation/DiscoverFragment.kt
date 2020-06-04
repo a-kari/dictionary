@@ -17,7 +17,7 @@ import jp.neechan.akari.dictionary.base.presentation.adapters.WordsAdapter
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
-import jp.neechan.akari.dictionary.discover.filter.presentation.WordsFilterDialog
+import jp.neechan.akari.dictionary.filter.presentation.WordsFilterDialog
 import jp.neechan.akari.dictionary.word.presentation.WordActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
 import org.koin.androidx.viewmodel.ext.android.viewModel

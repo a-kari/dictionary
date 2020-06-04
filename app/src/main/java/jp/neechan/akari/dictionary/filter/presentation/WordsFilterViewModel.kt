@@ -1,4 +1,4 @@
-package jp.neechan.akari.dictionary.discover.filter.presentation
+package jp.neechan.akari.dictionary.filter.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -10,7 +10,7 @@ import jp.neechan.akari.dictionary.base.domain.entities.PartOfSpeech
 import jp.neechan.akari.dictionary.base.presentation.models.FrequencyUI
 import jp.neechan.akari.dictionary.base.presentation.models.PartOfSpeechUI
 import jp.neechan.akari.dictionary.base.domain.usecases.LoadFilterParamsUseCase
-import jp.neechan.akari.dictionary.discover.filter.domain.usecases.SaveFilterParamsUseCase
+import jp.neechan.akari.dictionary.filter.domain.usecases.SaveFilterParamsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package jp.neechan.akari.dictionary.discover.filter.domain.usecases
+package jp.neechan.akari.dictionary.filter.domain.usecases
 
 import jp.neechan.akari.dictionary.base.domain.entities.FilterParams
 import jp.neechan.akari.dictionary.base.domain.usecases.WordsRepository

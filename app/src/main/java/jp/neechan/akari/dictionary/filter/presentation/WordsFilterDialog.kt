@@ -1,4 +1,4 @@
-package jp.neechan.akari.dictionary.discover.filter.presentation
+package jp.neechan.akari.dictionary.filter.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater

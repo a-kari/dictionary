@@ -6,9 +6,9 @@ import jp.neechan.akari.dictionary.base.presentation.models.mappers.FrequencyToF
 import jp.neechan.akari.dictionary.base.presentation.models.mappers.PartOfSpeechToPartOfSpeechUIMapper
 import jp.neechan.akari.dictionary.base.presentation.models.mappers.ResultToUIStateMapper
 import jp.neechan.akari.dictionary.discover.domain.usecases.LoadAllWordsUseCase
-import jp.neechan.akari.dictionary.discover.filter.domain.usecases.SaveFilterParamsUseCase
-import jp.neechan.akari.dictionary.discover.filter.presentation.WordsFilterViewModel
 import jp.neechan.akari.dictionary.discover.presentation.DiscoverViewModel
+import jp.neechan.akari.dictionary.filter.domain.usecases.SaveFilterParamsUseCase
+import jp.neechan.akari.dictionary.filter.presentation.WordsFilterViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
