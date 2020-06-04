@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.App
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.views.BaseDialog
-import jp.neechan.akari.dictionary.filter.di.DaggerFilterComponent
+import jp.neechan.akari.dictionary.filter.di.FilterComponent
 import kotlinx.android.synthetic.main.dialog_words_filter.*
 import javax.inject.Inject
 
@@ -27,10 +27,7 @@ class WordsFilterDialog : BaseDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerFilterComponent.builder()
-                             .appComponent((requireActivity().application as App).getAppComponent())
-                             .build()
-                             .inject(this)
+        FilterComponent.create((requireActivity().application as App).getAppComponent()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(WordsFilterViewModel::class.java)
     }
 

@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.App
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
-import jp.neechan.akari.dictionary.settings.di.DaggerSettingsComponent
+import jp.neechan.akari.dictionary.settings.di.SettingsComponent
 import kotlinx.android.synthetic.main.fragment_settings.*
 import javax.inject.Inject
 
@@ -37,10 +37,7 @@ class SettingsFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerSettingsComponent.builder()
-                               .appComponent((requireActivity().application as App).getAppComponent())
-                               .build()
-                               .inject(this)
+        SettingsComponent.create((requireActivity().application as App).getAppComponent()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SettingsViewModel::class.java)
     }
 

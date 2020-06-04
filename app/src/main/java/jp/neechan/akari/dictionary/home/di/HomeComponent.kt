@@ -10,4 +10,10 @@ import jp.neechan.akari.dictionary.home.presentation.HomeFragment
 interface HomeComponent {
 
     fun inject(homeFragment: HomeFragment)
+
+    companion object {
+        fun create(appComponent: AppComponent): HomeComponent {
+            return DaggerHomeComponent.builder().appComponent(appComponent).build()
+        }
+    }
 }

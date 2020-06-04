@@ -20,7 +20,7 @@ import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
-import jp.neechan.akari.dictionary.home.di.DaggerHomeComponent
+import jp.neechan.akari.dictionary.home.di.HomeComponent
 import jp.neechan.akari.dictionary.search.presentation.SearchWordActivity
 import jp.neechan.akari.dictionary.word.presentation.WordActivity
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -41,10 +41,7 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerHomeComponent.builder()
-                           .appComponent((requireActivity().application as App).getAppComponent())
-                           .build()
-                           .inject(this)
+        HomeComponent.create((requireActivity().application as App).getAppComponent()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
         setHasOptionsMenu(true)

@@ -10,4 +10,10 @@ import jp.neechan.akari.dictionary.discover.presentation.DiscoverFragment
 interface DiscoverComponent {
 
     fun inject(discoverFragment: DiscoverFragment)
+
+    companion object {
+        fun create(appComponent: AppComponent): DiscoverComponent {
+            return DaggerDiscoverComponent.builder().appComponent(appComponent).build()
+        }
+    }
 }

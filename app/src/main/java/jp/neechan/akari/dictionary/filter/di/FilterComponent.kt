@@ -10,4 +10,10 @@ import jp.neechan.akari.dictionary.filter.presentation.WordsFilterDialog
 interface FilterComponent {
 
     fun inject(wordsFilterDialog: WordsFilterDialog)
+
+    companion object {
+        fun create(appComponent: AppComponent): FilterComponent {
+            return DaggerFilterComponent.builder().appComponent(appComponent).build()
+        }
+    }
 }

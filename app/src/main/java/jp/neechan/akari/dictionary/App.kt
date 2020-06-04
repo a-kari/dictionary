@@ -2,7 +2,6 @@ package jp.neechan.akari.dictionary
 
 import android.app.Application
 import jp.neechan.akari.dictionary.base.di.AppComponent
-import jp.neechan.akari.dictionary.base.di.DaggerAppComponent
 
 class App : Application() {
 
@@ -11,7 +10,6 @@ class App : Application() {
     }
 
     fun getAppComponent(): AppComponent {
-        return appComponent ?:
-               DaggerAppComponent.builder().context(this).build().also { appComponent = it }
+        return appComponent ?: AppComponent.create(this).also { appComponent = it }
     }
 }

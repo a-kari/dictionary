@@ -19,7 +19,7 @@ import jp.neechan.akari.dictionary.base.presentation.adapters.WordsAdapter
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
-import jp.neechan.akari.dictionary.discover.di.DaggerDiscoverComponent
+import jp.neechan.akari.dictionary.discover.di.DiscoverComponent
 import jp.neechan.akari.dictionary.filter.presentation.WordsFilterDialog
 import jp.neechan.akari.dictionary.word.presentation.WordActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
@@ -39,10 +39,7 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerDiscoverComponent.builder()
-                               .appComponent((requireActivity().application as App).getAppComponent())
-                               .build()
-                               .inject(this)
+        DiscoverComponent.create((requireActivity().application as App).getAppComponent()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DiscoverViewModel::class.java)
         setHasOptionsMenu(true)
     }

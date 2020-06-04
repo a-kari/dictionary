@@ -10,4 +10,10 @@ import jp.neechan.akari.dictionary.settings.presentation.SettingsFragment
 interface SettingsComponent {
 
     fun inject(settingsFragment: SettingsFragment)
+
+    companion object {
+        fun create(appComponent: AppComponent): SettingsComponent {
+            return DaggerSettingsComponent.builder().appComponent(appComponent).build()
+        }
+    }
 }

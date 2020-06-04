@@ -15,7 +15,7 @@ import jp.neechan.akari.dictionary.base.presentation.extensions.toast
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
-import jp.neechan.akari.dictionary.word.di.DaggerWordComponent
+import jp.neechan.akari.dictionary.word.di.WordComponent
 import kotlinx.android.synthetic.main.fragment_word.*
 import javax.inject.Inject
 
@@ -49,10 +49,7 @@ class WordFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerWordComponent.builder()
-                           .appComponent((requireActivity().application as App).getAppComponent())
-                           .build()
-                           .inject(this)
+        WordComponent.create((requireActivity().application as App).getAppComponent()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(WordViewModel::class.java)
     }
 

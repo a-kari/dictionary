@@ -10,4 +10,10 @@ import jp.neechan.akari.dictionary.word.presentation.WordFragment
 interface WordComponent {
 
     fun inject(wordFragment: WordFragment)
+
+    companion object {
+        fun create(appComponent: AppComponent): WordComponent {
+            return DaggerWordComponent.builder().appComponent(appComponent).build()
+        }
+    }
 }

@@ -13,7 +13,7 @@ import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
 import jp.neechan.akari.dictionary.base.presentation.views.BaseActivity
-import jp.neechan.akari.dictionary.search.di.DaggerSearchWordComponent
+import jp.neechan.akari.dictionary.search.di.SearchWordComponent
 import jp.neechan.akari.dictionary.word.presentation.WordFragment
 import kotlinx.android.synthetic.main.activity_search_word.*
 import javax.inject.Inject
@@ -28,10 +28,7 @@ class SearchWordActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DaggerSearchWordComponent.builder()
-                                 .appComponent((application as App).getAppComponent())
-                                 .build()
-                                 .inject(this)
+        SearchWordComponent.create((application as App).getAppComponent()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SearchWordViewModel::class.java)
 
         setContentView(R.layout.activity_search_word)

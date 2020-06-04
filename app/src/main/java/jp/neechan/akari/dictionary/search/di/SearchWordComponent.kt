@@ -10,4 +10,10 @@ import jp.neechan.akari.dictionary.search.presentation.SearchWordActivity
 interface SearchWordComponent {
 
     fun inject(searchWordActivity: SearchWordActivity)
+
+    companion object {
+        fun create(appComponent: AppComponent): SearchWordComponent {
+            return DaggerSearchWordComponent.builder().appComponent(appComponent).build()
+        }
+    }
 }

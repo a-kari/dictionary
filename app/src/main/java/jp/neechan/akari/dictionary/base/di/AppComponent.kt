@@ -1,5 +1,6 @@
 package jp.neechan.akari.dictionary.base.di
 
+import android.app.Application
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
@@ -26,5 +27,11 @@ interface AppComponent : RepositoryProvider, TextToSpeechServiceProvider, UIMode
         fun context(context: Context): Builder
 
         fun build(): AppComponent
+    }
+
+    companion object {
+        fun create(context: Application): AppComponent {
+            return DaggerAppComponent.builder().context(context).build()
+        }
     }
 }
