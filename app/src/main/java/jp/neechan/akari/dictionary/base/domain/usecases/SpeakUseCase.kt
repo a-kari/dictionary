@@ -1,6 +1,10 @@
 package jp.neechan.akari.dictionary.base.domain.usecases
 
-class SpeakUseCase(private val ttsService: TextToSpeechService) {
+import dagger.Reusable
+import javax.inject.Inject
+
+@Reusable
+class SpeakUseCase @Inject constructor(private val ttsService: TextToSpeechService) {
 
     suspend operator fun invoke(text: String) {
         ttsService.speak(text)

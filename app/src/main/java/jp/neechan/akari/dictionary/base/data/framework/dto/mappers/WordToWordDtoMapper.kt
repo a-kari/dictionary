@@ -1,5 +1,6 @@
 package jp.neechan.akari.dictionary.base.data.framework.dto.mappers
 
+import dagger.Reusable
 import jp.neechan.akari.dictionary.base.data.framework.dto.DefinitionDto
 import jp.neechan.akari.dictionary.base.data.framework.dto.FrequencyDto
 import jp.neechan.akari.dictionary.base.data.framework.dto.WordDto
@@ -7,9 +8,12 @@ import jp.neechan.akari.dictionary.base.domain.entities.Definition
 import jp.neechan.akari.dictionary.base.domain.entities.Frequency
 import jp.neechan.akari.dictionary.base.domain.entities.Word
 import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
+import javax.inject.Inject
 
-class WordToWordDtoMapper(private val frequencyMapper: ModelMapper<Frequency, FrequencyDto>,
-                          private val definitionMapper: ModelMapper<Definition, DefinitionDto>) : ModelMapper<Word, WordDto> {
+@Reusable
+class WordToWordDtoMapper @Inject constructor(
+    private val frequencyMapper: ModelMapper<Frequency, FrequencyDto>,
+    private val definitionMapper: ModelMapper<Definition, DefinitionDto>) : ModelMapper<Word, WordDto> {
 
     override fun mapToInternalLayer(externalLayerModel: WordDto): Word {
         return Word(

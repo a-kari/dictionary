@@ -13,18 +13,25 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import jp.neechan.akari.dictionary.App
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
+import jp.neechan.akari.dictionary.home.di.DaggerHomeComponent
 import jp.neechan.akari.dictionary.search.presentation.SearchWordActivity
 import jp.neechan.akari.dictionary.word.presentation.WordActivity
 import kotlinx.android.synthetic.main.fragment_home.*
+import javax.inject.Inject
 
 class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: HomeViewModel
+
     private lateinit var wordsAdapter: EditableWordsAdapter
     private lateinit var editButton: MenuItem
 
@@ -34,6 +41,12 @@ class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DaggerHomeComponent.builder()
+                           .appComponent((requireActivity().application as App).getAppComponent())
+                           .build()
+                           .inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+
         setHasOptionsMenu(true)
     }
 

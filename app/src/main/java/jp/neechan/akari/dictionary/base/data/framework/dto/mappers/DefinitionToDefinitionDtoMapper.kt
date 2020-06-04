@@ -1,13 +1,16 @@
 package jp.neechan.akari.dictionary.base.data.framework.dto.mappers
 
+import dagger.Reusable
 import jp.neechan.akari.dictionary.base.data.framework.dto.DefinitionDto
 import jp.neechan.akari.dictionary.base.data.framework.dto.PartOfSpeechDto
 import jp.neechan.akari.dictionary.base.domain.entities.Definition
-import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
 import jp.neechan.akari.dictionary.base.domain.entities.PartOfSpeech
+import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
+import javax.inject.Inject
 
-class DefinitionToDefinitionDtoMapper(private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechDto>)
-    : ModelMapper<Definition, DefinitionDto> {
+@Reusable
+class DefinitionToDefinitionDtoMapper @Inject constructor(
+    private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechDto>) : ModelMapper<Definition, DefinitionDto> {
 
     override fun mapToInternalLayer(externalLayerModel: DefinitionDto): Definition {
         return Definition(

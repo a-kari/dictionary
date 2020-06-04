@@ -1,10 +1,13 @@
 package jp.neechan.akari.dictionary.base.data.framework.network
 
+import dagger.Reusable
 import jp.neechan.akari.dictionary.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-class AuthorizationInterceptor : Interceptor {
+@Reusable
+class AuthorizationInterceptor @Inject constructor() : Interceptor {
 
     companion object {
         private const val API_KEY_HEADER = "X-Mashape-Key"

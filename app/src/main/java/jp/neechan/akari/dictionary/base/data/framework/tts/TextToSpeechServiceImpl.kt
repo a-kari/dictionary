@@ -14,8 +14,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TextToSpeechServiceImpl(
+@Singleton
+class TextToSpeechServiceImpl @Inject constructor(
     private val context: Context,
     private val preferencesRepository: TextToSpeechPreferencesRepository
 ) : TextToSpeechService, TextToSpeech.OnInitListener {

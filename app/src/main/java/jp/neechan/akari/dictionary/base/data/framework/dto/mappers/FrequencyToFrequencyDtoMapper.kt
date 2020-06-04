@@ -1,10 +1,13 @@
 package jp.neechan.akari.dictionary.base.data.framework.dto.mappers
 
+import dagger.Reusable
 import jp.neechan.akari.dictionary.base.data.framework.dto.FrequencyDto
 import jp.neechan.akari.dictionary.base.domain.entities.Frequency
 import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
+import javax.inject.Inject
 
-class FrequencyToFrequencyDtoMapper : ModelMapper<Frequency, FrequencyDto> {
+@Reusable
+class FrequencyToFrequencyDtoMapper @Inject constructor() : ModelMapper<Frequency, FrequencyDto> {
 
     override fun mapToInternalLayer(externalLayerModel: FrequencyDto): Frequency {
         return Frequency.valueOf(externalLayerModel.name)

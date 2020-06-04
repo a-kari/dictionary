@@ -2,10 +2,13 @@ package jp.neechan.akari.dictionary.base.data.framework.shared_preferences
 
 import android.content.Context
 import androidx.core.content.edit
+import dagger.Reusable
 import jp.neechan.akari.dictionary.base.data.interface_adapters.TextToSpeechPreferencesService
 import java.util.Locale
+import javax.inject.Inject
 
-class TextToSpeechPreferencesServiceImpl(context: Context) : TextToSpeechPreferencesService {
+@Reusable
+class TextToSpeechPreferencesServiceImpl @Inject constructor(context: Context) : TextToSpeechPreferencesService {
 
     private val preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 

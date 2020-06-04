@@ -1,5 +1,6 @@
 package jp.neechan.akari.dictionary.base.data.framework.db.dao
 
+import dagger.Reusable
 import jp.neechan.akari.dictionary.base.data.framework.dto.WordDto
 import jp.neechan.akari.dictionary.base.data.interface_adapters.WordsLocalSource
 import jp.neechan.akari.dictionary.base.domain.entities.FilterParams
@@ -7,9 +8,12 @@ import jp.neechan.akari.dictionary.base.domain.entities.Page
 import jp.neechan.akari.dictionary.base.domain.entities.Word
 import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
 import java.util.Date
+import javax.inject.Inject
 
-class WordsLocalSourceImpl(private val wordsDao: WordsDao,
-                           private val wordMapper: ModelMapper<Word, WordDto>) : WordsLocalSource {
+@Reusable
+class WordsLocalSourceImpl @Inject constructor(
+    private val wordsDao: WordsDao,
+    private val wordMapper: ModelMapper<Word, WordDto>) : WordsLocalSource {
 
     override suspend fun loadWords(params: FilterParams): Page<String> {
         val page = params.page

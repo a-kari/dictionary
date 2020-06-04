@@ -7,16 +7,31 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import jp.neechan.akari.dictionary.App
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.views.BaseDialog
+import jp.neechan.akari.dictionary.filter.di.DaggerFilterComponent
 import kotlinx.android.synthetic.main.dialog_words_filter.*
+import javax.inject.Inject
 
 class WordsFilterDialog : BaseDialog() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: WordsFilterViewModel
 
     companion object {
         fun newInstance() = WordsFilterDialog()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        DaggerFilterComponent.builder()
+                             .appComponent((requireActivity().application as App).getAppComponent())
+                             .build()
+                             .inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(WordsFilterViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
