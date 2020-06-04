@@ -13,11 +13,10 @@ import jp.neechan.akari.dictionary.base.presentation.models.WordUI
 import jp.neechan.akari.dictionary.base.presentation.views.BaseActivity
 import jp.neechan.akari.dictionary.word.presentation.WordFragment
 import kotlinx.android.synthetic.main.activity_search_word.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchWordActivity : BaseActivity() {
 
-    private val viewModel: SearchWordViewModel by viewModel()
+    private lateinit var viewModel: SearchWordViewModel
     private lateinit var wordFragment: WordFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {

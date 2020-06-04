@@ -21,11 +21,10 @@ import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import jp.neechan.akari.dictionary.search.presentation.SearchWordActivity
 import jp.neechan.akari.dictionary.word.presentation.WordActivity
 import kotlinx.android.synthetic.main.fragment_home.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
 
-    private val viewModel: HomeViewModel by viewModel()
+    private lateinit var viewModel: HomeViewModel
     private lateinit var wordsAdapter: EditableWordsAdapter
     private lateinit var editButton: MenuItem
 

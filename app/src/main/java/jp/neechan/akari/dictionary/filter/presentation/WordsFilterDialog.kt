@@ -10,11 +10,10 @@ import androidx.lifecycle.Observer
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.views.BaseDialog
 import kotlinx.android.synthetic.main.dialog_words_filter.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WordsFilterDialog : BaseDialog() {
 
-    private val viewModel: WordsFilterViewModel by viewModel()
+    private lateinit var viewModel: WordsFilterViewModel
 
     companion object {
         fun newInstance() = WordsFilterDialog()

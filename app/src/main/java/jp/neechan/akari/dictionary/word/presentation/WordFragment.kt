@@ -14,11 +14,10 @@ import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import kotlinx.android.synthetic.main.fragment_word.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WordFragment : BaseFragment() {
 
-    private val viewModel: WordViewModel by viewModel()
+    private lateinit var viewModel: WordViewModel
 
     private lateinit var wordId: String
     private var addToDictionaryEnabled = false

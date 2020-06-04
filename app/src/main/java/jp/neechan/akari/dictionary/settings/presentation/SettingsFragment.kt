@@ -15,11 +15,10 @@ import androidx.lifecycle.Observer
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import kotlinx.android.synthetic.main.fragment_settings.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment() {
 
-    private val viewModel: SettingsViewModel by viewModel()
+    private lateinit var viewModel: SettingsViewModel
 
     private lateinit var voicesAdapter: ArrayAdapter<String>
 

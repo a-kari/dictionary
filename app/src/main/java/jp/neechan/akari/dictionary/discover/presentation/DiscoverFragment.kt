@@ -20,11 +20,10 @@ import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
 import jp.neechan.akari.dictionary.filter.presentation.WordsFilterDialog
 import jp.neechan.akari.dictionary.word.presentation.WordActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
-    private val viewModel: DiscoverViewModel by viewModel()
+    private lateinit var viewModel: DiscoverViewModel
     private lateinit var wordsAdapter: WordsAdapter
 
     companion object {
