@@ -21,6 +21,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupBottomNavigation()
+        selectFragment(savedInstanceState)
     }
 
     private fun setupBottomNavigation() {
@@ -35,7 +36,13 @@ class MainActivity : BaseActivity() {
             }
             true
         }
-        bottomNavigationView.selectedItemId = R.id.home
+    }
+
+    private fun selectFragment(savedInstanceState: Bundle?) {
+        bottomNavigationView.selectedItemId = savedInstanceState?.getInt(
+            SELECTED_NAVIGATION_ITEM_ID,
+            R.id.home
+        ) ?: R.id.home
     }
 
     private fun <T : Fragment> loadFragment(clazz: Class<T>) {
@@ -52,10 +59,5 @@ class MainActivity : BaseActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(SELECTED_NAVIGATION_ITEM_ID, selectedNavigationItemId)
         super.onSaveInstanceState(outState)
-    }
-    
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        bottomNavigationView.selectedItemId = savedInstanceState.getInt(SELECTED_NAVIGATION_ITEM_ID, R.id.home)
     }
 }
