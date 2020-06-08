@@ -9,7 +9,9 @@ import android.widget.SeekBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.base_ui.presentation.views.BaseDialog
+import jp.neechan.akari.dictionary.core_api.di.AppWithFacade
 import jp.neechan.akari.dictionary.feature_words_filter.R
+import jp.neechan.akari.dictionary.feature_words_filter.di.FilterComponent
 import kotlinx.android.synthetic.main.dialog_words_filter.*
 import javax.inject.Inject
 
@@ -24,6 +26,7 @@ internal class WordsFilterDialog : BaseDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FilterComponent.create((requireActivity().application as AppWithFacade).getFacade()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(WordsFilterViewModel::class.java)
     }
 

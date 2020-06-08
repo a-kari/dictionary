@@ -15,8 +15,12 @@ import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.base_ui.presentation.extensions.addVerticalDividers
 import jp.neechan.akari.dictionary.base_ui.presentation.views.BaseFragment
 import jp.neechan.akari.dictionary.base_ui_words_list.presentation.adapters.WordsAdapter
+import jp.neechan.akari.dictionary.core_api.di.AppWithFacade
+import jp.neechan.akari.dictionary.core_api.presentation.mediators.WordMediator
+import jp.neechan.akari.dictionary.core_api.presentation.mediators.WordsFilterMediator
 import jp.neechan.akari.dictionary.core_api.presentation.models.UIState
 import jp.neechan.akari.dictionary.feature_discover.R
+import jp.neechan.akari.dictionary.feature_discover.di.DiscoverComponent
 import kotlinx.android.synthetic.main.fragment_discover.*
 import javax.inject.Inject
 
@@ -25,6 +29,8 @@ internal class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListene
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: DiscoverViewModel
 
+    @Inject lateinit var filterMediator: WordsFilterMediator
+    @Inject lateinit var wordMediator: WordMediator
 
     private lateinit var wordsAdapter: WordsAdapter
 
@@ -34,6 +40,7 @@ internal class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListene
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DiscoverComponent.create((requireActivity().application as AppWithFacade).getFacade()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DiscoverViewModel::class.java)
         setHasOptionsMenu(true)
     }
