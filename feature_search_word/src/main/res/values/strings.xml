@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SearchWordActivity -->
+    <string name="search_word_search_view_hint">Search a word</string>
+    <string name="search_word_hint">Search a word and it will appear here.</string>
+    <string name="search_word_no_result">No relevant word found for your search.</string>
+
+</resources>
