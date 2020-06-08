@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- UI state -->
+    <string name="ui_state_connection_error">No connection</string>
+    <string name="ui_state_not_found_error">Not found</string>
+    <string name="ui_state_unknown_error">Unknown error</string>
+
+    <!-- Frequency -->
+    <string name="frequency_very_rare">Very rare</string>
+    <string name="frequency_rare">Rare</string>
+    <string name="frequency_normal">Normal</string>
+    <string name="frequency_frequent">Frequent</string>
+    <string name="frequency_very_frequent">Very frequent</string>
+    <string name="frequency_unknown">Unknown</string>
+
+    <!-- PartOfSpeech -->
+    <string name="part_of_speech_all">All</string>
+    <string name="part_of_speech_unknown">Unknown</string>
+    <string name="part_of_speech_noun">Noun</string>
+    <string name="part_of_speech_pronoun">Pronoun</string>
+    <string name="part_of_speech_adjective">Adjective</string>
+    <string name="part_of_speech_verb">Verb</string>
+    <string name="part_of_speech_adverb">Adverb</string>
+    <string name="part_of_speech_preposition">Preposition</string>
+    <string name="part_of_speech_conjunction">Conjunction</string>
+
+</resources>
