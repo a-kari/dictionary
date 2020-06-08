@@ -24,7 +24,7 @@ import jp.neechan.akari.dictionary.feature_discover.di.DiscoverComponent
 import kotlinx.android.synthetic.main.fragment_discover.*
 import javax.inject.Inject
 
-class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
+internal class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: DiscoverViewModel

@@ -7,7 +7,7 @@ import okhttp3.Response
 import javax.inject.Inject
 
 @Reusable
-class AuthorizationInterceptor @Inject constructor() : Interceptor {
+internal class AuthorizationInterceptor @Inject constructor() : Interceptor {
 
     companion object {
         private const val API_KEY_HEADER = "X-Mashape-Key"

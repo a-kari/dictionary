@@ -9,7 +9,7 @@ import java.net.UnknownHostException
 import javax.inject.Inject
 
 @Reusable
-class RetrofitResultWrapper @Inject constructor() : ResultWrapper {
+internal class RetrofitResultWrapper @Inject constructor() : ResultWrapper {
 
     override suspend fun <T> wrapWithResult(block: suspend () -> T): Result<T> {
         return try {

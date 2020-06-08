@@ -20,7 +20,7 @@ import jp.neechan.akari.dictionary.core_api.di.scopes.PerApp
         UIMappersProvider::class
     ]
 )
-interface FacadeComponent : ProvidersFacade {
+internal interface FacadeComponent : ProvidersFacade {
 
     companion object {
         private var facadeComponent: FacadeComponent? = null

@@ -13,7 +13,7 @@ import jp.neechan.akari.dictionary.feature_home.domain.usecases.LoadSavedWordsUs
 import javax.inject.Inject
 
 @PerFragment
-class HomeViewModelFactory @Inject constructor(
+internal class HomeViewModelFactory @Inject constructor(
     private val loadWordsUseCase: LoadSavedWordsUseCase,
     private val loadFilterParamsUseCase: LoadFilterParamsUseCase,
     private val deleteWordUseCase: DeleteWordUseCase,

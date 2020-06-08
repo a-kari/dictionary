@@ -2,7 +2,7 @@ package jp.neechan.akari.dictionary.core_impl.data.framework.dto
 
 import jp.neechan.akari.dictionary.core_api.domain.entities.FilterParams
 
-data class FilterParamsDto(var page: Int,
+internal data class FilterParamsDto(var page: Int,
                            var partOfSpeech: PartOfSpeechDto,
                            var frequency: FrequencyDto) {
 

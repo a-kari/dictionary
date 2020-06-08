@@ -11,7 +11,7 @@ import jp.neechan.akari.dictionary.core_impl.data.interface_adapters.WordsRemote
 import javax.inject.Inject
 
 @Reusable
-class WordsRemoteSourceImpl @Inject constructor(
+internal class WordsRemoteSourceImpl @Inject constructor(
     private val wordsApi: WordsApi,
     private val wordMapper: ModelMapper<Word, WordDto>,
     private val paramsMapper: ModelMapper<FilterParams, FilterParamsDto>) : WordsRemoteSource {

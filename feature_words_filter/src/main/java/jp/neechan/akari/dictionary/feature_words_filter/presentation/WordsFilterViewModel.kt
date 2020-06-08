@@ -14,7 +14,7 @@ import jp.neechan.akari.dictionary.feature_words_filter.domain.usecases.SaveFilt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class WordsFilterViewModel(
+internal class WordsFilterViewModel(
     private val loadFilterParams: LoadFilterParamsUseCase,
     private val saveFilterParams: SaveFilterParamsUseCase,
     private val frequencyMapper: ModelMapper<Frequency, FrequencyUI>,

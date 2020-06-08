@@ -11,7 +11,7 @@ import jp.neechan.akari.dictionary.feature_main.di.MainComponent
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+internal class MainActivity : BaseActivity() {
 
     @Inject lateinit var homeMediator: HomeMediator
     @Inject lateinit var discoverMediator: DiscoverMediator

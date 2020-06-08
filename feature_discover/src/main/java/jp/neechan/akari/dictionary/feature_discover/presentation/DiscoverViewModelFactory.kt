@@ -12,7 +12,7 @@ import jp.neechan.akari.dictionary.feature_discover.domain.usecases.LoadAllWords
 import javax.inject.Inject
 
 @PerFragment
-class DiscoverViewModelFactory @Inject constructor(
+internal class DiscoverViewModelFactory @Inject constructor(
     private val loadWordsUseCase: LoadAllWordsUseCase,
     private val loadFilterParamsUseCase: LoadFilterParamsUseCase,
     private val resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>

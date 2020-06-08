@@ -11,7 +11,7 @@ import jp.neechan.akari.dictionary.core_impl.data.framework.dto.PartOfSpeechDto
 import javax.inject.Inject
 
 @Reusable
-class FilterParamsToFilterParamsDtoMapper @Inject constructor(
+internal class FilterParamsToFilterParamsDtoMapper @Inject constructor(
     private val frequencyMapper: ModelMapper<Frequency, FrequencyDto>,
     private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechDto>) : ModelMapper<FilterParams, FilterParamsDto> {
 

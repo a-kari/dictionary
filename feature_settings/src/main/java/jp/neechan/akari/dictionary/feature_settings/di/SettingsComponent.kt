@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.feature_settings.presentation.SettingsFragmen
 
 @PerFragment
 @Component(modules = [SettingsModule::class], dependencies = [ProvidersFacade::class])
-interface SettingsComponent {
+internal interface SettingsComponent {
 
     fun inject(settingsFragment: SettingsFragment)
 

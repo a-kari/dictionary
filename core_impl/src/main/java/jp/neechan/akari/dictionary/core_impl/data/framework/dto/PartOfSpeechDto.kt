@@ -1,6 +1,6 @@
 package jp.neechan.akari.dictionary.core_impl.data.framework.dto
 
-enum class PartOfSpeechDto {
+internal enum class PartOfSpeechDto {
 
     NOUN,
     PRONOUN,

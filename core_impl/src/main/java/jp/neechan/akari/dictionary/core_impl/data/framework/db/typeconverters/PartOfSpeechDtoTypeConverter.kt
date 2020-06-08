@@ -3,7 +3,7 @@ package jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters
 import androidx.room.TypeConverter
 import jp.neechan.akari.dictionary.core_impl.data.framework.dto.PartOfSpeechDto
 
-object PartOfSpeechDtoTypeConverter {
+internal object PartOfSpeechDtoTypeConverter {
 
     @JvmStatic
     @TypeConverter

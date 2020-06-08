@@ -3,7 +3,7 @@ package jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters
 import androidx.room.TypeConverter
 import jp.neechan.akari.dictionary.core_impl.data.framework.dto.FrequencyDto
 
-object FrequencyDtoTypeConverter {
+internal object FrequencyDtoTypeConverter {
 
     @JvmStatic
     @TypeConverter

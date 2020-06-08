@@ -6,7 +6,7 @@ import dagger.Module
 import jp.neechan.akari.dictionary.feature_search_word.presentation.SearchWordViewModelFactory
 
 @Module
-abstract class SearchWordModule {
+internal abstract class SearchWordModule {
 
     @Binds
     abstract fun bindViewModelFactory(

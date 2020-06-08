@@ -21,14 +21,15 @@ import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import java.util.Locale
 
-class SettingsViewModel(private val loadPronunciationsUseCase: LoadPronunciationsUseCase,
-                        private val loadVoicesUseCase: LoadVoicesUseCase,
-                        private val loadPreferredPronunciationUseCase: LoadPreferredPronunciationUseCase,
-                        private val loadPreferredVoiceUseCase: LoadPreferredVoiceUseCase,
-                        private val savePreferredPronunciationUseCase: SavePreferredPronunciationUseCase,
-                        private val savePreferredVoiceUseCase: SavePreferredVoiceUseCase,
-                        private val speakUseCase: SpeakUseCase,
-                        private val stopSpeakingUseCase: StopSpeakingUseCase) : ViewModel() {
+internal class SettingsViewModel(
+    private val loadPronunciationsUseCase: LoadPronunciationsUseCase,
+    private val loadVoicesUseCase: LoadVoicesUseCase,
+    private val loadPreferredPronunciationUseCase: LoadPreferredPronunciationUseCase,
+    private val loadPreferredVoiceUseCase: LoadPreferredVoiceUseCase,
+    private val savePreferredPronunciationUseCase: SavePreferredPronunciationUseCase,
+    private val savePreferredVoiceUseCase: SavePreferredVoiceUseCase,
+    private val speakUseCase: SpeakUseCase,
+    private val stopSpeakingUseCase: StopSpeakingUseCase) : ViewModel() {
 
     // pronunciations will be populated only once.
     private val pronunciations: LiveData<List<Locale>> = liveData {

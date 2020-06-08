@@ -11,7 +11,7 @@ import jp.neechan.akari.dictionary.core_impl.data.framework.dto.WordDto
 import javax.inject.Inject
 
 @Reusable
-class WordToWordDtoMapper @Inject constructor(
+internal class WordToWordDtoMapper @Inject constructor(
     private val frequencyMapper: ModelMapper<Frequency, FrequencyDto>,
     private val definitionMapper: ModelMapper<Definition, DefinitionDto>) : ModelMapper<Word, WordDto> {
 

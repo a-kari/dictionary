@@ -3,7 +3,7 @@ package jp.neechan.akari.dictionary.core_impl.data.framework.dto
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class WordWithDefinitionsDto(
+internal data class WordWithDefinitionsDto(
 
     @Embedded
     val word: WordDto,

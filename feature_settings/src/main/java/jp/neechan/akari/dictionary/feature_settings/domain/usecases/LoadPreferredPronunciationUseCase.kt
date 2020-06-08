@@ -7,7 +7,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 @Reusable
-class LoadPreferredPronunciationUseCase @Inject constructor(
+internal class LoadPreferredPronunciationUseCase @Inject constructor(
     private val ttsPreferencesRepository: TextToSpeechPreferencesRepository,
     private val ttsService: TextToSpeechService) {
 

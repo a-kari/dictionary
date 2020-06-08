@@ -19,7 +19,7 @@ import jp.neechan.akari.dictionary.feature_word.di.WordComponent
 import kotlinx.android.synthetic.main.fragment_word.*
 import javax.inject.Inject
 
-class WordFragment : BaseFragment() {
+internal class WordFragment : BaseFragment() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: WordViewModel

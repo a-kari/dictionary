@@ -6,7 +6,7 @@ import dagger.Module
 import jp.neechan.akari.dictionary.feature_home.presentation.HomeViewModelFactory
 
 @Module
-abstract class HomeModule {
+internal abstract class HomeModule {
 
     @Binds
     abstract fun bindViewModelFactory(

@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.core_impl.data.framework.dto.FrequencyDto
 import javax.inject.Inject
 
 @Reusable
-class FrequencyToFrequencyDtoMapper @Inject constructor() : ModelMapper<Frequency, FrequencyDto> {
+internal class FrequencyToFrequencyDtoMapper @Inject constructor() : ModelMapper<Frequency, FrequencyDto> {
 
     override fun mapToInternalLayer(externalLayerModel: FrequencyDto): Frequency {
         return Frequency.valueOf(externalLayerModel.name)

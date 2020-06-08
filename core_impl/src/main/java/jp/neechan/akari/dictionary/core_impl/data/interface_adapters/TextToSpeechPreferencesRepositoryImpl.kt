@@ -6,7 +6,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 @Reusable
-class TextToSpeechPreferencesRepositoryImpl @Inject constructor(
+internal class TextToSpeechPreferencesRepositoryImpl @Inject constructor(
     private val ttsPreferencesService: TextToSpeechPreferencesService) : TextToSpeechPreferencesRepository {
 
     override suspend fun loadPreferredLocale(): Locale? {

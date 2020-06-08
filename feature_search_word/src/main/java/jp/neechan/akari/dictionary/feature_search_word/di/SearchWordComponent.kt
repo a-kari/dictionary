@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.feature_search_word.presentation.SearchWordAc
 
 @PerActivity
 @Component(modules = [SearchWordModule::class], dependencies = [ProvidersFacade::class])
-interface SearchWordComponent {
+internal interface SearchWordComponent {
 
     fun inject(searchWordActivity: SearchWordActivity)
 

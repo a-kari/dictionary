@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import jp.neechan.akari.dictionary.base_ui_words_list.presentation.adapters.WordsAdapter
 import jp.neechan.akari.dictionary.feature_home.R
 
-class EditableWordsAdapter(private val wordActionListener: WordActionListener) : WordsAdapter(wordActionListener) {
+internal class EditableWordsAdapter(
+    private val wordActionListener: WordActionListener) : WordsAdapter(wordActionListener) {
 
     private var isEditMode = false
 

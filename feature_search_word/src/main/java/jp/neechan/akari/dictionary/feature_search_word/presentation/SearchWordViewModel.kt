@@ -11,7 +11,7 @@ import jp.neechan.akari.dictionary.core_api.presentation.models.UIState
 import jp.neechan.akari.dictionary.core_api.presentation.models.WordUI
 import jp.neechan.akari.dictionary.domain_words.domain.LoadWordUseCase
 
-class SearchWordViewModel(
+internal class SearchWordViewModel(
     private val loadWordUseCase: LoadWordUseCase,
     private val resultMapper: ModelMapper<Result<Word>, UIState<WordUI>>) : ViewModel() {
 

@@ -6,7 +6,7 @@ import dagger.Module
 import jp.neechan.akari.dictionary.feature_settings.presentation.SettingsViewModelFactory
 
 @Module
-abstract class SettingsModule {
+internal abstract class SettingsModule {
 
     @Binds
     abstract fun bindViewModelFactory(

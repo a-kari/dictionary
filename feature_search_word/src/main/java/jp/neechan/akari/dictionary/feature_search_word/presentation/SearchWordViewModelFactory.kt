@@ -12,7 +12,7 @@ import jp.neechan.akari.dictionary.domain_words.domain.LoadWordUseCase
 import javax.inject.Inject
 
 @PerActivity
-class SearchWordViewModelFactory @Inject constructor(
+internal class SearchWordViewModelFactory @Inject constructor(
     private val loadWordUseCase: LoadWordUseCase,
     private val wordResultMapper: ModelMapper<Result<Word>, UIState<WordUI>>
 ) : BaseViewModelFactory() {

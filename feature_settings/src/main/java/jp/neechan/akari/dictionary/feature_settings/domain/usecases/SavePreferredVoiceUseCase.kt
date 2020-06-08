@@ -6,7 +6,7 @@ import jp.neechan.akari.dictionary.core_api.domain.usecases.TextToSpeechService
 import javax.inject.Inject
 
 @Reusable
-class SavePreferredVoiceUseCase @Inject constructor(
+internal class SavePreferredVoiceUseCase @Inject constructor(
     private val ttsPreferencesRepository: TextToSpeechPreferencesRepository,
     private val ttsService: TextToSpeechService) {
 

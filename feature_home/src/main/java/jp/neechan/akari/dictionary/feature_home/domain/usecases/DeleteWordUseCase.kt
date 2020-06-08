@@ -5,7 +5,7 @@ import jp.neechan.akari.dictionary.core_api.domain.usecases.WordsRepository
 import javax.inject.Inject
 
 @Reusable
-class DeleteWordUseCase @Inject constructor(private val wordsRepository: WordsRepository) {
+internal class DeleteWordUseCase @Inject constructor(private val wordsRepository: WordsRepository) {
 
     suspend operator fun invoke(word: String) {
         wordsRepository.deleteWord(word)

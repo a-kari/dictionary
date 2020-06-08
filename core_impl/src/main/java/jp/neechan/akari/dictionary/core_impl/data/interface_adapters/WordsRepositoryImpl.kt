@@ -10,7 +10,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import javax.inject.Inject
 
 @PerApp
-class WordsRepositoryImpl @Inject constructor(
+internal class WordsRepositoryImpl @Inject constructor(
     private val localSource: WordsLocalSource,
     private val remoteSource: WordsRemoteSource,
     private val resultWrapper: ResultWrapper) : WordsRepository {

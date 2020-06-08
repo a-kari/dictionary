@@ -21,7 +21,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 
-class HomeViewModel(
+internal class HomeViewModel(
     private val loadWordsUseCase: LoadSavedWordsUseCase,
     loadFilterParamsUseCase: LoadFilterParamsUseCase,
     private val deleteWordUseCase: DeleteWordUseCase,

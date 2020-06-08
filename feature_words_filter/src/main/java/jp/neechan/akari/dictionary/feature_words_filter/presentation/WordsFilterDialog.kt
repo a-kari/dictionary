@@ -15,7 +15,7 @@ import jp.neechan.akari.dictionary.feature_words_filter.di.FilterComponent
 import kotlinx.android.synthetic.main.dialog_words_filter.*
 import javax.inject.Inject
 
-class WordsFilterDialog : BaseDialog() {
+internal class WordsFilterDialog : BaseDialog() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: WordsFilterViewModel

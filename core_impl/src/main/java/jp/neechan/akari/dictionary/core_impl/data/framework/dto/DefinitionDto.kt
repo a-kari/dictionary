@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class DefinitionDto(
+internal data class DefinitionDto(
 
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,

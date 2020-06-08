@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.feature_discover.presentation.DiscoverFragmen
 
 @PerFragment
 @Component(modules = [DiscoverModule::class], dependencies = [ProvidersFacade::class])
-interface DiscoverComponent {
+internal interface DiscoverComponent {
 
     fun inject(discoverFragment: DiscoverFragment)
 

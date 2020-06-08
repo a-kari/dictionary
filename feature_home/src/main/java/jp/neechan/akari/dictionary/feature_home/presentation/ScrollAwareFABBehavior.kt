@@ -8,7 +8,7 @@ import androidx.core.view.ViewCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton.OnVisibilityChangedListener
 
-class ScrollAwareFABBehavior(context: Context?, attrs: AttributeSet?)
+internal class ScrollAwareFABBehavior(context: Context?, attrs: AttributeSet?)
     : FloatingActionButton.Behavior(context, attrs) {
 
     override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, fab: FloatingActionButton,

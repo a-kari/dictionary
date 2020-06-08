@@ -20,7 +20,7 @@ import jp.neechan.akari.dictionary.feature_settings.di.SettingsComponent
 import kotlinx.android.synthetic.main.fragment_settings.*
 import javax.inject.Inject
 
-class SettingsFragment : BaseFragment() {
+internal class SettingsFragment : BaseFragment() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: SettingsViewModel

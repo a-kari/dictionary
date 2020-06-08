@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.feature_words_filter.presentation.WordsFilter
 
 @PerFragment
 @Component(modules = [FilterModule::class], dependencies = [ProvidersFacade::class])
-interface FilterComponent {
+internal interface FilterComponent {
 
     fun inject(wordsFilterDialog: WordsFilterDialog)
 

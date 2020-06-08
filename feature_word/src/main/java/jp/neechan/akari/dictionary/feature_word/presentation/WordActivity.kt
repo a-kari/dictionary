@@ -6,7 +6,7 @@ import jp.neechan.akari.dictionary.base_ui.presentation.views.BaseActivity
 import jp.neechan.akari.dictionary.feature_word.R
 import kotlinx.android.synthetic.main.activity_word.*
 
-class WordActivity : BaseActivity() {
+internal class WordActivity : BaseActivity() {
 
     private lateinit var wordFragment: WordFragment
     private lateinit var word: String

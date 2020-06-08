@@ -17,7 +17,7 @@ import jp.neechan.akari.dictionary.core_api.presentation.models.UIState
  *  @param U is a UI model class
  *  @property contentMapper maps from a core model into a UI model
  */
-class ResultToUIStateMapper<R, U>(private val contentMapper: ModelMapper<R, U>? = null) :
+internal class ResultToUIStateMapper<R, U>(private val contentMapper: ModelMapper<R, U>? = null) :
     ModelMapper<Result<R>, UIState<U>> {
 
     override fun mapToInternalLayer(externalLayerModel: UIState<U>): Result<R> {

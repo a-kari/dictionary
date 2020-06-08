@@ -6,7 +6,7 @@ import dagger.Module
 import jp.neechan.akari.dictionary.feature_word.presentation.WordViewModelFactory
 
 @Module
-abstract class WordModule {
+internal abstract class WordModule {
 
     @Binds
     abstract fun bindViewModelFactory(

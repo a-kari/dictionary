@@ -17,7 +17,7 @@ import jp.neechan.akari.dictionary.feature_search_word.di.SearchWordComponent
 import kotlinx.android.synthetic.main.activity_search_word.*
 import javax.inject.Inject
 
-class SearchWordActivity : BaseActivity() {
+internal class SearchWordActivity : BaseActivity() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: SearchWordViewModel

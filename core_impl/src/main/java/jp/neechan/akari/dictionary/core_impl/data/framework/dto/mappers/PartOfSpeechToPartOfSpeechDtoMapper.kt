@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.core_impl.data.framework.dto.PartOfSpeechDto
 import javax.inject.Inject
 
 @Reusable
-class PartOfSpeechToPartOfSpeechDtoMapper @Inject constructor() : ModelMapper<PartOfSpeech, PartOfSpeechDto> {
+internal class PartOfSpeechToPartOfSpeechDtoMapper @Inject constructor() : ModelMapper<PartOfSpeech, PartOfSpeechDto> {
 
     override fun mapToInternalLayer(externalLayerModel: PartOfSpeechDto): PartOfSpeech {
         return PartOfSpeech.valueOf(externalLayerModel.name)

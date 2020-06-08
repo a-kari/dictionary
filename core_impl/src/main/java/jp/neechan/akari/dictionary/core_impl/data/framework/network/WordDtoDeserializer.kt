@@ -54,7 +54,7 @@ import javax.inject.Inject
  */
 
 @Reusable
-class WordDtoDeserializer @Inject constructor() : JsonDeserializer<WordDto> {
+internal class WordDtoDeserializer @Inject constructor() : JsonDeserializer<WordDto> {
 
     override fun deserialize(json: JsonElement,
                              typeOfT: Type,

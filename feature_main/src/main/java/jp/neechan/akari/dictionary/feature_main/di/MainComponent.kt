@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.feature_main.presentation.MainActivity
 
 @PerActivity
 @Component(dependencies = [ProvidersFacade::class])
-interface MainComponent {
+internal interface MainComponent {
 
     fun inject(mainActivity: MainActivity)
 

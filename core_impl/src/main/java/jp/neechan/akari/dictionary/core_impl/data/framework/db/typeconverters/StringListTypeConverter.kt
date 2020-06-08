@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-object StringListTypeConverter {
+internal object StringListTypeConverter {
 
     private val gson = Gson()
 

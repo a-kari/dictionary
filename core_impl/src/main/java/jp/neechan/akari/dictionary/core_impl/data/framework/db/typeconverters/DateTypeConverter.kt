@@ -3,7 +3,7 @@ package jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters
 import androidx.room.TypeConverter
 import java.util.Date
 
-object DateTypeConverter {
+internal object DateTypeConverter {
 
     @JvmStatic
     @TypeConverter

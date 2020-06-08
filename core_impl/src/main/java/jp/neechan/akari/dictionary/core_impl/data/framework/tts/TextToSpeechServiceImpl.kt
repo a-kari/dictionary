@@ -18,7 +18,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 @PerApp
-class TextToSpeechServiceImpl @Inject constructor(
+internal class TextToSpeechServiceImpl @Inject constructor(
     private val context: Context,
     private val preferencesRepository: TextToSpeechPreferencesRepository
 ) : TextToSpeechService, TextToSpeech.OnInitListener {

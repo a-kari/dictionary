@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.core_api.domain.usecases.WordsRepository
 import javax.inject.Inject
 
 @Reusable
-class SaveFilterParamsUseCase @Inject constructor(
+internal class SaveFilterParamsUseCase @Inject constructor(
     private val paramsRepository: FilterParamsRepository,
     private val wordsRepository: WordsRepository) {
 

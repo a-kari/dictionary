@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.core_api.presentation.models.PartOfSpeechUI
 import javax.inject.Inject
 
 @Reusable
-class PartOfSpeechToPartOfSpeechUIMapper @Inject constructor() :
+internal class PartOfSpeechToPartOfSpeechUIMapper @Inject constructor() :
     ModelMapper<PartOfSpeech, PartOfSpeechUI> {
 
     override fun mapToInternalLayer(externalLayerModel: PartOfSpeechUI): PartOfSpeech {

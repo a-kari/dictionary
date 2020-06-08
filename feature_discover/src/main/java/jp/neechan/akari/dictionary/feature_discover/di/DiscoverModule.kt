@@ -6,7 +6,7 @@ import dagger.Module
 import jp.neechan.akari.dictionary.feature_discover.presentation.DiscoverViewModelFactory
 
 @Module
-abstract class DiscoverModule {
+internal abstract class DiscoverModule {
 
     @Binds
     abstract fun bindViewModelFactory(

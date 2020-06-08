@@ -10,7 +10,7 @@ import jp.neechan.akari.dictionary.core_impl.data.interface_adapters.FilterPrefe
 import javax.inject.Inject
 
 @Reusable
-class FilterPreferencesServiceImpl @Inject constructor(context: Context) : FilterPreferencesService {
+internal class FilterPreferencesServiceImpl @Inject constructor(context: Context) : FilterPreferencesService {
 
     private val preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 

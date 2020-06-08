@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.Date
 
 @Entity(tableName = "Word")
-data class WordDto(
+internal data class WordDto(
 
     @PrimaryKey
     val word: String,

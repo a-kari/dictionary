@@ -20,7 +20,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 
-class DiscoverViewModel(
+internal class DiscoverViewModel(
     private val loadWordsUseCase: LoadAllWordsUseCase,
     loadFilterParamsUseCase: LoadFilterParamsUseCase,
     resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>) : ViewModel() {

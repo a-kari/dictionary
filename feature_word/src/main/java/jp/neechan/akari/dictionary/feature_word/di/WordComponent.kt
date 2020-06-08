@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.feature_word.presentation.WordFragment
 
 @PerFragment
 @Component(modules = [WordModule::class], dependencies = [ProvidersFacade::class])
-interface WordComponent {
+internal interface WordComponent {
 
     fun inject(wordFragment: WordFragment)
 

@@ -15,7 +15,7 @@ import jp.neechan.akari.dictionary.feature_word.domain.usecases.SaveWordUseCase
 import javax.inject.Inject
 
 @PerFragment
-class WordViewModelFactory @Inject constructor(
+internal class WordViewModelFactory @Inject constructor(
     private val loadWordUseCase: LoadWordUseCase,
     private val saveWordUseCase: SaveWordUseCase,
     private val resultMapper: ModelMapper<Result<Word>, UIState<WordUI>>,

@@ -6,7 +6,7 @@ import jp.neechan.akari.dictionary.core_api.domain.usecases.FilterParamsReposito
 import javax.inject.Inject
 
 @Reusable
-class FilterParamsRepositoryImpl @Inject constructor(
+internal class FilterParamsRepositoryImpl @Inject constructor(
     private val preferencesService: FilterPreferencesService) : FilterParamsRepository {
 
     override suspend fun loadFilterParams(): FilterParams {

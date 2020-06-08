@@ -9,7 +9,7 @@ import jp.neechan.akari.dictionary.core_api.presentation.models.PartOfSpeechUI
 import javax.inject.Inject
 
 @Reusable
-class DefinitionToDefinitionUIMapper @Inject constructor(
+internal class DefinitionToDefinitionUIMapper @Inject constructor(
     private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechUI>
 ) : ModelMapper<Definition, DefinitionUI> {
 

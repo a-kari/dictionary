@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.view_word.view.*
 import kotlinx.android.synthetic.main.view_word_definition.view.*
 import kotlinx.android.synthetic.main.view_word_part_of_speech.view.*
 
-class WordView : LinearLayout {
+internal class WordView : LinearLayout {
 
     private lateinit var speakCallback: () -> Unit
     private var definitionExtraTopMargin = 0

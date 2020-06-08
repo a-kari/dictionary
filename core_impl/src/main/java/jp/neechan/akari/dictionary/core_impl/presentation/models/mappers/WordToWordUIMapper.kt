@@ -13,7 +13,7 @@ import jp.neechan.akari.dictionary.core_api.presentation.models.WordUI
 import javax.inject.Inject
 
 @Reusable
-class WordToWordUIMapper @Inject constructor(
+internal class WordToWordUIMapper @Inject constructor(
     private val frequencyMapper: ModelMapper<Frequency, FrequencyUI>,
     private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechUI>,
     private val definitionMapper: ModelMapper<Definition, DefinitionUI>

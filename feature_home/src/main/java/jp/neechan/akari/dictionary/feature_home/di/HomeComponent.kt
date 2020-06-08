@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.feature_home.presentation.HomeFragment
 
 @PerFragment
 @Component(modules = [HomeModule::class], dependencies = [ProvidersFacade::class])
-interface HomeComponent {
+internal interface HomeComponent {
 
     fun inject(homeFragment: HomeFragment)
 

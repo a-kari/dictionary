@@ -9,7 +9,7 @@ import jp.neechan.akari.dictionary.core_impl.data.framework.dto.PartOfSpeechDto
 import javax.inject.Inject
 
 @Reusable
-class DefinitionToDefinitionDtoMapper @Inject constructor(
+internal class DefinitionToDefinitionDtoMapper @Inject constructor(
     private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechDto>) : ModelMapper<Definition, DefinitionDto> {
 
     override fun mapToInternalLayer(externalLayerModel: DefinitionDto): Definition {

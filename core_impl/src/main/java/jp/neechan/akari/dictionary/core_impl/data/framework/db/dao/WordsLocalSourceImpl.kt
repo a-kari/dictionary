@@ -11,7 +11,7 @@ import java.util.Date
 import javax.inject.Inject
 
 @Reusable
-class WordsLocalSourceImpl @Inject constructor(
+internal class WordsLocalSourceImpl @Inject constructor(
     private val wordsDao: WordsDao,
     private val wordMapper: ModelMapper<Word, WordDto>) : WordsLocalSource {
 

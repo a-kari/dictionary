@@ -6,7 +6,7 @@ import jp.neechan.akari.dictionary.core_api.domain.usecases.WordsRepository
 import javax.inject.Inject
 
 @Reusable
-class SaveWordUseCase @Inject constructor(private val wordsRepository: WordsRepository) {
+internal class SaveWordUseCase @Inject constructor(private val wordsRepository: WordsRepository) {
 
     suspend operator fun invoke(word: Word) {
         wordsRepository.saveWord(word)

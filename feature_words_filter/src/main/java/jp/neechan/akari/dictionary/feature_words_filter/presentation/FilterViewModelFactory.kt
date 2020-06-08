@@ -13,7 +13,7 @@ import jp.neechan.akari.dictionary.feature_words_filter.domain.usecases.SaveFilt
 import javax.inject.Inject
 
 @PerFragment
-class FilterViewModelFactory @Inject constructor(
+internal class FilterViewModelFactory @Inject constructor(
     private val loadFilterParams: LoadFilterParamsUseCase,
     private val saveFilterParams: SaveFilterParamsUseCase,
     private val frequencyMapper: ModelMapper<Frequency, FrequencyUI>,

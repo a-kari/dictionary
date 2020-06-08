@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
 
-interface WordsApi {
+internal interface WordsApi {
 
     @GET("words/")
     suspend fun loadWords(@QueryMap params: Map<String, String>): Page<String>

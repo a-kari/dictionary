@@ -25,7 +25,7 @@ import jp.neechan.akari.dictionary.feature_home.di.HomeComponent
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
-class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
+internal class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionListener {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: HomeViewModel

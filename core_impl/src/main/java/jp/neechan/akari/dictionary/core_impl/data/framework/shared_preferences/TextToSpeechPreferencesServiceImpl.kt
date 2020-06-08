@@ -8,7 +8,7 @@ import java.util.Locale
 import javax.inject.Inject
 
 @Reusable
-class TextToSpeechPreferencesServiceImpl @Inject constructor(context: Context) : TextToSpeechPreferencesService {
+internal class TextToSpeechPreferencesServiceImpl @Inject constructor(context: Context) : TextToSpeechPreferencesService {
 
     private val preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 

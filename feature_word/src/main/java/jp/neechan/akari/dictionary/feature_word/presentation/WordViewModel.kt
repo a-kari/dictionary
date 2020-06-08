@@ -16,12 +16,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 
-class WordViewModel(private val loadWordUseCase: LoadWordUseCase,
-                    private val saveWordUseCase: SaveWordUseCase,
-                    private val resultMapper: ModelMapper<Result<Word>, UIState<WordUI>>,
-                    private val wordMapper: ModelMapper<Word, WordUI>,
-                    private val speakUseCase: SpeakUseCase,
-                    private val stopSpeakingUseCase: StopSpeakingUseCase) : ViewModel() {
+internal class WordViewModel(
+    private val loadWordUseCase: LoadWordUseCase,
+    private val saveWordUseCase: SaveWordUseCase,
+    private val resultMapper: ModelMapper<Result<Word>, UIState<WordUI>>,
+    private val wordMapper: ModelMapper<Word, WordUI>,
+    private val speakUseCase: SpeakUseCase,
+    private val stopSpeakingUseCase: StopSpeakingUseCase) : ViewModel() {
 
     lateinit var wordId: String
 

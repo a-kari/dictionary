@@ -14,7 +14,7 @@ import jp.neechan.akari.dictionary.feature_settings.domain.usecases.SavePreferre
 import javax.inject.Inject
 
 @PerFragment
-class SettingsViewModelFactory @Inject constructor(
+internal class SettingsViewModelFactory @Inject constructor(
     private val loadPronunciationsUseCase: LoadPronunciationsUseCase,
     private val loadVoicesUseCase: LoadVoicesUseCase,
     private val loadPreferredPronunciationUseCase: LoadPreferredPronunciationUseCase,

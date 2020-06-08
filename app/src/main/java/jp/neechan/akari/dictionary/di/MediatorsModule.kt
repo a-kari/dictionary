@@ -16,7 +16,7 @@ import jp.neechan.akari.dictionary.feature_word.presentation.WordMediatorImpl
 import jp.neechan.akari.dictionary.feature_words_filter.presentation.WordsFilterMediatorImpl
 
 @Module
-abstract class MediatorsModule {
+internal abstract class MediatorsModule {
 
     @Binds
     abstract fun bindHomeMediator(mediatorImpl: HomeMediatorImpl): HomeMediator

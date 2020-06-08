@@ -10,7 +10,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import javax.inject.Inject
 
 @Reusable
-class LoadSavedWordsUseCase @Inject constructor(
+internal class LoadSavedWordsUseCase @Inject constructor(
     private val wordsRepository: WordsRepository) : LoadWordsUseCase {
 
     override suspend operator fun invoke(params: FilterParams): Result<Page<String>> {

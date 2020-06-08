@@ -7,7 +7,7 @@ import jp.neechan.akari.dictionary.core_api.presentation.models.FrequencyUI
 import javax.inject.Inject
 
 @Reusable
-class FrequencyToFrequencyUIMapper @Inject constructor() : ModelMapper<Frequency, FrequencyUI> {
+internal class FrequencyToFrequencyUIMapper @Inject constructor() : ModelMapper<Frequency, FrequencyUI> {
 
     override fun mapToInternalLayer(externalLayerModel: FrequencyUI): Frequency {
         return Frequency.valueOf(externalLayerModel.name)
