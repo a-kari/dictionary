@@ -1,0 +1,56 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="ToolbarStyle">
+        <item name="android:background">@color/blue</item>
+    </style>
+
+    <style name="ToolbarTheme">
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="ToolbarStyle.TitleTextAppearance">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="ButtonStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+
+    <style name="ButtonStyle.Large">
+        <item name="android:background">@drawable/bg_button_pink</item>
+    </style>
+
+    <style name="ButtonStyle.Small">
+        <item name="android:background">@drawable/bg_button_blue</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="SearchViewStyle">
+        <item name="android:paddingStart">@dimen/search_view_start_padding</item>
+        <item name="android:background">@drawable/bg_editable</item>
+        <item name="queryBackground">@null</item>
+        <item name="queryHint">@string/search</item>
+        <item name="iconifiedByDefault">false</item>
+    </style>
+
+    <style name="SearchViewTheme">
+        <item name="colorControlNormal">@color/grey</item>
+    </style>
+
+</resources>
