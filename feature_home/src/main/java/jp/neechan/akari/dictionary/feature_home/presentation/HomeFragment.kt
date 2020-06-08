@@ -16,8 +16,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import jp.neechan.akari.dictionary.base_ui.presentation.extensions.addVerticalDividers
 import jp.neechan.akari.dictionary.base_ui.presentation.views.BaseFragment
+import jp.neechan.akari.dictionary.core_api.di.AppWithFacade
+import jp.neechan.akari.dictionary.core_api.presentation.mediators.SearchWordMediator
+import jp.neechan.akari.dictionary.core_api.presentation.mediators.WordMediator
 import jp.neechan.akari.dictionary.core_api.presentation.models.UIState
 import jp.neechan.akari.dictionary.feature_home.R
+import jp.neechan.akari.dictionary.feature_home.di.HomeComponent
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
@@ -26,6 +30,8 @@ internal class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionLis
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: HomeViewModel
 
+    @Inject lateinit var searchWordMediator: SearchWordMediator
+    @Inject lateinit var wordMediator: WordMediator
 
     private lateinit var wordsAdapter: EditableWordsAdapter
     private lateinit var editButton: MenuItem
@@ -36,6 +42,7 @@ internal class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionLis
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        HomeComponent.create((requireActivity().application as AppWithFacade).getFacade()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
         setHasOptionsMenu(true)
@@ -96,6 +103,7 @@ internal class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionLis
     }
 
     private fun setupListeners() {
+        addWordButton.setOnClickListener { searchWordMediator.openSearchWord(requireContext()) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -123,6 +131,7 @@ internal class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionLis
     }
 
     override fun onWordClicked(word: String) {
+        wordMediator.openWordActivity(requireContext(), word)
     }
 
     override fun onWordDeleted(word: String) {
