@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- TextToSpeechService -->
+    <string name="tts_cant_play">Can\'t play</string>
+
+</resources>
