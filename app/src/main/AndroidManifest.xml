@@ -12,26 +12,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
-        <activity
-            android:name=".base.presentation.views.MainActivity"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".word.presentation.WordActivity"
-            android:launchMode="singleTop" />
-
-        <activity
-            android:name=".search.presentation.SearchWordActivity"
-            android:launchMode="singleTop" />
-
-    </application>
+        android:theme="@style/AppTheme" />
 
 </manifest>
