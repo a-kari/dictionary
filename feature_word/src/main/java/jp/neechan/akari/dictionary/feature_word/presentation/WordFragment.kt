@@ -11,11 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.base_ui.presentation.extensions.toast
 import jp.neechan.akari.dictionary.base_ui.presentation.views.BaseFragment
-import jp.neechan.akari.dictionary.core_api.di.AppWithFacade
 import jp.neechan.akari.dictionary.core_api.presentation.models.UIState
 import jp.neechan.akari.dictionary.core_api.presentation.models.WordUI
 import jp.neechan.akari.dictionary.feature_word.R
-import jp.neechan.akari.dictionary.feature_word.di.WordComponent
 import kotlinx.android.synthetic.main.fragment_word.*
 import javax.inject.Inject
 
@@ -39,7 +37,6 @@ internal class WordFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WordComponent.create((requireActivity().application as AppWithFacade).getFacade()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(WordViewModel::class.java)
     }
 
