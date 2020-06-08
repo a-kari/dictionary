@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- DiscoverFragment -->
+    <string name="discover_empty_content">No relevant words found for your search.</string>
+
+</resources>
