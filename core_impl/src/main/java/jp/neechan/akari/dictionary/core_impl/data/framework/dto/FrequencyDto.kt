@@ -11,12 +11,9 @@ internal enum class FrequencyDto(val from: Float, val to: Float) {
 
     companion object {
         fun valueOf(frequencyNumber: Float?): FrequencyDto {
-            return if (frequencyNumber != null) {
-                values().first { it.from <= frequencyNumber && frequencyNumber <= it.to }
-
-            } else {
-                UNKNOWN
-            }
+            return frequencyNumber?.let {
+                values().firstOrNull { it.from <= frequencyNumber && frequencyNumber < it.to } ?: UNKNOWN
+            } ?: UNKNOWN
         }
     }
 }
