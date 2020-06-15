@@ -39,6 +39,14 @@ android {
                     "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"]
         }
     }
+
+    testOptions {
+        unitTests.all {
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+            }
+        }
+    }
 }
 
 apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
