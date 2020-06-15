@@ -27,9 +27,24 @@ android {
     }
 
     buildTypes {
+        debug {
+            kotlinOptions.freeCompilerArgs += '-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi'
+        }
         release {
+            kotlinOptions.freeCompilerArgs += '-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            all {
+                testLogging {
+                    events "passed", "skipped", "failed", "standardOut", "standardError"
+                }
+            }
         }
     }
 }
@@ -65,6 +80,13 @@ dependencies {
     implementation project(':domain_tts')
 
     // Tests
+    testImplementation project(':test_utils')
     testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "org.mockito:mockito-inline:$mockito_inline_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
+    testImplementation "androidx.test:core:$android_test_version"
+    testImplementation "androidx.arch.core:core-testing:$aac_test_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_android_version"
 }
