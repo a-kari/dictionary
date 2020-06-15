@@ -1,11 +1,11 @@
 package jp.neechan.akari.dictionary.core_impl.data.interface_adapters
 
+import jp.neechan.akari.dictionary.core_api.di.scopes.PerApp
 import jp.neechan.akari.dictionary.core_api.domain.entities.FilterParams
 import jp.neechan.akari.dictionary.core_api.domain.entities.Page
 import jp.neechan.akari.dictionary.core_api.domain.entities.Result
 import jp.neechan.akari.dictionary.core_api.domain.entities.Word
 import jp.neechan.akari.dictionary.core_api.domain.usecases.WordsRepository
-import jp.neechan.akari.dictionary.core_api.di.scopes.PerApp
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import javax.inject.Inject
 
@@ -13,14 +13,14 @@ import javax.inject.Inject
 internal class WordsRepositoryImpl @Inject constructor(
     private val localSource: WordsLocalSource,
     private val remoteSource: WordsRemoteSource,
-    private val resultWrapper: ResultWrapper) : WordsRepository {
+    private val remoteResultWrapper: ResultWrapper) : WordsRepository {
 
     override val allWordsRecentlyUpdated = ConflatedBroadcastChannel(false)
 
     override val savedWordsRecentlyUpdated = ConflatedBroadcastChannel(false)
 
     override suspend fun loadWords(params: FilterParams): Result<Page<String>> {
-        return resultWrapper.wrapWithResult { remoteSource.loadWords(params) }
+        return remoteResultWrapper.wrapWithResult { remoteSource.loadWords(params) }
     }
 
     override suspend fun loadSavedWords(params: FilterParams): Result<Page<String>> {
@@ -48,7 +48,7 @@ internal class WordsRepositoryImpl @Inject constructor(
             Result.Success(localWord)
 
         } else {
-            resultWrapper.wrapWithResult { remoteSource.loadWord(wordId) }
+            remoteResultWrapper.wrapWithResult { remoteSource.loadWord(wordId) }
         }
     }
 
