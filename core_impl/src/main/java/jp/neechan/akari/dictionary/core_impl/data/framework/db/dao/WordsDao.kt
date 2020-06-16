@@ -20,7 +20,7 @@ internal interface WordsDao {
 
     @Transaction
     @Query("SELECT * FROM Word WHERE word = :wordId LIMIT 1")
-    suspend fun getWord(wordId: String): WordWithDefinitionsDto?
+    suspend fun getWordWithDefinitions(wordId: String): WordWithDefinitionsDto?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveWord(word: WordDto)

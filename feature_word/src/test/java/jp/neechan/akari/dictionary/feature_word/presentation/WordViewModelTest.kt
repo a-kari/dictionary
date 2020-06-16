@@ -34,7 +34,7 @@ class WordViewModelTest {
 
     // Run LiveData methods synchronously.
     @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
+    val synchronousAacRule = InstantTaskExecutorRule()
 
     // Switch Dispatchers.Main to TestCoroutineDispatcher.
     @get:Rule

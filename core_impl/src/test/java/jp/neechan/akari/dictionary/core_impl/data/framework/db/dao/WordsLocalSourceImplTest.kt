@@ -45,7 +45,7 @@ class WordsLocalSourceImplTest {
 
         val actualReturn = sourceUnderTest.loadWord(inputWordId)
 
-        verify(mockWordsDao).getWord(inputWordId)
+        verify(mockWordsDao).getWordWithDefinitions(inputWordId)
         assertEquals(expectedReturn, actualReturn)
     }
 
@@ -54,12 +54,12 @@ class WordsLocalSourceImplTest {
         val inputWordId = "hello"
         val expectedWordWithDefinitions = mockWordWithDefinitionDto
         val expectedReturn = mockWord
-        `when`(mockWordsDao.getWord(anyString())).thenReturn(expectedWordWithDefinitions)
+        `when`(mockWordsDao.getWordWithDefinitions(anyString())).thenReturn(expectedWordWithDefinitions)
         `when`(mockWordMapper.mapToInternalLayer(anyNonNull())).thenReturn(expectedReturn)
 
         val actualReturn = sourceUnderTest.loadWord(inputWordId)
 
-        verify(mockWordsDao).getWord(inputWordId)
+        verify(mockWordsDao).getWordWithDefinitions(inputWordId)
         verify(mockWordMapper).mapToInternalLayer(expectedWordWithDefinitions.word)
         assertEquals(expectedReturn, actualReturn)
     }

@@ -25,7 +25,7 @@ internal class WordsLocalSourceImpl @Inject constructor(
     }
 
     override suspend fun loadWord(wordId: String): Word? {
-        val wordWithDefinitionsDto = wordsDao.getWord(wordId)
+        val wordWithDefinitionsDto = wordsDao.getWordWithDefinitions(wordId)
         return wordWithDefinitionsDto?.let {
             wordWithDefinitionsDto.word.definitions = wordWithDefinitionsDto.definitions
             wordMapper.mapToInternalLayer(wordWithDefinitionsDto.word)
