@@ -72,4 +72,7 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "org.mockito:mockito-inline:$mockito_inline_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
+
+    // Instrumented tests
+    androidTestImplementation "androidx.test.ext:junit:$junit_instrumented_version"
 }
