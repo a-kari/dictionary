@@ -65,5 +65,5 @@ dependencies {
 
     // Tests
     testImplementation "junit:junit:$junit_version"
-    androidTestImplementation "androidx.test.ext:junit:$junit_android_version"
+    androidTestImplementation "androidx.test.ext:junit:$junit_instrumented_version"
 }

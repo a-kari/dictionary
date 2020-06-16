@@ -8,7 +8,9 @@ ext {
 
     // Tests
     junit_version = '4.13'
-    junit_android_version = '1.1.1'
+
+    // Instrumented tests
+    junit_instrumented_version = '1.1.1'
     espresso_version = '3.2.0'
 
     // Coroutines
