@@ -16,6 +16,7 @@ ext {
     aac_test_version = '2.1.0'
 
     // Instrumented tests
+    instrumented_runner_version = '1.2.0'
     junit_instrumented_version = '1.1.1'
     espresso_version = '3.2.0'
 
