@@ -1,6 +1,5 @@
 package jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters
 
-import jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters.FrequencyDtoTypeConverter
 import jp.neechan.akari.dictionary.core_impl.data.framework.dto.FrequencyDto
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -10,6 +9,8 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized::class)
 internal class FrequencyDtoTypeConverterTest(private val inputFrequency: FrequencyDto) {
 
+    private val converterUnderTest = FrequencyDtoTypeConverter()
+
     // The test calls two methods of the unit (save() & restore()).
     // But it doesn't matter in what form the unit saves the frequency -
     // actually, we just need to check that a restored frequency equals to original.
@@ -17,9 +18,7 @@ internal class FrequencyDtoTypeConverterTest(private val inputFrequency: Frequen
     fun `restored frequency should be equal to input`() {
         val expectedFrequency = inputFrequency
 
-        val actualFrequency = FrequencyDtoTypeConverter.restore(
-            FrequencyDtoTypeConverter.save(inputFrequency)
-        )
+        val actualFrequency = converterUnderTest.restore(converterUnderTest.save(inputFrequency))
 
         assertEquals(expectedFrequency, actualFrequency)
     }

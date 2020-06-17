@@ -4,20 +4,18 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-internal object StringListTypeConverter {
+internal class StringListTypeConverter : AbstractTypeConverter<List<String>?, String?> {
 
     private val gson = Gson()
 
-    @JvmStatic
     @TypeConverter
-    fun save(list: List<String>?): String? {
-        return list?.let { gson.toJson(list) }
+    override fun save(restored: List<String>?): String? {
+        return restored?.let { gson.toJson(restored) }
     }
 
-    @JvmStatic
     @TypeConverter
-    fun restore(jsonArrayString: String?): List<String>? {
+    override fun restore(saved: String?): List<String>? {
         val stringListType = object : TypeToken<List<String>>() {}.type
-        return gson.fromJson(jsonArrayString, stringListType)
+        return gson.fromJson(saved, stringListType)
     }
 }

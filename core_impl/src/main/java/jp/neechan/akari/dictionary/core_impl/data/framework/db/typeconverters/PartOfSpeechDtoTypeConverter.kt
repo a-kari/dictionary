@@ -3,17 +3,15 @@ package jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters
 import androidx.room.TypeConverter
 import jp.neechan.akari.dictionary.core_impl.data.framework.dto.PartOfSpeechDto
 
-internal object PartOfSpeechDtoTypeConverter {
+internal class PartOfSpeechDtoTypeConverter : AbstractTypeConverter<PartOfSpeechDto, String> {
 
-    @JvmStatic
     @TypeConverter
-    fun save(partOfSpeech: PartOfSpeechDto): String {
-        return partOfSpeech.name
+    override fun save(restored: PartOfSpeechDto): String {
+        return restored.name
     }
 
-    @JvmStatic
     @TypeConverter
-    fun restore(partOfSpeechString: String): PartOfSpeechDto {
-        return PartOfSpeechDto.valueOf(partOfSpeechString)
+    override fun restore(saved: String): PartOfSpeechDto {
+        return PartOfSpeechDto.valueOf(saved)
     }
 }

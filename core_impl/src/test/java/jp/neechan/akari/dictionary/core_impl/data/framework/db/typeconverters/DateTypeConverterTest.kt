@@ -1,6 +1,5 @@
 package jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters
 
-import jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters.DateTypeConverter
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -10,6 +9,8 @@ import java.util.Date
 @RunWith(Parameterized::class)
 class DateTypeConverterTest(private val inputDate: Date?) {
 
+    private val converterUnderTest = DateTypeConverter()
+
     // The test calls two methods of the unit (save() & restore()).
     // But it doesn't matter in what form the unit saves the date -
     // actually, we just need to check that a restored date equals to original.
@@ -17,7 +18,7 @@ class DateTypeConverterTest(private val inputDate: Date?) {
     fun `restored date should be equal to input`() {
         val expectedDate = inputDate
 
-        val actualDate = DateTypeConverter.restore(DateTypeConverter.save(inputDate))
+        val actualDate = converterUnderTest.restore(converterUnderTest.save(inputDate))
 
         assertEquals(expectedDate, actualDate)
     }

@@ -3,17 +3,15 @@ package jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters
 import androidx.room.TypeConverter
 import java.util.Date
 
-internal object DateTypeConverter {
+internal class DateTypeConverter : AbstractTypeConverter<Date?, Long?> {
 
-    @JvmStatic
     @TypeConverter
-    fun save(date: Date?): Long? {
-        return date?.time
+    override fun save(restored: Date?): Long? {
+        return restored?.time
     }
 
-    @JvmStatic
     @TypeConverter
-    fun restore(millis: Long?): Date? {
-        return millis?.let { Date(millis) }
+    override fun restore(saved: Long?): Date? {
+        return saved?.let { Date(saved) }
     }
 }

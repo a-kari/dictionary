@@ -3,17 +3,15 @@ package jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters
 import androidx.room.TypeConverter
 import jp.neechan.akari.dictionary.core_impl.data.framework.dto.FrequencyDto
 
-internal object FrequencyDtoTypeConverter {
+internal class FrequencyDtoTypeConverter : AbstractTypeConverter<FrequencyDto, String> {
 
-    @JvmStatic
     @TypeConverter
-    fun save(frequencyDto: FrequencyDto): String {
-        return frequencyDto.name
+    override fun save(restored: FrequencyDto): String {
+        return restored.name
     }
 
-    @JvmStatic
     @TypeConverter
-    fun restore(frequencyString: String): FrequencyDto {
-        return FrequencyDto.valueOf(frequencyString)
+    override fun restore(saved: String): FrequencyDto {
+        return FrequencyDto.valueOf(saved)
     }
 }

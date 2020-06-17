@@ -1,6 +1,5 @@
 package jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters
 
-import jp.neechan.akari.dictionary.core_impl.data.framework.db.typeconverters.PartOfSpeechDtoTypeConverter
 import jp.neechan.akari.dictionary.core_impl.data.framework.dto.PartOfSpeechDto
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -10,6 +9,8 @@ import org.junit.runners.Parameterized
 @RunWith(Parameterized::class)
 internal class PartOfSpeechDtoTypeConverterTest(private val inputPartOfSpeech: PartOfSpeechDto) {
 
+    private val converterUnderTest = PartOfSpeechDtoTypeConverter()
+
     // The test calls two methods of the unit (save() & restore()).
     // But it doesn't matter in what form the unit saves the part of speech -
     // actually, we just need to check that a restored part of speech equals to original.
@@ -17,9 +18,7 @@ internal class PartOfSpeechDtoTypeConverterTest(private val inputPartOfSpeech: P
     fun `restored part of speech should be equal to input`() {
         val expectedPartOfSpeech = inputPartOfSpeech
 
-        val actualPartOfSpeech = PartOfSpeechDtoTypeConverter.restore(
-            PartOfSpeechDtoTypeConverter.save(inputPartOfSpeech)
-        )
+        val actualPartOfSpeech = converterUnderTest.restore(converterUnderTest.save(inputPartOfSpeech))
 
         assertEquals(expectedPartOfSpeech, actualPartOfSpeech)
     }
