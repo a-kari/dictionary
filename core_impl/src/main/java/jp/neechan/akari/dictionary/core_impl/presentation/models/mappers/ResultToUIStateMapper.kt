@@ -20,6 +20,7 @@ import jp.neechan.akari.dictionary.core_api.presentation.models.UIState
 internal class ResultToUIStateMapper<R, U>(private val contentMapper: ModelMapper<R, U>? = null) :
     ModelMapper<Result<R>, UIState<U>> {
 
+    @Suppress("UNCHECKED_CAST")
     override fun mapToInternalLayer(externalLayerModel: UIState<U>): Result<R> {
         return when (externalLayerModel) {
             is UIState.ShowContent -> {
@@ -34,6 +35,7 @@ internal class ResultToUIStateMapper<R, U>(private val contentMapper: ModelMappe
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun mapToExternalLayer(internalLayerModel: Result<R>): UIState<U> {
         return when (internalLayerModel) {
             is Result.Success -> {

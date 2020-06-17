@@ -30,17 +30,9 @@ android {
     }
 
     buildTypes {
-        debug {
-            kotlinOptions.freeCompilerArgs += [
-                    '-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi',
-                    '-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi']
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            kotlinOptions.freeCompilerArgs += [
-                    "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                    "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"]
         }
     }
 }

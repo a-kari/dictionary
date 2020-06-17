@@ -31,6 +31,7 @@ import org.mockito.Mockito.mock
  * This class mocks AppWithFacade's provisions.
  * Mocked provisions' behavior can be overridden in tests using below fields.
  */
+@Suppress("UNCHECKED_CAST")
 class TestAppWithMockFacade : Application(), AppWithFacade {
 
     private val facade: ProvidersFacade
