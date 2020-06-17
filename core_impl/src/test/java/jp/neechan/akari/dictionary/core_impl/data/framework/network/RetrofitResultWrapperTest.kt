@@ -1,71 +1,69 @@
 package jp.neechan.akari.dictionary.core_impl.data.framework.network
 
+import jp.neechan.akari.dictionary.core_api.domain.entities.Page
 import jp.neechan.akari.dictionary.core_api.domain.entities.Result
+import jp.neechan.akari.dictionary.core_impl.data.framework.dto.FrequencyDto
+import jp.neechan.akari.dictionary.core_impl.data.framework.dto.WordDto
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import retrofit2.HttpException
 import java.net.HttpURLConnection
 import java.net.UnknownHostException
+import java.util.Date
 
-class RetrofitResultWrapperTest {
+@RunWith(Parameterized::class)
+class RetrofitResultWrapperTest<T>(private val inputBlock: () -> T?,
+                                   private val expectedResult: Result<T>) {
 
     private val wrapperUnderTest = RetrofitResultWrapper()
 
     @Test
-    fun `should return Success`() = runBlockingTest {
-        val inputBlock = { listOf("Giraffe", "Leopard", "Zebra") }
-        val expectedResult = Result.Success(inputBlock())
-
+    fun `should return expected Result according to return of the block`() = runBlockingTest {
         val actualResult = wrapperUnderTest.wrapWithResult { inputBlock() }
 
-        assertEquals(expectedResult, actualResult)
+        if (expectedResult is Result.Success || expectedResult is Result.NotFoundError || expectedResult is Result.ConnectionError) {
+            assertEquals(expectedResult, actualResult)
+
+        } else {
+            assertEquals(expectedResult::class, actualResult::class)
+            expectedResult as Result.Error
+            actualResult as Result.Error
+            assertEquals(expectedResult.error!!::class, actualResult.error!!::class)
+            assertEquals(expectedResult.error!!.message, actualResult.error!!.message)
+        }
     }
 
-    @Test
-    fun `should return ConnectionError`() = runBlockingTest {
-        val inputBlock = { throw UnknownHostException() }
-        val expectedResult = Result.ConnectionError
+    companion object {
+        @JvmStatic
+        @Parameterized.Parameters
+        fun getParams(): Collection<Array<out Any>> {
+            val sampleStringList = listOf("Giraffe", "Leopard", "Zebra")
+            val samplePage = Page(sampleStringList, 1, false)
+            val sampleWordDto = WordDto("hello", "həˈləʊ", listOf("hel", "lo"), FrequencyDto.FREQUENT, null, Date(10))
 
-        val actualResult = wrapperUnderTest.wrapWithResult { inputBlock() }
+            val emptyStringList = emptyList<String>()
+            val emptyPage = Page(emptyStringList, 1, false)
 
-        assertEquals(expectedResult, actualResult)
-    }
+            val connectionException = UnknownHostException()
+            val notFoundException = mock(HttpException::class.java).also { `when`(it.code()).thenReturn(HttpURLConnection.HTTP_NOT_FOUND) }
+            val unknownException = RuntimeException("Something went wrong")
 
-    @Test
-    fun `should return NotFoundError`() = runBlockingTest {
-        val mockHttpException = mock(HttpException::class.java)
-        `when`(mockHttpException.code()).thenReturn(HttpURLConnection.HTTP_NOT_FOUND)
-        val inputBlock = { throw mockHttpException }
-        val expectedResult = Result.NotFoundError
-
-        val actualResult = wrapperUnderTest.wrapWithResult { inputBlock() }
-
-        assertEquals(expectedResult, actualResult)
-    }
-
-    @Test
-    fun `should return NotFoundError 2`() = runBlockingTest {
-        val inputBlock = { null }
-        val expectedResult = Result.NotFoundError
-
-        val actualResult = wrapperUnderTest.wrapWithResult { inputBlock() }
-
-        assertEquals(expectedResult, actualResult)
-    }
-
-    @Test
-    fun `should return Error`() = runBlockingTest {
-        val exception = RuntimeException("Something went wrong")
-        val inputBlock = { throw exception }
-        val expectedResult = Result.Error(exception)
-
-        val actualResult = wrapperUnderTest.wrapWithResult { inputBlock() }
-
-        assertTrue(actualResult is Result.Error)
-        assertEquals(expectedResult.error, (actualResult as Result.Error).error)
+            return listOf(
+                arrayOf<Any>({ sampleStringList },          Result.Success(sampleStringList)),
+                arrayOf<Any>({ samplePage },                Result.Success(samplePage)),
+                arrayOf<Any>({ sampleWordDto },             Result.Success(sampleWordDto)),
+                arrayOf<Any>({ emptyStringList },           Result.NotFoundError),
+                arrayOf<Any>({ emptyPage },                 Result.NotFoundError),
+                arrayOf<Any>({ null },                      Result.NotFoundError),
+                arrayOf<Any>({ throw notFoundException },   Result.NotFoundError),
+                arrayOf<Any>({ throw connectionException }, Result.ConnectionError),
+                arrayOf<Any>({ throw unknownException },    Result.Error(unknownException))
+            )
+        }
     }
 }

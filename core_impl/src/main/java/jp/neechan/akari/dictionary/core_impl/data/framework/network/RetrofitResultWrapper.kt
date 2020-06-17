@@ -14,7 +14,12 @@ internal class RetrofitResultWrapper @Inject constructor() : ResultWrapper {
     override suspend fun <T> wrapWithResult(block: suspend () -> T?): Result<T> {
         return try {
             val value = block()
-            value?.let { Result.Success(it) } ?: Result.NotFoundError
+            if (value == null || (value is Iterable<*> && value.none())) {
+                Result.NotFoundError
+
+            } else {
+                Result.Success(value)
+            }
 
         } catch (unknownHostException: UnknownHostException) {
             Result.ConnectionError
