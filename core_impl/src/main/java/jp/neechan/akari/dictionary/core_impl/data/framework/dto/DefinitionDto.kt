@@ -2,6 +2,7 @@ package jp.neechan.akari.dictionary.core_impl.data.framework.dto
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -11,7 +12,8 @@ import androidx.room.PrimaryKey
         parentColumns = ["word"],
         childColumns = ["wordId"],
         onDelete = ForeignKey.CASCADE
-    )]
+    )],
+    indices = [Index("wordId")]
 )
 internal data class DefinitionDto(
 
