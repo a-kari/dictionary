@@ -15,6 +15,7 @@ import jp.neechan.akari.dictionary.core_impl.data.framework.network.RetrofitResu
 import jp.neechan.akari.dictionary.core_impl.data.framework.network.WordDtoDeserializer
 import jp.neechan.akari.dictionary.core_impl.data.framework.network.WordsApi
 import jp.neechan.akari.dictionary.core_impl.data.interface_adapters.ResultWrapper
+import jp.neechan.akari.dictionary.core_impl.di.qualifiers.RemoteResultWrapper
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -76,5 +77,6 @@ internal abstract class NetworkModule {
     }
 
     @Binds
+    @RemoteResultWrapper
     abstract fun bindResultWrapper(retrofitResultWrapper: RetrofitResultWrapper): ResultWrapper
 }

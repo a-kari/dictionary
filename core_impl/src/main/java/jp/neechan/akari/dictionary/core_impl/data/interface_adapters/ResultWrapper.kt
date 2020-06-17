@@ -4,5 +4,5 @@ import jp.neechan.akari.dictionary.core_api.domain.entities.Result
 
 internal interface ResultWrapper {
 
-    suspend fun <T> wrapWithResult(block: suspend () -> T): Result<T>
+    suspend fun <T> wrapWithResult(block: suspend () -> T?): Result<T>
 }

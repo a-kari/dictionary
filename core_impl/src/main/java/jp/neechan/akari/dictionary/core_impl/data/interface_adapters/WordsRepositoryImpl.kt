@@ -6,14 +6,17 @@ import jp.neechan.akari.dictionary.core_api.domain.entities.Page
 import jp.neechan.akari.dictionary.core_api.domain.entities.Result
 import jp.neechan.akari.dictionary.core_api.domain.entities.Word
 import jp.neechan.akari.dictionary.core_api.domain.usecases.WordsRepository
+import jp.neechan.akari.dictionary.core_impl.di.qualifiers.LocalResultWrapper
+import jp.neechan.akari.dictionary.core_impl.di.qualifiers.RemoteResultWrapper
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import javax.inject.Inject
 
 @PerApp
 internal class WordsRepositoryImpl @Inject constructor(
     private val localSource: WordsLocalSource,
+    @LocalResultWrapper private val localResultWrapper: ResultWrapper,
     private val remoteSource: WordsRemoteSource,
-    private val remoteResultWrapper: ResultWrapper) : WordsRepository {
+    @RemoteResultWrapper private val remoteResultWrapper: ResultWrapper) : WordsRepository {
 
     override val allWordsRecentlyUpdated = ConflatedBroadcastChannel(false)
 
@@ -24,13 +27,7 @@ internal class WordsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun loadSavedWords(params: FilterParams): Result<Page<String>> {
-        val savedWords = localSource.loadWords(params)
-        return if (savedWords.isNotEmpty()) {
-            Result.Success(savedWords)
-
-        } else {
-            Result.NotFoundError
-        }
+        return localResultWrapper.wrapWithResult { localSource.loadWords(params) }
     }
 
     override suspend fun setAllWordsRecentlyUpdated(recentlyUpdated: Boolean) {
@@ -42,10 +39,10 @@ internal class WordsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun loadWord(wordId: String): Result<Word> {
-        val localWord = localSource.loadWord(wordId)
+        val localWord = localResultWrapper.wrapWithResult { localSource.loadWord(wordId) }
 
-        return if (localWord != null) {
-            Result.Success(localWord)
+        return if (localWord is Result.Success<Word>) {
+            localWord
 
         } else {
             remoteResultWrapper.wrapWithResult { remoteSource.loadWord(wordId) }

@@ -11,9 +11,10 @@ import javax.inject.Inject
 @Reusable
 internal class RetrofitResultWrapper @Inject constructor() : ResultWrapper {
 
-    override suspend fun <T> wrapWithResult(block: suspend () -> T): Result<T> {
+    override suspend fun <T> wrapWithResult(block: suspend () -> T?): Result<T> {
         return try {
-            Result.Success(block())
+            val value = block()
+            value?.let { Result.Success(it) } ?: Result.NotFoundError
 
         } catch (unknownHostException: UnknownHostException) {
             Result.ConnectionError

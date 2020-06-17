@@ -3,6 +3,7 @@ package jp.neechan.akari.dictionary.core_impl.di
 import dagger.Component
 import jp.neechan.akari.dictionary.core_impl.data.framework.network.WordsApi
 import jp.neechan.akari.dictionary.core_impl.data.interface_adapters.ResultWrapper
+import jp.neechan.akari.dictionary.core_impl.di.qualifiers.RemoteResultWrapper
 import javax.inject.Singleton
 
 @Singleton
@@ -11,6 +12,7 @@ internal interface NetworkComponent {
 
     fun provideWordsApi(): WordsApi
 
+    @RemoteResultWrapper
     fun provideResultWrapper(): ResultWrapper
 
     companion object {

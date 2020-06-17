@@ -2,7 +2,6 @@ package jp.neechan.akari.dictionary.core_impl.data.interface_adapters
 
 import jp.neechan.akari.dictionary.core_api.domain.entities.Result
 import jp.neechan.akari.dictionary.core_api.domain.entities.Word
-import jp.neechan.akari.dictionary.test_utils.mockito.MockitoUtils.anyNonNull
 import jp.neechan.akari.dictionary.test_utils.mockito.MockitoUtils.anySuspendFunction
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.test.runBlockingTest
@@ -23,6 +22,7 @@ class WordsRepositoryImplTest {
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
     @Mock private lateinit var mockLocalSource: WordsLocalSource
+    @Mock private lateinit var mockLocalResultWrapper: ResultWrapper
     @Mock private lateinit var mockRemoteSource: WordsRemoteSource
     @Mock private lateinit var mockRemoteResultWrapper: ResultWrapper
     @Mock private lateinit var mockWord: Word
@@ -31,20 +31,24 @@ class WordsRepositoryImplTest {
 
     @Before
     fun setup() {
-        repositoryUnderTest = WordsRepositoryImpl(mockLocalSource, mockRemoteSource, mockRemoteResultWrapper)
+        repositoryUnderTest = WordsRepositoryImpl(
+            mockLocalSource,
+            mockLocalResultWrapper,
+            mockRemoteSource,
+            mockRemoteResultWrapper
+        )
     }
 
     @Test
     fun `loadWord() should fetch a word from the local source`() = runBlockingTest {
         val inputWordId = "hello"
-        val expectedWord = mockWord
-        val expectedReturn = Result.Success(expectedWord)
-        `when`(mockLocalSource.loadWord(anyNonNull())).thenReturn(expectedWord)
+        val expectedReturn = Result.Success(mockWord)
+        `when`(mockLocalResultWrapper.wrapWithResult(anySuspendFunction<Word>())).thenReturn(expectedReturn)
 
         val actualReturn = repositoryUnderTest.loadWord(inputWordId)
 
         assertEquals(expectedReturn, actualReturn)
-        verify(mockLocalSource).loadWord(inputWordId)
+        verify(mockLocalResultWrapper).wrapWithResult(anySuspendFunction<Word>())
         verifyZeroInteractions(mockRemoteSource)
         verifyZeroInteractions(mockRemoteResultWrapper)
     }
@@ -58,7 +62,7 @@ class WordsRepositoryImplTest {
         val actualReturn = repositoryUnderTest.loadWord(inputWordId)
 
         assertEquals(expectedReturn, actualReturn)
-        verify(mockLocalSource).loadWord(inputWordId)
+        verify(mockLocalResultWrapper).wrapWithResult(anySuspendFunction<Word>())
         verify(mockRemoteResultWrapper).wrapWithResult(anySuspendFunction<Word>())
     }
 

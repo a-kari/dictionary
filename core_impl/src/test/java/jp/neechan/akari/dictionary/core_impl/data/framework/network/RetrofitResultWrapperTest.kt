@@ -48,6 +48,16 @@ class RetrofitResultWrapperTest {
     }
 
     @Test
+    fun `should return NotFoundError 2`() = runBlockingTest {
+        val inputBlock = { null }
+        val expectedResult = Result.NotFoundError
+
+        val actualResult = wrapperUnderTest.wrapWithResult { inputBlock() }
+
+        assertEquals(expectedResult, actualResult)
+    }
+
+    @Test
     fun `should return Error`() = runBlockingTest {
         val exception = RuntimeException("Something went wrong")
         val inputBlock = { throw exception }
