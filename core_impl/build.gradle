@@ -6,6 +6,10 @@ apply plugin: 'kotlin-kapt'
 apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
 apply from: "$project.rootDir/scripts/packaging_options.gradle"
 
+def keysPropertiesFile = rootProject.file('keys.properties')
+def keysProperties = new Properties()
+keysProperties.load(new FileInputStream(keysPropertiesFile))
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -18,6 +22,12 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     compileOptions {
@@ -31,6 +41,7 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField 'String', 'API_KEY', keysProperties['api_key']
             kotlinOptions.freeCompilerArgs += [
                     '-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi',
                     '-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi']
@@ -38,6 +49,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'API_KEY', keysProperties['api_key']
             kotlinOptions.freeCompilerArgs += [
                     "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
                     "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"]
