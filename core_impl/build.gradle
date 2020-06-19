@@ -3,6 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
+apply from: "$project.rootDir/scripts/packaging_options.gradle"
+
 def keysPropertiesFile = rootProject.file('keys.properties')
 def keysProperties = new Properties()
 keysProperties.load(new FileInputStream(keysPropertiesFile))
@@ -46,9 +49,15 @@ android {
                     "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"]
         }
     }
-}
 
-apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
+    testOptions {
+        unitTests.all {
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+            }
+        }
+    }
+}
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -79,6 +88,15 @@ dependencies {
     api project(':core_api')
 
     // Tests
+    testImplementation project(':test_utils')
     testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "org.mockito:mockito-inline:$mockito_inline_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
+
+    // Instrumented tests
+    androidTestImplementation "androidx.test:runner:$instrumented_runner_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_instrumented_version"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
+    androidTestImplementation "androidx.arch.core:core-testing:$aac_test_version"
 }

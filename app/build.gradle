@@ -3,6 +3,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
+apply from: "$project.rootDir/scripts/packaging_options.gradle"
+
 android {
     compileSdkVersion 29
     buildToolsVersion '29.0.3'
@@ -42,8 +45,6 @@ android {
     }
 }
 
-apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
-
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
@@ -67,5 +68,6 @@ dependencies {
 
     // Tests
     testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test:runner:$instrumented_runner_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_instrumented_version"
 }
