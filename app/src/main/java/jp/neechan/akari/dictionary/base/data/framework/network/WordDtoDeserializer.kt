@@ -3,11 +3,13 @@ package jp.neechan.akari.dictionary.base.data.framework.network
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
+import dagger.Reusable
 import jp.neechan.akari.dictionary.base.data.framework.dto.DefinitionDto
 import jp.neechan.akari.dictionary.base.data.framework.dto.FrequencyDto
 import jp.neechan.akari.dictionary.base.data.framework.dto.PartOfSpeechDto
 import jp.neechan.akari.dictionary.base.data.framework.dto.WordDto
 import java.lang.reflect.Type
+import javax.inject.Inject
 
 /**
  * Deserializes a word from the API into a WordDto instance.
@@ -50,7 +52,9 @@ import java.lang.reflect.Type
  *     "frequency": 5.83
  * }
  */
-class WordDtoDeserializer : JsonDeserializer<WordDto> {
+
+@Reusable
+class WordDtoDeserializer @Inject constructor() : JsonDeserializer<WordDto> {
 
     override fun deserialize(json: JsonElement,
                              typeOfT: Type,

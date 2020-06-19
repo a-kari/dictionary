@@ -12,12 +12,18 @@ import android.widget.RadioGroup
 import androidx.annotation.IdRes
 import androidx.core.view.children
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import jp.neechan.akari.dictionary.App
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
+import jp.neechan.akari.dictionary.settings.di.SettingsComponent
 import kotlinx.android.synthetic.main.fragment_settings.*
+import javax.inject.Inject
 
 class SettingsFragment : BaseFragment() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: SettingsViewModel
 
     private lateinit var voicesAdapter: ArrayAdapter<String>
@@ -27,6 +33,12 @@ class SettingsFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = SettingsFragment()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        SettingsComponent.create((requireActivity().application as App).getAppComponent()).inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SettingsViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

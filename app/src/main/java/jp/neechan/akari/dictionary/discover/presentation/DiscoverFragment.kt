@@ -12,18 +12,25 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import jp.neechan.akari.dictionary.App
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.adapters.WordsAdapter
 import jp.neechan.akari.dictionary.base.presentation.extensions.addVerticalDividers
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.views.BaseFragment
+import jp.neechan.akari.dictionary.discover.di.DiscoverComponent
 import jp.neechan.akari.dictionary.filter.presentation.WordsFilterDialog
 import jp.neechan.akari.dictionary.word.presentation.WordActivity
 import kotlinx.android.synthetic.main.fragment_discover.*
+import javax.inject.Inject
 
 class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: DiscoverViewModel
+
     private lateinit var wordsAdapter: WordsAdapter
 
     companion object {
@@ -32,6 +39,8 @@ class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        DiscoverComponent.create((requireActivity().application as App).getAppComponent()).inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(DiscoverViewModel::class.java)
         setHasOptionsMenu(true)
     }
 

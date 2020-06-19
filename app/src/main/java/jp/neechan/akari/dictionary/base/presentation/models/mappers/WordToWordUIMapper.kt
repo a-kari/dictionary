@@ -1,5 +1,6 @@
 package jp.neechan.akari.dictionary.base.presentation.models.mappers
 
+import dagger.Reusable
 import jp.neechan.akari.dictionary.base.domain.entities.Definition
 import jp.neechan.akari.dictionary.base.domain.entities.Frequency
 import jp.neechan.akari.dictionary.base.domain.entities.PartOfSpeech
@@ -9,10 +10,13 @@ import jp.neechan.akari.dictionary.base.presentation.models.DefinitionUI
 import jp.neechan.akari.dictionary.base.presentation.models.FrequencyUI
 import jp.neechan.akari.dictionary.base.presentation.models.PartOfSpeechUI
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
+import javax.inject.Inject
 
-class WordToWordUIMapper(private val frequencyMapper: ModelMapper<Frequency, FrequencyUI>,
-                         private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechUI>,
-                         private val definitionMapper: ModelMapper<Definition, DefinitionUI>) : ModelMapper<Word, WordUI> {
+@Reusable
+class WordToWordUIMapper @Inject constructor(
+    private val frequencyMapper: ModelMapper<Frequency, FrequencyUI>,
+    private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechUI>,
+    private val definitionMapper: ModelMapper<Definition, DefinitionUI>) : ModelMapper<Word, WordUI> {
 
     override fun mapToInternalLayer(externalLayerModel: WordUI): Word {
         return Word(

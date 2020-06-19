@@ -2,12 +2,15 @@ package jp.neechan.akari.dictionary.base.data.framework.shared_preferences
 
 import android.content.Context
 import androidx.core.content.edit
+import dagger.Reusable
 import jp.neechan.akari.dictionary.base.data.interface_adapters.FilterPreferencesService
 import jp.neechan.akari.dictionary.base.domain.entities.FilterParams
 import jp.neechan.akari.dictionary.base.domain.entities.Frequency
 import jp.neechan.akari.dictionary.base.domain.entities.PartOfSpeech
+import javax.inject.Inject
 
-class FilterPreferencesServiceImpl(context: Context) : FilterPreferencesService {
+@Reusable
+class FilterPreferencesServiceImpl @Inject constructor(context: Context) : FilterPreferencesService {
 
     private val preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
 

@@ -6,10 +6,14 @@ import jp.neechan.akari.dictionary.base.domain.entities.Result
 import jp.neechan.akari.dictionary.base.domain.entities.Word
 import jp.neechan.akari.dictionary.base.domain.usecases.WordsRepository
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class WordsRepositoryImpl(private val localSource: WordsLocalSource,
-                          private val remoteSource: WordsRemoteSource,
-                          private val resultWrapper: ResultWrapper) : WordsRepository {
+@Singleton
+class WordsRepositoryImpl @Inject constructor(
+    private val localSource: WordsLocalSource,
+    private val remoteSource: WordsRemoteSource,
+    private val resultWrapper: ResultWrapper) : WordsRepository {
 
     override val allWordsRecentlyUpdated = ConflatedBroadcastChannel(false)
 

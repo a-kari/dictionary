@@ -7,20 +7,30 @@ import androidx.annotation.StringRes
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import jp.neechan.akari.dictionary.App
 import jp.neechan.akari.dictionary.R
 import jp.neechan.akari.dictionary.base.presentation.models.UIState
 import jp.neechan.akari.dictionary.base.presentation.models.WordUI
 import jp.neechan.akari.dictionary.base.presentation.views.BaseActivity
+import jp.neechan.akari.dictionary.search.di.SearchWordComponent
 import jp.neechan.akari.dictionary.word.presentation.WordFragment
 import kotlinx.android.synthetic.main.activity_search_word.*
+import javax.inject.Inject
 
 class SearchWordActivity : BaseActivity() {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: SearchWordViewModel
+
     private lateinit var wordFragment: WordFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SearchWordComponent.create((application as App).getAppComponent()).inject(this)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(SearchWordViewModel::class.java)
+
         setContentView(R.layout.activity_search_word)
         setupWordFragment()
         showHint()

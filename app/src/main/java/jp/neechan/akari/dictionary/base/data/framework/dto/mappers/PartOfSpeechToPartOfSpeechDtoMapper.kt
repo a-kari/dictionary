@@ -1,10 +1,13 @@
 package jp.neechan.akari.dictionary.base.data.framework.dto.mappers
 
+import dagger.Reusable
 import jp.neechan.akari.dictionary.base.data.framework.dto.PartOfSpeechDto
-import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
 import jp.neechan.akari.dictionary.base.domain.entities.PartOfSpeech
+import jp.neechan.akari.dictionary.base.domain.entities.mappers.ModelMapper
+import javax.inject.Inject
 
-class PartOfSpeechToPartOfSpeechDtoMapper : ModelMapper<PartOfSpeech, PartOfSpeechDto> {
+@Reusable
+class PartOfSpeechToPartOfSpeechDtoMapper @Inject constructor() : ModelMapper<PartOfSpeech, PartOfSpeechDto> {
 
     override fun mapToInternalLayer(externalLayerModel: PartOfSpeechDto): PartOfSpeech {
         return PartOfSpeech.valueOf(externalLayerModel.name)
