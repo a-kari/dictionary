@@ -8,9 +8,12 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import jp.neechan.akari.dictionary.base_ui.presentation.views.BaseActivity
+import jp.neechan.akari.dictionary.core_api.di.AppWithFacade
+import jp.neechan.akari.dictionary.core_api.presentation.mediators.WordMediator
 import jp.neechan.akari.dictionary.core_api.presentation.models.UIState
 import jp.neechan.akari.dictionary.core_api.presentation.models.WordUI
 import jp.neechan.akari.dictionary.feature_search_word.R
+import jp.neechan.akari.dictionary.feature_search_word.di.SearchWordComponent
 import kotlinx.android.synthetic.main.activity_search_word.*
 import javax.inject.Inject
 
@@ -19,9 +22,11 @@ internal class SearchWordActivity : BaseActivity() {
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: SearchWordViewModel
 
+    @Inject lateinit var wordMediator: WordMediator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SearchWordComponent.create((application as AppWithFacade).getFacade()).inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SearchWordViewModel::class.java)
 
         setContentView(R.layout.activity_search_word)
@@ -44,6 +49,7 @@ internal class SearchWordActivity : BaseActivity() {
     }
 
     private fun setupWordFragment() {
+        wordMediator.openWordFragment(R.id.content, supportFragmentManager)
     }
     
     private fun setupObservers() {
@@ -95,6 +101,7 @@ internal class SearchWordActivity : BaseActivity() {
     }
 
     private fun showContent(word: WordUI) {
+        wordMediator.showWordInWordFragment(word, supportFragmentManager)
 
         progressBar.visibility = GONE
         hintTv.visibility = GONE
