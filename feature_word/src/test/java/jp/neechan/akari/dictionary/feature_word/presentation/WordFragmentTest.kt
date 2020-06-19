@@ -1,11 +1,11 @@
 package jp.neechan.akari.dictionary.feature_word.presentation
 
+import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.commit
+import androidx.fragment.app.testing.launchFragmentInContainer
 import jp.neechan.akari.dictionary.core_api.presentation.models.FrequencyUI
 import jp.neechan.akari.dictionary.core_api.presentation.models.WordUI
 import jp.neechan.akari.dictionary.test_utils.robolectric.TestAppWithMockFacade
-import jp.neechan.akari.dictionary.test_utils.robolectric.TestFragmentContainerActivity
 import kotlinx.android.synthetic.main.fragment_word.view.*
 import kotlinx.android.synthetic.main.view_word.view.*
 import org.junit.Assert.assertEquals
@@ -14,7 +14,6 @@ import org.junit.Test
 import org.junit.experimental.runners.Enclosed
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
-import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.util.Date
@@ -55,23 +54,16 @@ internal class WordFragmentTest {
 
         @Test
         fun `should populate view with the word and show or hide addToDictionaryButton`() {
-            val activity = Robolectric.buildActivity(TestFragmentContainerActivity::class.java).setup().get()
-            val fragmentUnderTest = WordFragment.newInstance()
-            activity.supportFragmentManager.commit {
-                replace(
-                    activity.fragmentContainerId,
-                    fragmentUnderTest,
-                    WordFragment::class.simpleName
-                )
+            val scenario = launchFragmentInContainer<WordFragment>(Bundle())
+            scenario.onFragment { fragmentUnderTest ->
+                fragmentUnderTest.setWord(inputWordUI)
+                val rootView = fragmentUnderTest.view!!
+                val actualWordTvText = rootView.wordTv.text
+                val actualAddToDictionaryButtonVisibility = rootView.addToDictionaryButton.visibility
+
+                assertEquals(expectedWordTvText, actualWordTvText)
+                assertEquals(expectedAddToDictionaryButtonVisibility, actualAddToDictionaryButtonVisibility)
             }
-
-            fragmentUnderTest.setWord(inputWordUI)
-            val rootView = fragmentUnderTest.view!!
-            val actualWordTvText = rootView.wordTv.text
-            val actualAddToDictionaryButtonVisibility = rootView.addToDictionaryButton.visibility
-
-            assertEquals(expectedWordTvText, actualWordTvText)
-            assertEquals(expectedAddToDictionaryButtonVisibility, actualAddToDictionaryButtonVisibility)
         }
 
         companion object {

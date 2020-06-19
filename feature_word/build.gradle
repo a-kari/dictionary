@@ -89,6 +89,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
     testImplementation "androidx.test:core:$android_test_version"
     testImplementation "androidx.arch.core:core-testing:$aac_test_version"
+    testImplementation "androidx.fragment:fragment-testing:$fragment_ktx_version"
 
     // Instrumented tests
     androidTestImplementation "androidx.test:runner:$instrumented_runner_version"
