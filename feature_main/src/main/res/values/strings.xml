@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- MainActivity -->
+    <string name="main_bottom_navigation_home">Home</string>
+    <string name="main_bottom_navigation_discover">Discover</string>
+    <string name="main_bottom_navigation_settings">Settings</string>
+
+</resources>

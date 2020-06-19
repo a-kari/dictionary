@@ -1,0 +1,83 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
+apply from: "$project.rootDir/scripts/packaging_options.gradle"
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildTypes {
+        debug {
+            kotlinOptions.freeCompilerArgs += [
+                    '-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi',
+                    '-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi']
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            kotlinOptions.freeCompilerArgs += [
+                    '-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi',
+                    '-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$coroutines_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$coroutines_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutines_lifecycle_version"
+
+    // Android UI
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "com.google.android.material:material:$material_version"
+
+    // Paging library
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    // Project modules
+    implementation project(':core_api')
+    implementation project(':base_ui')
+    implementation project(':base_ui_words_list')
+    implementation project(':domain_words')
+
+    // Tests
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test:runner:$instrumented_runner_version"
+    androidTestImplementation "androidx.test.ext:junit:$junit_instrumented_version"
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- WordsFilterDialog -->
+    <string name="words_filter_frequency">Frequency:</string>
+    <string name="words_filter_part_of_speech">Part of speech:</string>
+
+</resources>

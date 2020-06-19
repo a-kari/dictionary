@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="jp.neechan.akari.dictionary.feature_search_word">
+
+    <application>
+
+        <activity
+            android:name=".presentation.SearchWordActivity"
+            android:launchMode="singleTop" />
+
+    </application>
+
+</manifest>

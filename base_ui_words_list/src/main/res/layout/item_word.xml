@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_selectable"
+    android:paddingLeft="@dimen/default_padding_small"
+    android:paddingTop="@dimen/default_padding"
+    android:paddingRight="@dimen/default_padding_small"
+    android:paddingBottom="@dimen/default_padding">
+
+    <jp.neechan.akari.dictionary.base_ui.presentation.views.AvatarView
+        android:id="@+id/avatarView"
+        android:layout_width="@dimen/word_avatar_size"
+        android:layout_height="@dimen/word_avatar_size"
+        android:layout_marginStart="@dimen/default_padding_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/wordTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_padding"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/deleteButton"
+        app:layout_constraintStart_toEndOf="@id/avatarView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Air" />
+
+    <ImageView
+        android:id="@+id/deleteButton"
+        android:layout_width="@dimen/word_button_size"
+        android:layout_height="@dimen/word_button_size"
+        android:background="@drawable/bg_selectable_circle"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/default_padding_small"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_delete" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

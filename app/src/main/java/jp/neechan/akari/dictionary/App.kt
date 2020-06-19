@@ -1,15 +1,13 @@
 package jp.neechan.akari.dictionary
 
 import android.app.Application
-import jp.neechan.akari.dictionary.base.di.AppComponent
+import jp.neechan.akari.dictionary.core_api.di.AppWithFacade
+import jp.neechan.akari.dictionary.core_api.di.ProvidersFacade
+import jp.neechan.akari.dictionary.di.FacadeComponent
 
-class App : Application() {
+class App : Application(), AppWithFacade {
 
-    companion object {
-        private var appComponent: AppComponent? = null
-    }
-
-    fun getAppComponent(): AppComponent {
-        return appComponent ?: AppComponent.create(this).also { appComponent = it }
+    override fun getFacade(): ProvidersFacade {
+        return FacadeComponent.create(this)
     }
 }
