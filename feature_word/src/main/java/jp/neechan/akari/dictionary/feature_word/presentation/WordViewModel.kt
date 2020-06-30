@@ -15,6 +15,7 @@ import jp.neechan.akari.dictionary.feature_word.domain.usecases.SaveWordUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class WordViewModel(
     private val loadWordUseCase: LoadWordUseCase,
@@ -28,7 +29,11 @@ internal class WordViewModel(
 
     val wordLiveData = liveData {
         emit(UIState.ShowLoading)
-        emit(resultMapper.mapToExternalLayer(loadWordUseCase(wordId)))
+
+        val word = withContext(Dispatchers.IO) {
+            resultMapper.mapToExternalLayer(loadWordUseCase(wordId))
+        }
+        emit(word)
     }
 
     fun saveWord(wordUI: WordUI) = viewModelScope.launch(Dispatchers.IO) {
