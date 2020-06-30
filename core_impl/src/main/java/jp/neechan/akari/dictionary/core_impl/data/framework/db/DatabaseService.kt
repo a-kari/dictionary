@@ -18,7 +18,7 @@ import jp.neechan.akari.dictionary.core_impl.data.framework.dto.WordDto
     FrequencyDtoTypeConverter::class,
     PartOfSpeechDtoTypeConverter::class
 )
-internal abstract class DatabaseService : RoomDatabase() {
+abstract class DatabaseService : RoomDatabase() {
 
     abstract fun getWordsDao(): WordsDao
 }

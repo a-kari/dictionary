@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey
     )],
     indices = [Index("wordId")]
 )
-internal data class DefinitionDto(
+data class DefinitionDto(
 
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,

@@ -12,7 +12,7 @@ import jp.neechan.akari.dictionary.core_impl.data.interface_adapters.WordsRemote
 import jp.neechan.akari.dictionary.core_impl.data.interface_adapters.WordsRepositoryImpl
 
 @Module
-internal abstract class WordsRepositoryModule {
+abstract class WordsRepositoryModule {
 
     @Binds
     abstract fun bindWordsLocalSource(wordsLocalSourceImpl: WordsLocalSourceImpl): WordsLocalSource

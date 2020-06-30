@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
 apply from: "$project.rootDir/scripts/packaging_options.gradle"
@@ -49,11 +50,34 @@ dependencies {
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
+    // Dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
     // Android UI
     implementation "androidx.appcompat:appcompat:$appcompat_version"
 
     // Project modules
     api project(':core_api')
+    implementation project(':core_impl')
+    implementation project(':core')
+    api project(':app')
+    implementation project(':feature_main')
+    implementation project(':feature_home')
+    implementation project(':feature_discover')
+    implementation project(':feature_settings')
+    implementation project(':feature_word')
+    implementation project(':feature_search_word')
+    implementation project(':feature_words_filter')
 
     // Tests
     implementation "junit:junit:$junit_version"

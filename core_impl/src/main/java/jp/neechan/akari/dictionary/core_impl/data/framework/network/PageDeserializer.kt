@@ -35,7 +35,7 @@ import javax.inject.Inject
  */
 
 @Reusable
-internal class PageDeserializer<T> @Inject constructor() : JsonDeserializer<Page<T>> {
+class PageDeserializer<T> @Inject constructor() : JsonDeserializer<Page<T>> {
 
     override fun deserialize(json: JsonElement, genericPageType: Type, context: JsonDeserializationContext): Page<T> {
         val pageJson = json.asJsonObject

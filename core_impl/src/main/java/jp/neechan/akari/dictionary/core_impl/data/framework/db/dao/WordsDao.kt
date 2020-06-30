@@ -10,7 +10,7 @@ import jp.neechan.akari.dictionary.core_impl.data.framework.dto.WordDto
 import jp.neechan.akari.dictionary.core_impl.data.framework.dto.WordWithDefinitionsDto
 
 @Dao
-internal interface WordsDao {
+interface WordsDao {
 
     @Query("SELECT word FROM Word ORDER BY saveDate DESC LIMIT :limit OFFSET :offset")
     fun getWords(limit: Int, offset: Int): List<String>

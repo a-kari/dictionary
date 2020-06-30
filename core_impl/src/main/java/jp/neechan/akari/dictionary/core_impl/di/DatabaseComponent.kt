@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [DatabaseModule::class], dependencies = [ContextProvider::class])
-internal interface DatabaseComponent {
+interface DatabaseComponent {
 
     fun provideWordsDao(): WordsDao
 

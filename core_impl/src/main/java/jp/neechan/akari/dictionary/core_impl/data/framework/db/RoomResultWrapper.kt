@@ -6,7 +6,7 @@ import jp.neechan.akari.dictionary.core_impl.data.interface_adapters.ResultWrapp
 import javax.inject.Inject
 
 @Reusable
-internal class RoomResultWrapper @Inject constructor() : ResultWrapper {
+class RoomResultWrapper @Inject constructor() : ResultWrapper {
 
     override suspend fun <T> wrapWithResult(block: suspend () -> T?): Result<T> {
         return try {

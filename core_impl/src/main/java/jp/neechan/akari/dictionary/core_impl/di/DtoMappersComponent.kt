@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [DtoMappersModule::class])
-internal interface DtoMappersComponent {
+interface DtoMappersComponent {
 
     fun provideWordMapper(): ModelMapper<Word, WordDto>
 

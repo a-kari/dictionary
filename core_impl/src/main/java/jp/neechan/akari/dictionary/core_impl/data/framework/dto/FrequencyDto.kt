@@ -1,6 +1,6 @@
 package jp.neechan.akari.dictionary.core_impl.data.framework.dto
 
-internal enum class FrequencyDto(val from: Float, val to: Float) {
+enum class FrequencyDto(val from: Float, val to: Float) {
 
     VERY_RARE(0f, 2f),
     RARE(2f, 4f),

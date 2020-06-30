@@ -2,7 +2,7 @@ package jp.neechan.akari.dictionary.core_impl.data.interface_adapters
 
 import java.util.Locale
 
-internal interface TextToSpeechPreferencesService {
+interface TextToSpeechPreferencesService {
 
     suspend fun loadPreferredLocale(): Locale?
 

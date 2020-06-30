@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [SharedPreferencesModule::class], dependencies = [ContextProvider::class])
-internal interface SharedPreferencesComponent {
+interface SharedPreferencesComponent {
 
     fun provideFilterPreferencesService(): FilterPreferencesService
 

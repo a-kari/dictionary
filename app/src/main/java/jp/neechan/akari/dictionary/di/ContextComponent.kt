@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component
-internal interface ContextComponent : ContextProvider {
+interface ContextComponent : ContextProvider {
 
     @Component.Builder
     interface Builder {
