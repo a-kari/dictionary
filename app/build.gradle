@@ -54,6 +54,9 @@ dependencies {
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
+    // Android UI
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+
     // Project modules
     api project(':core_api')
     implementation project(':core')
