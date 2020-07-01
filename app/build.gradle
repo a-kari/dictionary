@@ -35,6 +35,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        checkDependencies true
+        abortOnError true
+        xmlReport false
+        disable 'DefaultLocale'
+    }
 }
 
 dependencies {
@@ -62,4 +69,7 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test:runner:$instrumented_runner_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_instrumented_version"
+
+    // Lint
+    lintChecks project(':lint_checks')
 }

@@ -35,4 +35,7 @@ ext {
 
     // Room
     room_version = '2.2.5'
+
+    // Lint
+    android_lint_version = '27.0.0'
 }

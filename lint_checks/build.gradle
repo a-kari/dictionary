@@ -1,0 +1,24 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
+
+dependencies {
+
+    // Kotlin
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Android Lint
+    compileOnly "com.android.tools.lint:lint-api:$android_lint_version"
+    compileOnly "com.android.tools.lint:lint-checks:$android_lint_version"
+    testImplementation "com.android.tools.lint:lint-tests:$android_lint_version"
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+jar {
+    manifest {
+        attributes 'Lint-Registry-v2': 'jp.neechan.akari.dictionary.lint_checks.LintRegistry'
+    }
+}
