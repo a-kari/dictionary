@@ -28,6 +28,7 @@ class HardcodedSizeDetectorTest(
                     """<?xml version="1.0" encoding="utf-8"?>
                         <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                            xmlns:tools="http://schemas.android.com/tools"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -38,7 +39,8 @@ class HardcodedSizeDetectorTest(
                                 android:drawablePadding="$inputTvDrawablePadding"
                                 android:padding="$inputTvPadding"
                                 android:textSize="$inputTvTextSize"
-                                app:elevation="$inputTvElevation" />
+                                app:elevation="$inputTvElevation"
+                                tools:textSize="20sp" />
 
                         </FrameLayout>"""
                 )
@@ -57,20 +59,20 @@ class HardcodedSizeDetectorTest(
         private const val MATCH_PARENT = "match_parent"
         private const val WRAP_CONTENT = "wrap_content"
         private const val VALUE_0_DP = "0dp"
-        private const val VALUE_1_DP = "1dp"
+        private const val VALUE_0_SP = "0sp"
 
         @Parameterized.Parameters
         @JvmStatic
         fun getParams(): Collection<Array<Any>> {
             return listOf(
                 //      width         height        margin        padding     drawablePadding elevation     textSize      warnings
-                arrayOf(DIMEN,        MATCH_PARENT, WRAP_CONTENT, VALUE_0_DP,   VALUE_1_DP,   DIMEN,        DIMEN,        0),
-                arrayOf(HARDCODED_DP, MATCH_PARENT, WRAP_CONTENT, VALUE_0_DP,   VALUE_1_DP,   DIMEN,        DIMEN,        1),
-                arrayOf(HARDCODED_DP, HARDCODED_DP, WRAP_CONTENT, VALUE_0_DP,   VALUE_1_DP,   DIMEN,        DIMEN,        2),
-                arrayOf(HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, VALUE_0_DP,   VALUE_1_DP,   DIMEN,        DIMEN,        3),
-                arrayOf(HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, VALUE_1_DP,   DIMEN,        DIMEN,        4),
-                arrayOf(HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, DIMEN,        DIMEN,        5),
-                arrayOf(HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, DIMEN,        6),
+                arrayOf(DIMEN,        MATCH_PARENT, WRAP_CONTENT, VALUE_0_DP,   DIMEN,        DIMEN,        VALUE_0_SP,   0),
+                arrayOf(HARDCODED_DP, MATCH_PARENT, WRAP_CONTENT, VALUE_0_DP,   DIMEN,        DIMEN,        VALUE_0_SP,   1),
+                arrayOf(HARDCODED_DP, HARDCODED_DP, WRAP_CONTENT, VALUE_0_DP,   DIMEN,        DIMEN,        VALUE_0_SP,   2),
+                arrayOf(HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, VALUE_0_DP,   DIMEN,        DIMEN,        VALUE_0_SP,   3),
+                arrayOf(HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, DIMEN,        DIMEN,        VALUE_0_SP,   4),
+                arrayOf(HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, DIMEN,        VALUE_0_SP,   5),
+                arrayOf(HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, VALUE_0_SP,   6),
                 arrayOf(HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_DP, HARDCODED_SP, 7)
             )
         }

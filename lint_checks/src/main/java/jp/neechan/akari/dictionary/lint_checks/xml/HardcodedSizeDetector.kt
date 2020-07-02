@@ -9,6 +9,22 @@ import com.android.tools.lint.detector.api.Severity
 import com.android.tools.lint.detector.api.XmlContext
 import org.w3c.dom.Attr
 
+/**
+ * Finds hardcoded sizes in xml layout files. Hardcoded sizes can look like:
+ *
+ * android:layout_width="100dp"
+ * android:textSize="20sp"
+ * app:elevation="8dp"
+ *
+ * It's bad, because the app should look fine on all screens. And it's necessary to use sizes from
+ * dimens.xml, because there may be several dimens.xml for each screen type.
+ *
+ * The lint has a whitelist:
+ *
+ * - 0dp value is frequently used, for example, in ConstraintLayout.
+ * - 0sp value can be used with dynamic text size.
+ * - All attributes from tools namespace.
+ */
 @Suppress("UnstableApiUsage")
 class HardcodedSizeDetector : LayoutDetector() {
 
@@ -31,15 +47,23 @@ class HardcodedSizeDetector : LayoutDetector() {
         )
     }
 
-    private val whitelist = listOf("0dp", "0sp", "1dp")
+    private val namespacesWhitelist = listOf("http://schemas.android.com/tools")
+    private val valuesWhitelist = listOf("0dp", "0sp")
 
     override fun getApplicableAttributes(): Collection<String> = ALL
 
     override fun visitAttribute(context: XmlContext, attribute: Attr) {
-        val size = attribute.value
-        val isHardcoded = size.matches(HARDCODED_SIZE_PATTERN) && size !in whitelist
+        // Ignore attributes from whitelist namespaces.
+        if (attribute.namespaceURI in namespacesWhitelist) {
+            return
+        }
 
-        if (isHardcoded) {
+        // Check if the attribute's value is a hardcoded size, which is not in the whitelist,
+        // and report if so.
+        val value = attribute.value
+        val isHardcodedSize = value.matches(HARDCODED_SIZE_PATTERN) && value !in valuesWhitelist
+
+        if (isHardcodedSize) {
             context.report(ISSUE, context.getLocation(attribute), DESCRIPTION)
         }
     }
