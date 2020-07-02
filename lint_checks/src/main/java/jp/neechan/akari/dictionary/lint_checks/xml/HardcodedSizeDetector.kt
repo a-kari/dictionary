@@ -4,6 +4,8 @@ import com.android.tools.lint.detector.api.Category
 import com.android.tools.lint.detector.api.Implementation
 import com.android.tools.lint.detector.api.Issue
 import com.android.tools.lint.detector.api.LayoutDetector
+import com.android.tools.lint.detector.api.LintFix
+import com.android.tools.lint.detector.api.Location
 import com.android.tools.lint.detector.api.Scope
 import com.android.tools.lint.detector.api.Severity
 import com.android.tools.lint.detector.api.XmlContext
@@ -37,13 +39,15 @@ class HardcodedSizeDetector : LayoutDetector() {
                                         "the correct layout on all screen densities"
 
         val ISSUE = Issue.create(
-            "HardcodedSize",
-            DESCRIPTION,
-            EXPLANATION,
-            Category.USABILITY,
-            7,
-            Severity.WARNING,
-            Implementation(HardcodedSizeDetector::class.java, Scope.RESOURCE_FILE_SCOPE)
+            id = "HardcodedSize",
+            briefDescription = DESCRIPTION,
+            explanation = EXPLANATION,
+            category = Category.USABILITY,
+            priority = 7,
+            severity = Severity.WARNING,
+            implementation = Implementation(
+                HardcodedSizeDetector::class.java, Scope.RESOURCE_FILE_SCOPE
+            )
         )
     }
 
@@ -64,7 +68,22 @@ class HardcodedSizeDetector : LayoutDetector() {
         val isHardcodedSize = value.matches(HARDCODED_SIZE_PATTERN) && value !in valuesWhitelist
 
         if (isHardcodedSize) {
-            context.report(ISSUE, context.getLocation(attribute), DESCRIPTION)
+            context.report(
+                ISSUE,
+                context.getLocation(attribute),
+                DESCRIPTION,
+                createLint(context.getValueLocation(attribute))
+            )
         }
+    }
+
+    private fun createLint(valueLocation: Location): LintFix {
+        return LintFix.create()
+                      .name("Use dimens.xml")
+                      .replace()
+                      .range(valueLocation)
+                      .with("@dimen/value")
+                      .select("value")
+                      .build()
     }
 }
