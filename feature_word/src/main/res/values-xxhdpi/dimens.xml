@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- WordFragment -->
+    <dimen name="word_fragment_add_button_height">64dp</dimen>
+
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Word -->
+    <dimen name="word_avatar_size">50dp</dimen>
+    <dimen name="word_button_size">46dp</dimen>
+
+</resources>

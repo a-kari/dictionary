@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Common -->
+    <dimen name="default_padding">16dp</dimen>
+    <dimen name="default_padding_small">8dp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_medium">14sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="dialog_padding">48dp</dimen>
+    <dimen name="button_icon_size">16dp</dimen>
+    <dimen name="search_view_start_padding">-8dp</dimen>
+    <dimen name="spinner_min_width">100dp</dimen>
+
+    <!-- AvatarView -->
+    <dimen name="avatar_text_size">30sp</dimen>
+
+</resources>
