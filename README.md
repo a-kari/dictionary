@@ -53,6 +53,7 @@
 * Room Persistence Library
 * Paging Library
 * Unit testing: JUnit, Mockito, Robolectric
+* Code analysis: Android Lint, Detekt
 
 ### Структура Gradle-модулей:
 
