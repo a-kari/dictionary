@@ -29,7 +29,6 @@ internal class HomeViewModelFactory @Inject constructor(
                 deleteWordUseCase,
                 stringPageResultMapper
             ) as T
-
         } else {
             throw cannotInstantiateException(modelClass)
         }

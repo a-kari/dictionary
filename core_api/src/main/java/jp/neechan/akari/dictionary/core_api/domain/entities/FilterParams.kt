@@ -1,8 +1,10 @@
 package jp.neechan.akari.dictionary.core_api.domain.entities
 
-data class FilterParams(var page: Int = DEFAULT_PAGE,
-                        var partOfSpeech: PartOfSpeech = DEFAULT_PART_OF_SPEECH,
-                        var frequency: Frequency = DEFAULT_FREQUENCY) {
+data class FilterParams(
+    var page: Int = DEFAULT_PAGE,
+    var partOfSpeech: PartOfSpeech = DEFAULT_PART_OF_SPEECH,
+    var frequency: Frequency = DEFAULT_FREQUENCY
+) {
 
     companion object {
         const val DEFAULT_PAGE = 1

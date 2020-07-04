@@ -22,7 +22,8 @@ internal class SettingsViewModelFactory @Inject constructor(
     private val savePreferredPronunciationUseCase: SavePreferredPronunciationUseCase,
     private val savePreferredVoiceUseCase: SavePreferredVoiceUseCase,
     private val speakUseCase: SpeakUseCase,
-    private val stopSpeakingUseCase: StopSpeakingUseCase) : BaseViewModelFactory() {
+    private val stopSpeakingUseCase: StopSpeakingUseCase
+) : BaseViewModelFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -37,7 +38,6 @@ internal class SettingsViewModelFactory @Inject constructor(
                 speakUseCase,
                 stopSpeakingUseCase
             ) as T
-
         } else {
             throw cannotInstantiateException(modelClass)
         }

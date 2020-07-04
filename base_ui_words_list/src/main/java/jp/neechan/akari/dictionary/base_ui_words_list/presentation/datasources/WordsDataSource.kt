@@ -14,10 +14,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-class WordsDataSource(private val loadWords: LoadWordsUseCase,
-                      private val loadFilterParams: LoadFilterParamsUseCase,
-                      private val resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>,
-                      private val coroutineScope: CoroutineScope) : PageKeyedDataSource<Int, String>() {
+class WordsDataSource(
+    private val loadWords: LoadWordsUseCase,
+    private val loadFilterParams: LoadFilterParamsUseCase,
+    private val resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>,
+    private val coroutineScope: CoroutineScope
+) : PageKeyedDataSource<Int, String>() {
 
     private val _uiStateLiveData = MutableLiveData<UIState<Page<String>>>()
     val uiStateLiveData: LiveData<UIState<Page<String>>> = _uiStateLiveData

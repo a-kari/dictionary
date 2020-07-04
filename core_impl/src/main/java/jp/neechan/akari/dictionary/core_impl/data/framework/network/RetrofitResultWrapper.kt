@@ -16,22 +16,17 @@ internal class RetrofitResultWrapper @Inject constructor() : ResultWrapper {
             val value = block()
             if (value == null || (value is Iterable<*> && value.none())) {
                 Result.NotFoundError
-
             } else {
                 Result.Success(value)
             }
-
         } catch (unknownHostException: UnknownHostException) {
             Result.ConnectionError
-
         } catch (httpException: HttpException) {
             if (httpException.code() == HttpURLConnection.HTTP_NOT_FOUND) {
                 Result.NotFoundError
-
             } else {
                 Result.Error(httpException)
             }
-
         } catch (throwable: Throwable) {
             Result.Error(throwable)
         }

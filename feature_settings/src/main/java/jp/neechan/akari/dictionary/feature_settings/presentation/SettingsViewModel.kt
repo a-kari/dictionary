@@ -29,7 +29,8 @@ internal class SettingsViewModel(
     private val savePreferredPronunciationUseCase: SavePreferredPronunciationUseCase,
     private val savePreferredVoiceUseCase: SavePreferredVoiceUseCase,
     private val speakUseCase: SpeakUseCase,
-    private val stopSpeakingUseCase: StopSpeakingUseCase) : ViewModel() {
+    private val stopSpeakingUseCase: StopSpeakingUseCase
+) : ViewModel() {
 
     // pronunciations will be populated only once.
     private val pronunciations: LiveData<List<Locale>> = liveData {

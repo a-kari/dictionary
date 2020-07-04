@@ -23,7 +23,8 @@ import kotlinx.coroutines.launch
 internal class DiscoverViewModel(
     private val loadWordsUseCase: LoadAllWordsUseCase,
     loadFilterParamsUseCase: LoadFilterParamsUseCase,
-    resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>) : ViewModel() {
+    resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>
+) : ViewModel() {
 
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 

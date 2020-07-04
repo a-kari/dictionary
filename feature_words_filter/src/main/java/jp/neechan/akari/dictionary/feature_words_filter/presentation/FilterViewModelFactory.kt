@@ -29,7 +29,6 @@ internal class FilterViewModelFactory @Inject constructor(
                 frequencyMapper,
                 partOfSpeechMapper
             ) as T
-
         } else {
             throw cannotInstantiateException(modelClass)
         }

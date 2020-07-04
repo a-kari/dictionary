@@ -7,7 +7,8 @@ import jp.neechan.akari.dictionary.base_ui_words_list.presentation.adapters.Word
 import jp.neechan.akari.dictionary.feature_home.R
 
 internal class EditableWordsAdapter(
-    private val wordActionListener: WordActionListener) : WordsAdapter(wordActionListener) {
+    private val wordActionListener: WordActionListener
+) : WordsAdapter(wordActionListener) {
 
     private var isEditMode = false
 
@@ -40,7 +41,6 @@ internal class EditableWordsAdapter(
             if (!isEditMode) {
                 deleteButton.visibility = View.GONE
                 deleteButton.setOnClickListener(null)
-
             } else {
                 root.setOnClickListener(null)
                 deleteButton.visibility = View.VISIBLE

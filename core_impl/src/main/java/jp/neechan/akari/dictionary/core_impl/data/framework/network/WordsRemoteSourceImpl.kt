@@ -14,7 +14,8 @@ import javax.inject.Inject
 internal class WordsRemoteSourceImpl @Inject constructor(
     private val wordsApi: WordsApi,
     private val wordMapper: ModelMapper<Word, WordDto>,
-    private val paramsMapper: ModelMapper<FilterParams, FilterParamsDto>) : WordsRemoteSource {
+    private val paramsMapper: ModelMapper<FilterParams, FilterParamsDto>
+) : WordsRemoteSource {
 
     override suspend fun loadWords(params: FilterParams): Page<String> {
         val paramsDto = paramsMapper.mapToExternalLayer(params)

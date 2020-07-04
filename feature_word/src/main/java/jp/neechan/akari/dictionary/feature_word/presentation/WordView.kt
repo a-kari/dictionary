@@ -53,7 +53,6 @@ internal class WordView : LinearLayout {
         if (pronunciation != null) {
             speakButton.text = pronunciation
             speakButton.visibility = VISIBLE
-
         } else {
             speakButton.visibility = GONE
         }
@@ -63,7 +62,6 @@ internal class WordView : LinearLayout {
         if (syllables != null) {
             syllablesTv.text = syllables
             syllablesContainer.visibility = VISIBLE
-
         } else {
             syllablesContainer.visibility = GONE
         }
@@ -85,7 +83,6 @@ internal class WordView : LinearLayout {
                 }
             }
             definitionsContainer.visibility = VISIBLE
-
         } else {
             definitionsContainer.visibility = GONE
         }
@@ -108,7 +105,6 @@ internal class WordView : LinearLayout {
         if (definition.examples.isValid()) {
             definitionView.examplesTv.text = definition.examples
             definitionView.examplesContainer.visibility = VISIBLE
-
         } else {
             definitionView.examplesContainer.visibility = GONE
         }
@@ -116,7 +112,6 @@ internal class WordView : LinearLayout {
         if (definition.synonyms.isValid()) {
             definitionView.synonymsTv.text = definition.synonyms
             definitionView.synonymsContainer.visibility = VISIBLE
-
         } else {
             definitionView.synonymsContainer.visibility = GONE
         }
@@ -124,7 +119,6 @@ internal class WordView : LinearLayout {
         if (definition.antonyms.isValid()) {
             definitionView.antonymsTv.text = definition.antonyms
             definitionView.antonymsContainer.visibility = VISIBLE
-
         } else {
             definitionView.antonymsContainer.visibility = GONE
         }

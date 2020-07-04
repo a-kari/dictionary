@@ -27,7 +27,7 @@ internal interface ContextComponent : ContextProvider {
                 ?: DaggerContextComponent.builder()
                                          .context(context)
                                          .build()
-                                         .also { contextComponent = it  }
+                                         .also { contextComponent = it }
         }
     }
 }

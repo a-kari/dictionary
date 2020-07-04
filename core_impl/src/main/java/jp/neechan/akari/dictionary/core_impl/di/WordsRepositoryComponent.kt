@@ -29,7 +29,6 @@ interface WordsRepositoryComponent : WordsRepositoryProvider {
                     .dtoMappersComponent(DtoMappersComponent.create())
                     .build()
                     .also { wordsRepositoryComponent = it }
-
         }
     }
 }

@@ -9,7 +9,8 @@ import javax.inject.Inject
 @Reusable
 internal class SaveFilterParamsUseCase @Inject constructor(
     private val paramsRepository: FilterParamsRepository,
-    private val wordsRepository: WordsRepository) {
+    private val wordsRepository: WordsRepository
+) {
 
     suspend operator fun invoke(params: FilterParams) {
         paramsRepository.saveFilterParams(params)

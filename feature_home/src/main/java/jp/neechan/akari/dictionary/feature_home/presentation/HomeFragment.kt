@@ -119,7 +119,6 @@ internal class HomeFragment : BaseFragment(), EditableWordsAdapter.WordActionLis
             viewModel.isEditMode = !viewModel.isEditMode
             syncEditMode()
             true
-
         } else {
             super.onOptionsItemSelected(item)
         }

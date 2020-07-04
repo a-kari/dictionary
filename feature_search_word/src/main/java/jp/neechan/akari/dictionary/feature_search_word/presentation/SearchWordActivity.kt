@@ -51,7 +51,7 @@ internal class SearchWordActivity : BaseActivity() {
     private fun setupWordFragment() {
         wordMediator.openWordFragment(R.id.content, supportFragmentManager)
     }
-    
+
     private fun setupObservers() {
         viewModel.wordLiveData.observe(this, Observer { state ->
             when (state) {
