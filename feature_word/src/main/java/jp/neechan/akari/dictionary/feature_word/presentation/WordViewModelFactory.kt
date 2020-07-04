@@ -21,7 +21,8 @@ internal class WordViewModelFactory @Inject constructor(
     private val resultMapper: ModelMapper<Result<Word>, UIState<WordUI>>,
     private val wordMapper: ModelMapper<Word, WordUI>,
     private val speakUseCase: SpeakUseCase,
-    private val stopSpeakingUseCase: StopSpeakingUseCase) : BaseViewModelFactory() {
+    private val stopSpeakingUseCase: StopSpeakingUseCase
+) : BaseViewModelFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -34,7 +35,6 @@ internal class WordViewModelFactory @Inject constructor(
                 speakUseCase,
                 stopSpeakingUseCase
             ) as T
-
         } else {
             throw cannotInstantiateException(modelClass)
         }

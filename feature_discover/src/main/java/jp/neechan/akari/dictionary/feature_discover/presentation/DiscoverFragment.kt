@@ -124,7 +124,6 @@ internal class DiscoverFragment : BaseFragment(), WordsAdapter.WordActionListene
         return if (item.itemId == R.id.filter) {
             showFilterDialog()
             true
-
         } else {
             return super.onOptionsItemSelected(item)
         }

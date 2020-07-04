@@ -18,7 +18,8 @@ internal class WordsFilterViewModel(
     private val loadFilterParams: LoadFilterParamsUseCase,
     private val saveFilterParams: SaveFilterParamsUseCase,
     private val frequencyMapper: ModelMapper<Frequency, FrequencyUI>,
-    private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechUI>) : ViewModel() {
+    private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechUI>
+) : ViewModel() {
 
     private val frequencies = arrayOf(
         FrequencyUI.VERY_RARE,

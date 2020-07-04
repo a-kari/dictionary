@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import jp.neechan.akari.dictionary.base_ui_words_list.R
 import kotlinx.android.synthetic.main.item_word.view.*
 
-open class WordsAdapter(private val wordActionListener: WordActionListener)
-    : PagedListAdapter<String, WordsAdapter.WordHolder>(diffCallback) {
+open class WordsAdapter(private val wordActionListener: WordActionListener) :
+    PagedListAdapter<String, WordsAdapter.WordHolder>(diffCallback) {
 
     interface WordActionListener {
         fun onWordClicked(word: String)
@@ -26,8 +26,10 @@ open class WordsAdapter(private val wordActionListener: WordActionListener)
         getItem(position)?.let { holder.bind(it) }
     }
 
-    open class WordHolder(private val root: View,
-                          private val wordActionListener: WordActionListener) : RecyclerView.ViewHolder(root) {
+    open class WordHolder(
+        private val root: View,
+        private val wordActionListener: WordActionListener
+    ) : RecyclerView.ViewHolder(root) {
 
         // A property to consume in child modules.
         protected val deleteButton: ImageView get() = root.deleteButton

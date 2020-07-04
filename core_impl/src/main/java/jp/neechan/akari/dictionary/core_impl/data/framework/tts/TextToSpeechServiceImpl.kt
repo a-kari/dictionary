@@ -74,7 +74,6 @@ internal class TextToSpeechServiceImpl @Inject constructor(
         if (status == TextToSpeech.SUCCESS) {
             ttsState = TextToSpeechState.CREATED
             scope.launch { configure() }
-
         } else {
             ttsState = TextToSpeechState.ERROR_CREATING
         }
@@ -152,7 +151,6 @@ internal class TextToSpeechServiceImpl @Inject constructor(
         // still don't support them: https://issuetracker.google.com/issues/37012397
         return try {
             voices.filter { it.locale == locale }
-
         } catch (t: Throwable) {
             emptyList()
         }

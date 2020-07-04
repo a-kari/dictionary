@@ -23,7 +23,8 @@ internal class WordViewModel(
     private val resultMapper: ModelMapper<Result<Word>, UIState<WordUI>>,
     private val wordMapper: ModelMapper<Word, WordUI>,
     private val speakUseCase: SpeakUseCase,
-    private val stopSpeakingUseCase: StopSpeakingUseCase) : ViewModel() {
+    private val stopSpeakingUseCase: StopSpeakingUseCase
+) : ViewModel() {
 
     lateinit var wordId: String
 

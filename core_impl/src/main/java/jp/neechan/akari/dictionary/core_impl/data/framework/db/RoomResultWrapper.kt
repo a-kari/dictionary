@@ -13,11 +13,9 @@ internal class RoomResultWrapper @Inject constructor() : ResultWrapper {
             val value = block()
             if (value == null || (value is Iterable<*> && value.none())) {
                 Result.NotFoundError
-
             } else {
                 Result.Success(value)
             }
-
         } catch (throwable: Throwable) {
             Result.Error(throwable)
         }

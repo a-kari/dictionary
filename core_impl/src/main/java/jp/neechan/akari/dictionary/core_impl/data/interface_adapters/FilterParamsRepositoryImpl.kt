@@ -7,7 +7,8 @@ import javax.inject.Inject
 
 @Reusable
 internal class FilterParamsRepositoryImpl @Inject constructor(
-    private val preferencesService: FilterPreferencesService) : FilterParamsRepository {
+    private val preferencesService: FilterPreferencesService
+) : FilterParamsRepository {
 
     override suspend fun loadFilterParams(): FilterParams {
         return preferencesService.loadFilterParams()

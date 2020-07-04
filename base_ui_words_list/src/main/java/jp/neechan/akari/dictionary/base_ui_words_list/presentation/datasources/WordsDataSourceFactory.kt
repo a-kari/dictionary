@@ -11,10 +11,12 @@ import jp.neechan.akari.dictionary.domain_words.domain.LoadFilterParamsUseCase
 import jp.neechan.akari.dictionary.domain_words.domain.LoadWordsUseCase
 import kotlinx.coroutines.CoroutineScope
 
-class WordsDataSourceFactory(private val loadWords: LoadWordsUseCase,
-                             private var loadFilterParams: LoadFilterParamsUseCase,
-                             private val resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>,
-                             private val coroutineScope: CoroutineScope) : DataSource.Factory<Int, String>() {
+class WordsDataSourceFactory(
+    private val loadWords: LoadWordsUseCase,
+    private var loadFilterParams: LoadFilterParamsUseCase,
+    private val resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>,
+    private val coroutineScope: CoroutineScope
+) : DataSource.Factory<Int, String>() {
 
     private val _wordsDataSource = MutableLiveData<WordsDataSource>()
     val wordsDataSource: LiveData<WordsDataSource> = _wordsDataSource

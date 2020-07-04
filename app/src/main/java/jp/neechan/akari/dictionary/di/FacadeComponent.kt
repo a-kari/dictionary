@@ -27,8 +27,8 @@ internal interface FacadeComponent : ProvidersFacade {
 
         fun create(context: Application): FacadeComponent {
             val contextProvider = ContextComponent.create(context)
-            return facadeComponent ?:
-                DaggerFacadeComponent.builder()
+            return facadeComponent
+                ?: DaggerFacadeComponent.builder()
                     .contextProvider(contextProvider)
                     .wordsRepositoryProvider(CoreProvidersFactory.createWordsRepositoryProvider(contextProvider))
                     .textToSpeechServiceProvider(CoreProvidersFactory.createTextToSpeechProvider(contextProvider))

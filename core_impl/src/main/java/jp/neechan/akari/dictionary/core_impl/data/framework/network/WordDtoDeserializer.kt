@@ -56,9 +56,11 @@ import javax.inject.Inject
 @Reusable
 internal class WordDtoDeserializer @Inject constructor() : JsonDeserializer<WordDto> {
 
-    override fun deserialize(json: JsonElement,
-                             typeOfT: Type,
-                             context: JsonDeserializationContext): WordDto {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext
+    ): WordDto {
 
         val wordJson = json.asJsonObject
         val word = wordJson.getAsJsonPrimitive("word").asString
@@ -82,7 +84,6 @@ internal class WordDtoDeserializer @Inject constructor() : JsonDeserializer<Word
         val frequency = FrequencyDto.valueOf(
             if (wordJson.has("frequency")) {
                 wordJson.getAsJsonPrimitive("frequency").asFloat
-
             } else {
                 null
             }
@@ -108,7 +109,6 @@ internal class WordDtoDeserializer @Inject constructor() : JsonDeserializer<Word
         val partOfSpeech = PartOfSpeechDto.valueOf(
             if (definitionJson.get("partOfSpeech").isJsonPrimitive) {
                 definitionJson.getAsJsonPrimitive("partOfSpeech").asString
-
             } else {
                 null
             }

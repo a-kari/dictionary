@@ -13,7 +13,8 @@ import jp.neechan.akari.dictionary.domain_words.domain.LoadWordUseCase
 
 internal class SearchWordViewModel(
     private val loadWordUseCase: LoadWordUseCase,
-    private val resultMapper: ModelMapper<Result<Word>, UIState<WordUI>>) : ViewModel() {
+    private val resultMapper: ModelMapper<Result<Word>, UIState<WordUI>>
+) : ViewModel() {
 
     private val queryLiveData = MutableLiveData<String>()
 

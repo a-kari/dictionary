@@ -25,7 +25,8 @@ internal class HomeViewModel(
     private val loadWordsUseCase: LoadSavedWordsUseCase,
     loadFilterParamsUseCase: LoadFilterParamsUseCase,
     private val deleteWordUseCase: DeleteWordUseCase,
-    resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>) : ViewModel() {
+    resultMapper: ModelMapper<Result<Page<String>>, UIState<Page<String>>>
+) : ViewModel() {
 
     // It's needed to use Paging Library's own background threads here for smooth work.
     // As deleting a word invalidates the whole DataSource, data will be re-fetched.

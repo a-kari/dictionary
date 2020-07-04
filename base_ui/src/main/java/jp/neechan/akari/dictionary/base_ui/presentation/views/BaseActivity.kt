@@ -16,7 +16,6 @@ abstract class BaseActivity : AppCompatActivity() {
         return if (item.itemId == android.R.id.home) {
             onBackPressed()
             true
-
         } else {
             super.onOptionsItemSelected(item)
         }
