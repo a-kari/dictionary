@@ -36,11 +36,10 @@ android {
         }
     }
 
+    // Hypothetical CI/CD pipeline can use ./gradlew :app:lint to run checks for the entire app.
+    // Thus, we can get issues for the entire app in a single report.
     lintOptions {
         checkDependencies true
-        abortOnError true
-        xmlReport false
-        disable 'DefaultLocale'
     }
 }
 
@@ -72,7 +71,7 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test:runner:$instrumented_runner_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_instrumented_version"
-
-    // Lint
-    lintChecks project(':lint_checks')
 }
+
+// Android Lint
+apply from: "$project.rootDir/scripts/enable_android_lint.gradle"

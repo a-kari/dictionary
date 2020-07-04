@@ -60,3 +60,6 @@ dependencies {
     implementation "org.mockito:mockito-core:$mockito_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
 }
+
+// Android Lint
+apply from: "$project.rootDir/scripts/enable_android_lint.gradle"

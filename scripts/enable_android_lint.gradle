@@ -1,0 +1,15 @@
+apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
+
+android {
+    lintOptions {
+        abortOnError true
+        htmlReport true
+        xmlReport false
+        textReport false
+        disable 'DefaultLocale'
+    }
+}
+
+dependencies {
+    lintChecks project(':lint_checks')
+}
