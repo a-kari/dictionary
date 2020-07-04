@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>EmptyFunctionBlock:SettingsFragment.kt$SettingsFragment.&lt;no name provided&gt;${}</ID>
+    <ID>EmptyFunctionBlock:WordsFilterDialog.kt$WordsFilterDialog.&lt;no name provided&gt;${}</ID>
+    <ID>IteratorNotThrowingNoSuchElementException:Page.kt$Page$&lt;no name provided&gt; : Iterator</ID>
+    <ID>LongParameterList:SettingsViewModel.kt$SettingsViewModel$( private val loadPronunciationsUseCase: LoadPronunciationsUseCase, private val loadVoicesUseCase: LoadVoicesUseCase, private val loadPreferredPronunciationUseCase: LoadPreferredPronunciationUseCase, private val loadPreferredVoiceUseCase: LoadPreferredVoiceUseCase, private val savePreferredPronunciationUseCase: SavePreferredPronunciationUseCase, private val savePreferredVoiceUseCase: SavePreferredVoiceUseCase, private val speakUseCase: SpeakUseCase, private val stopSpeakingUseCase: StopSpeakingUseCase )</ID>
+    <ID>LongParameterList:SettingsViewModelFactory.kt$SettingsViewModelFactory$( private val loadPronunciationsUseCase: LoadPronunciationsUseCase, private val loadVoicesUseCase: LoadVoicesUseCase, private val loadPreferredPronunciationUseCase: LoadPreferredPronunciationUseCase, private val loadPreferredVoiceUseCase: LoadPreferredVoiceUseCase, private val savePreferredPronunciationUseCase: SavePreferredPronunciationUseCase, private val savePreferredVoiceUseCase: SavePreferredVoiceUseCase, private val speakUseCase: SpeakUseCase, private val stopSpeakingUseCase: StopSpeakingUseCase )</ID>
+    <ID>MagicNumber:BaseDialog.kt$BaseDialog$0.9f</ID>
+    <ID>MagicNumber:FrequencyDto.kt$FrequencyDto.FREQUENT$5f</ID>
+    <ID>MagicNumber:FrequencyDto.kt$FrequencyDto.FREQUENT$6f</ID>
+    <ID>MagicNumber:FrequencyDto.kt$FrequencyDto.NORMAL$4f</ID>
+    <ID>MagicNumber:FrequencyDto.kt$FrequencyDto.NORMAL$5f</ID>
+    <ID>MagicNumber:FrequencyDto.kt$FrequencyDto.RARE$4f</ID>
+    <ID>MagicNumber:FrequencyDto.kt$FrequencyDto.VERY_FREQUENT$10f</ID>
+    <ID>MagicNumber:FrequencyDto.kt$FrequencyDto.VERY_FREQUENT$6f</ID>
+    <ID>MagicNumber:TextToSpeechServiceImpl.kt$TextToSpeechServiceImpl.TextToSpeechState.VOICE_CONFIGURED$3</ID>
+    <ID>MaxLineLength:NetworkModule.kt$NetworkModule.Companion$@Provides @Reusable @JvmStatic fun provideGson(stringPageDeserializer: PageDeserializer&lt;String&gt;, wordDtoDeserializer: WordDtoDeserializer): Gson</ID>
+    <ID>MaxLineLength:TestAppWithMockFacade.kt$TestAppWithMockFacade$val frequencyUIMapper: ModelMapper&lt;Frequency, FrequencyUI&gt; = mock(ModelMapper::class.java) as ModelMapper&lt;Frequency, FrequencyUI&gt;</ID>
+    <ID>MaxLineLength:TestAppWithMockFacade.kt$TestAppWithMockFacade$val partOfSpeechUIMapper: ModelMapper&lt;PartOfSpeech, PartOfSpeechUI&gt; = mock(ModelMapper::class.java) as ModelMapper&lt;PartOfSpeech, PartOfSpeechUI&gt;</ID>
+    <ID>MaxLineLength:TestAppWithMockFacade.kt$TestAppWithMockFacade$val stringPageResultMapper: ModelMapper&lt;Result&lt;Page&lt;String&gt;&gt;, UIState&lt;Page&lt;String&gt;&gt;&gt; = mock(ModelMapper::class.java) as ModelMapper&lt;Result&lt;Page&lt;String&gt;&gt;, UIState&lt;Page&lt;String&gt;&gt;&gt;</ID>
+    <ID>MaxLineLength:TestAppWithMockFacade.kt$TestAppWithMockFacade$val textToSpeechPreferencesRepository: TextToSpeechPreferencesRepository = mock(TextToSpeechPreferencesRepository::class.java)</ID>
+    <ID>MaxLineLength:TestAppWithMockFacade.kt$TestAppWithMockFacade$val wordUIResultMapper: ModelMapper&lt;Result&lt;Word&gt;, UIState&lt;WordUI&gt;&gt; = mock(ModelMapper::class.java) as ModelMapper&lt;Result&lt;Word&gt;, UIState&lt;WordUI&gt;&gt;</ID>
+    <ID>MaxLineLength:TextToSpeechPreferencesServiceImpl.kt$TextToSpeechPreferencesServiceImpl$@Reusable internal</ID>
+    <ID>MaxLineLength:WordView.kt$WordView$val partOfSpeechView = LayoutInflater.from(context).inflate(R.layout.view_word_part_of_speech, definitionsView, false)</ID>
+    <ID>MaxLineLength:WordsRepositoryModule.kt$WordsRepositoryModule$@Binds abstract</ID>
+    <ID>MaximumLineLength:jp.neechan.akari.dictionary.core_impl.data.framework.shared_preferences.TextToSpeechPreferencesServiceImpl.kt:11</ID>
+    <ID>MaximumLineLength:jp.neechan.akari.dictionary.core_impl.di.NetworkModule.kt:44</ID>
+    <ID>MaximumLineLength:jp.neechan.akari.dictionary.core_impl.di.WordsRepositoryModule.kt:27</ID>
+    <ID>MaximumLineLength:jp.neechan.akari.dictionary.feature_word.presentation.WordView.kt:92</ID>
+    <ID>MaximumLineLength:jp.neechan.akari.dictionary.test_utils.robolectric.TestAppWithMockFacade.kt:49</ID>
+    <ID>MaximumLineLength:jp.neechan.akari.dictionary.test_utils.robolectric.TestAppWithMockFacade.kt:51</ID>
+    <ID>MaximumLineLength:jp.neechan.akari.dictionary.test_utils.robolectric.TestAppWithMockFacade.kt:52</ID>
+    <ID>MaximumLineLength:jp.neechan.akari.dictionary.test_utils.robolectric.TestAppWithMockFacade.kt:53</ID>
+    <ID>MaximumLineLength:jp.neechan.akari.dictionary.test_utils.robolectric.TestAppWithMockFacade.kt:54</ID>
+    <ID>TooGenericExceptionCaught:RetrofitResultWrapper.kt$RetrofitResultWrapper$throwable: Throwable</ID>
+    <ID>TooGenericExceptionCaught:RoomResultWrapper.kt$RoomResultWrapper$throwable: Throwable</ID>
+    <ID>TooGenericExceptionCaught:TextToSpeechServiceImpl.kt$TextToSpeechServiceImpl$t: Throwable</ID>
+    <ID>TooManyFunctions:DiscoverFragment.kt$DiscoverFragment$DiscoverFragment</ID>
+    <ID>TooManyFunctions:HomeFragment.kt$HomeFragment$HomeFragment</ID>
+    <ID>TooManyFunctions:SearchWordActivity.kt$SearchWordActivity$SearchWordActivity</ID>
+    <ID>TooManyFunctions:TestAppWithMockFacade.kt$TestAppWithMockFacade$&lt;no name provided&gt; : ProvidersFacade</ID>
+    <ID>TooManyFunctions:TextToSpeechServiceImpl.kt$TextToSpeechServiceImpl$TextToSpeechServiceImpl</ID>
+    <ID>TooManyFunctions:WordView.kt$WordView$WordView</ID>
+  </CurrentIssues>
+</SmellBaseline>
