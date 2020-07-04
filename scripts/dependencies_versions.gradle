@@ -38,4 +38,5 @@ ext {
 
     // Lint
     android_lint_version = '27.0.0'
+    detekt_version = '1.10.0'
 }

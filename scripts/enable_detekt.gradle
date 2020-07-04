@@ -1,0 +1,100 @@
+apply from: "$project.rootDir/scripts/dependencies_versions.gradle"
+
+configurations {
+    detekt
+}
+
+dependencies {
+    detekt "io.gitlab.arturbosch.detekt:detekt-cli:$detekt_version"
+    detekt "io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version"
+}
+
+def taskGroup = 'Verification'
+def taskMainClass = 'io.gitlab.arturbosch.detekt.cli.Main'
+def taskClasspath = configurations.detekt
+
+def jvmTarget = JavaVersion.VERSION_1_8.toString()
+def configFile = "$rootDir/config/detekt/detekt.yml"
+def baselineFile = "$rootDir/config/detekt/detekt_baseline.xml"
+def reportFile = "html:$rootDir/build/reports/detekt/detekt.html"
+def inputDirectory = "$projectDir"
+
+def defaultArguments = [
+        '--jvm-target', jvmTarget,
+        '--config', configFile,
+        '--report', "$reportFile",
+        '--parallel',
+        '--input', inputDirectory
+]
+
+/** Run Detekt inspections with no baseline considering. */
+task detekt(type: JavaExec) {
+    group = taskGroup
+    description = 'Run Detekt inspections'
+    main = taskMainClass
+    classpath = taskClasspath
+
+    args(defaultArguments)
+}
+
+/**
+ * Run Detekt inspections with the baseline considering.
+ * The baseline should be pre-generated via detektGenerateBaseline task.
+ */
+task detektWithBaseline(type: JavaExec) {
+    group = taskGroup
+    description = 'Run Detekt inspections considering the baseline'
+    main = taskMainClass
+    classpath = taskClasspath
+
+    def argumentsWithBaseline = defaultArguments
+    argumentsWithBaseline.addAll(['--baseline', "$baselineFile"])
+    args(argumentsWithBaseline)
+}
+
+/**
+ * Generate a baseline file for Detekt.
+ *
+ * If there is an existing baseline file already, it will be overwritten,
+ * so you will have to check if no unwanted suppresses are added there.
+ */
+task detektGenerateBaseline(type: JavaExec) {
+    group = taskGroup
+    description = 'Generate a baseline file for Detekt'
+    main = taskMainClass
+    classpath = taskClasspath
+
+    def argumentsWithCreateBaseline = defaultArguments
+    argumentsWithCreateBaseline.add('--create-baseline')
+    args(argumentsWithCreateBaseline)
+}
+
+/**
+ * Run Detekt auto-corrects, i.e. if there are issues with auto-correct features,
+ * they will be executed, correcting your source code.
+ *
+ * Note that this task does not consider or overwrite the baseline file.
+ * So if there are any auto-corrects, you have to:
+ *
+ * 1. Regenerate the baseline file via detektGenerateBaseline task.
+ * 2. Check the baseline file for unwanted suppresses.
+ */
+task detektAutoCorrect(type: JavaExec) {
+    group = taskGroup
+    description = 'Auto-correct all auto-correctable issues. No baseline considering or affection'
+    main = taskMainClass
+    classpath = taskClasspath
+
+    def argumentsWithAutoCorrect = defaultArguments
+    argumentsWithAutoCorrect.add('--auto-correct')
+
+    // By default, --auto-correct option has an influence on the baseline file, but:
+    //
+    // 1. For some reason, it's overwritten only partially, i.e. some fixed issues stay there.
+    // 2. New unwanted suppresses are added there.
+    //
+    // Due to this, here we disable (toggle off) the baseline overwriting,
+    // shifting responsibility for the baseline to user.
+    argumentsWithAutoCorrect.add('--create-baseline')
+    args(argumentsWithAutoCorrect)
+}
