@@ -8,7 +8,8 @@ import javax.inject.Inject
 @Reusable
 internal class LoadPreferredVoiceUseCase @Inject constructor(
     private val ttsPreferencesRepository: TextToSpeechPreferencesRepository,
-    private val ttsService: TextToSpeechService) {
+    private val ttsService: TextToSpeechService
+) {
 
     suspend operator fun invoke(): String {
         return ttsPreferencesRepository.loadPreferredVoice() ?: ttsService.loadDefaultVoice()

@@ -77,7 +77,6 @@ internal class SettingsFragment : BaseFragment() {
             if (voices.isNotEmpty()) {
                 voicesAdapter.addAll(voices)
                 voicesSpinner.isEnabled = true
-
             } else {
                 voicesSpinner.isEnabled = false
             }

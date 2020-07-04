@@ -13,7 +13,8 @@ import javax.inject.Inject
 @Reusable
 internal class FilterParamsToFilterParamsDtoMapper @Inject constructor(
     private val frequencyMapper: ModelMapper<Frequency, FrequencyDto>,
-    private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechDto>) : ModelMapper<FilterParams, FilterParamsDto> {
+    private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechDto>
+) : ModelMapper<FilterParams, FilterParamsDto> {
 
     override fun mapToInternalLayer(externalLayerModel: FilterParamsDto): FilterParams {
         return FilterParams(

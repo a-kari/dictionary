@@ -9,7 +9,8 @@ import javax.inject.Inject
 @Reusable
 internal class SavePreferredPronunciationUseCase @Inject constructor(
     private val ttsPreferencesRepository: TextToSpeechPreferencesRepository,
-    private val ttsService: TextToSpeechService) {
+    private val ttsService: TextToSpeechService
+) {
 
     suspend operator fun invoke(pronunciation: Locale) {
         ttsPreferencesRepository.savePreferredLocale(pronunciation)

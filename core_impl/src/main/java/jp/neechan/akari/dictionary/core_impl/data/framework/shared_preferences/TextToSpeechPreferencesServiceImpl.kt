@@ -25,7 +25,6 @@ internal class TextToSpeechPreferencesServiceImpl @Inject constructor(context: C
 
         return if (localeLanguage != null && localeCountry != null) {
             Locale(localeLanguage, localeCountry)
-
         } else {
             null
         }

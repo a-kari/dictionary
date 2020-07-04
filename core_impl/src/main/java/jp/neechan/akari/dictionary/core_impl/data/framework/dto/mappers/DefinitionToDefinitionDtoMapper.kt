@@ -10,7 +10,8 @@ import javax.inject.Inject
 
 @Reusable
 internal class DefinitionToDefinitionDtoMapper @Inject constructor(
-    private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechDto>) : ModelMapper<Definition, DefinitionDto> {
+    private val partOfSpeechMapper: ModelMapper<PartOfSpeech, PartOfSpeechDto>
+) : ModelMapper<Definition, DefinitionDto> {
 
     override fun mapToInternalLayer(externalLayerModel: DefinitionDto): Definition {
         return Definition(

@@ -16,7 +16,8 @@ internal class WordsRepositoryImpl @Inject constructor(
     private val localSource: WordsLocalSource,
     @LocalResultWrapper private val localResultWrapper: ResultWrapper,
     private val remoteSource: WordsRemoteSource,
-    @RemoteResultWrapper private val remoteResultWrapper: ResultWrapper) : WordsRepository {
+    @RemoteResultWrapper private val remoteResultWrapper: ResultWrapper
+) : WordsRepository {
 
     override val allWordsRecentlyUpdated = ConflatedBroadcastChannel(false)
 
@@ -43,7 +44,6 @@ internal class WordsRepositoryImpl @Inject constructor(
 
         return if (localWord is Result.Success<Word>) {
             localWord
-
         } else {
             remoteResultWrapper.wrapWithResult { remoteSource.loadWord(wordId) }
         }

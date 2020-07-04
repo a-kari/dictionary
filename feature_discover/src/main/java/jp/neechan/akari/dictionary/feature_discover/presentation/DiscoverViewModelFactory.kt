@@ -22,7 +22,6 @@ internal class DiscoverViewModelFactory @Inject constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DiscoverViewModel::class.java)) {
             return DiscoverViewModel(loadWordsUseCase, loadFilterParamsUseCase, resultMapper) as T
-
         } else {
             throw cannotInstantiateException(modelClass)
         }

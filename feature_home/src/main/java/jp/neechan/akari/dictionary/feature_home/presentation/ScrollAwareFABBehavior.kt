@@ -8,18 +8,31 @@ import androidx.core.view.ViewCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton.OnVisibilityChangedListener
 
-internal class ScrollAwareFABBehavior(context: Context?, attrs: AttributeSet?)
-    : FloatingActionButton.Behavior(context, attrs) {
+internal class ScrollAwareFABBehavior(context: Context?, attrs: AttributeSet?) :
+    FloatingActionButton.Behavior(context, attrs) {
 
-    override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, fab: FloatingActionButton,
-                                     directTargetChild: View, target: View, nestedScrollAxes: Int,
-                                     type: Int): Boolean {
+    override fun onStartNestedScroll(
+        coordinatorLayout: CoordinatorLayout,
+        fab: FloatingActionButton,
+        directTargetChild: View,
+        target: View,
+        nestedScrollAxes: Int,
+        type: Int
+    ): Boolean {
         return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL
     }
 
-    override fun onNestedScroll(coordinatorLayout: CoordinatorLayout, fab: FloatingActionButton,
-                                target: View, dxConsumed: Int, dyConsumed: Int,
-                                dxUnconsumed: Int, dyUnconsumed: Int, type: Int, consumed: IntArray) {
+    override fun onNestedScroll(
+        coordinatorLayout: CoordinatorLayout,
+        fab: FloatingActionButton,
+        target: View,
+        dxConsumed: Int,
+        dyConsumed: Int,
+        dxUnconsumed: Int,
+        dyUnconsumed: Int,
+        type: Int,
+        consumed: IntArray
+    ) {
         super.onNestedScroll(coordinatorLayout, fab, target, dxConsumed, dyConsumed,
             dxUnconsumed, dyUnconsumed, type, consumed)
 

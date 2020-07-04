@@ -13,7 +13,8 @@ import javax.inject.Inject
 @Reusable
 internal class WordToWordDtoMapper @Inject constructor(
     private val frequencyMapper: ModelMapper<Frequency, FrequencyDto>,
-    private val definitionMapper: ModelMapper<Definition, DefinitionDto>) : ModelMapper<Word, WordDto> {
+    private val definitionMapper: ModelMapper<Definition, DefinitionDto>
+) : ModelMapper<Word, WordDto> {
 
     override fun mapToInternalLayer(externalLayerModel: WordDto): Word {
         return Word(

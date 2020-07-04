@@ -2,9 +2,11 @@ package jp.neechan.akari.dictionary.core_impl.data.framework.dto
 
 import jp.neechan.akari.dictionary.core_api.domain.entities.FilterParams
 
-internal data class FilterParamsDto(var page: Int,
-                                    var partOfSpeech: PartOfSpeechDto,
-                                    var frequency: FrequencyDto) {
+internal data class FilterParamsDto(
+    var page: Int,
+    var partOfSpeech: PartOfSpeechDto,
+    var frequency: FrequencyDto
+) {
 
     companion object {
         const val DEFAULT_PAGE = FilterParams.DEFAULT_PAGE
@@ -19,7 +21,6 @@ internal data class FilterParamsDto(var page: Int,
         // The backend does not receive "all" part of speech, but an empty string.
         val partOfSpeech = if (partOfSpeech != PartOfSpeechDto.ALL) {
             partOfSpeech.name.toLowerCase()
-
         } else {
             ""
         }

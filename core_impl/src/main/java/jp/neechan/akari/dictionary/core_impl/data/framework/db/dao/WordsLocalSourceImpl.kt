@@ -13,7 +13,8 @@ import javax.inject.Inject
 @Reusable
 internal class WordsLocalSourceImpl @Inject constructor(
     private val wordsDao: WordsDao,
-    private val wordMapper: ModelMapper<Word, WordDto>) : WordsLocalSource {
+    private val wordMapper: ModelMapper<Word, WordDto>
+) : WordsLocalSource {
 
     override suspend fun loadWords(params: FilterParams): Page<String> {
         val page = params.page

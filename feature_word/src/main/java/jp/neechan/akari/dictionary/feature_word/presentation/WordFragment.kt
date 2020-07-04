@@ -96,7 +96,6 @@ internal class WordFragment : BaseFragment() {
                 viewModel.saveWord(word)
                 requireContext().toast(R.string.word_added_to_dictionary)
             }
-
         } else {
             addToDictionaryButton.visibility = GONE
         }
