@@ -18,13 +18,15 @@ def configFile = "$rootDir/config/detekt/detekt.yml"
 def baselineFile = "$rootDir/config/detekt/detekt_baseline.xml"
 def reportFile = "html:$rootDir/build/reports/detekt/detekt.html"
 def inputDirectory = "$projectDir"
+def excludeDirectories = "build/, resources/, tmp/, **/test/**, **/androidTest/**"
 
 def defaultArguments = [
         '--jvm-target', jvmTarget,
         '--config', configFile,
         '--report', "$reportFile",
         '--parallel',
-        '--input', inputDirectory
+        '--input', inputDirectory,
+        '--excludes', excludeDirectories
 ]
 
 /** Run Detekt inspections with no baseline considering. */
