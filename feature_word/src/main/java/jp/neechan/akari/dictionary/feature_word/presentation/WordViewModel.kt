@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import jp.neechan.akari.dictionary.core_api.domain.entities.Result
 import jp.neechan.akari.dictionary.core_api.domain.entities.Word
 import jp.neechan.akari.dictionary.core_api.domain.entities.mappers.ModelMapper
+import jp.neechan.akari.dictionary.core_api.presentation.models.FrequencyUI
 import jp.neechan.akari.dictionary.core_api.presentation.models.UIState
 import jp.neechan.akari.dictionary.core_api.presentation.models.WordUI
 import jp.neechan.akari.dictionary.domain_tts.domain.SpeakUseCase
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Date
 
 internal class WordViewModel(
     private val loadWordUseCase: LoadWordUseCase,
@@ -39,6 +41,12 @@ internal class WordViewModel(
             printCurrentThread("Fetching a word from api on a background thread")
             resultMapper.mapToExternalLayer(loadWordUseCase(wordId))
         }
+
+        // The same result could be with a stubbed value.
+//        val word = withContext(Dispatchers.IO) {
+//            printCurrentThread("Stubbing a value on a background thread")
+//            UIState.ShowContent(WordUI("hello", "həˈləʊ", "hel-lo", FrequencyUI.FREQUENT, null, Date()))
+//        }
 
         // Here is the issue. withContext {...} should switch back to the UI thread
         // after its finish, but it doesn't. emit() is still called on a background thread,
