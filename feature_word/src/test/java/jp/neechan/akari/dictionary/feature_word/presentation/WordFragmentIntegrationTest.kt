@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit
 @Config(application = TestAppWithFacade::class)
 class WordFragmentIntegrationTest {
 
-    // Подменяю Dispatchers.Main на TestCoroutineDispatcher.
+    // Delegate Dispatchers.Main to TestCoroutineDispatcher.
     @get:Rule
     val coroutinesRule = CoroutinesRule()
 
@@ -56,11 +56,11 @@ class WordFragmentIntegrationTest {
                                      .setBodyDelay(0, TimeUnit.MILLISECONDS)
         mockWebServer.enqueue(response)
 
-        // Запускаю WordFragment. Он сразу делает запрос к api через WordViewModel.
+        // Launch WordFragment. It immediately makes an API call via WordViewModel.
         val arguments = Bundle().apply { putString("wordId", SAMPLE_WORD_ID) }
         val fragmentScenario = launchFragmentInContainer<WordFragment>(arguments).moveToState(Lifecycle.State.RESUMED)
 
-        // Дожидаюсь, пока WordFragment сделает запрос к api, и делаю проверки.
+        // Wait until WordFragment finishes the API call, and make some assertions.
         fragmentScenario.onFragment { fragmentUnderTest ->
             runBlocking {
                 while (fragmentUnderTest.progressBar.visibility == VISIBLE) { yield() }

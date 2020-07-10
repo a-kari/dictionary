@@ -29,24 +29,24 @@ internal class WordViewModel(
     lateinit var wordId: String
 
     val wordLiveData = liveData {
-        // Блок liveData {...} запустился в UI-потоке, всё нормально.
-        // Эмичу UIState.ShowLoading, чтобы показывался ProgressBar.
+        // liveData {...} block is started on the UI thread, everything is fine.
         printCurrentThread("LiveData block is started on the UI thread")
         emit(UIState.ShowLoading)
 
-        // Получаю данные в background-потоке, здесь тоже всё нормально.
-        // Ответ успешно приходит с MockWebServer'a.
+        // Get data on a background thread, it's fine, too.
+        // Response is successfully received from MockWebServer.
         val word = withContext(Dispatchers.IO) {
             printCurrentThread("Fetching a word from api on a background thread")
             resultMapper.mapToExternalLayer(loadWordUseCase(wordId))
         }
 
-        // Вот здесь проблема. Функция withContext {...} после своего завершения должна переключиться
-        // обратно на UI-поток, но она не переключается. Функция emit() вызывается в
-        // background-потоке, что ведет к ошибке "Cannot invoke setValue on a background thread".
+        // Here is the issue. withContext {...} should switch back to the UI thread
+        // after its finish, but it doesn't. emit() is still called on a background thread,
+        // which leads to the "Cannot invoke setValue on a background thread" exception.
         //
-        // Эта проблема касается только тестов, где я подменяю Dispatchers.Main на TestCoroutineDispatcher,
-        // т.е. в основном коде приложения переключение на UI-поток происходит нормально.
+        // The issue concerns only tests
+        // (where I delegate Dispatchers.Main to TestCoroutineDispatcher),
+        // i.e. in the main application code switching back to the UI thread goes fine.
         printCurrentThread("withContext {...} has ended and should switch back to Dispatchers.Main, but it doesn't")
         emit(word)
     }
