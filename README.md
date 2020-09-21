@@ -2,6 +2,8 @@
 
 Приложение "Dictionary" - это толковый словарь английских слов.
 
+Оно использует [WordsAPI](https://www.wordsapi.com/). Получить для него ключ можно [здесь](https://rapidapi.com/dpventures/api/wordsapi).
+
 ---
 
 # Возможности приложения
